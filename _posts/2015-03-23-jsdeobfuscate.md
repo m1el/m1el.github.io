@@ -5,7 +5,7 @@ date: 2015-03-23 04:08
 ---
 
 There was a [post][1] on metasploit blog about improvements to
-jsobfu - obfuscator for JavaScript.  I find it particularly interesting
+jsobfu - obfuscator for JavaScript.  I find jsobfu particularly interesting
 and that is why I wrote a deobfuscator for it.
 
 <!-- more -->
