@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Deobfuscating JavaScript
+title: Deobfuscating jsobfu
 date: 2015-03-23 04:08
 ---
 
