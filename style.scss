@@ -290,6 +290,11 @@ code {
   border: 1px solid #ddd;
   border-radius: 3px;
 }
+.highlight code {
+  border: 0px none;
+  border-radius: 0;
+  padding: 0;
+}
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
