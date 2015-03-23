@@ -66,19 +66,19 @@ with literal representing their value.
 
 For example, code calculating value for binary operations:
 
-   case 'BinaryExpression':
-       left = const_collapse_scoped(astNode.left);
-       right = const_collapse_scoped(astNode.right);
-       if (left.pure && right.pure && astNode.operator in boperators) {
-           return mkliteral(boperators[astNode.operator](left.value, right.value));
-       } else {
-           return {
-               type: astNode.type,
-               operator: astNode.operator,
-               left: left,
-               right: right
-           };
-       }
+    case 'BinaryExpression':
+        left = const_collapse_scoped(astNode.left);
+        right = const_collapse_scoped(astNode.right);
+        if (left.pure && right.pure && astNode.operator in boperators) {
+            return mkliteral(boperators[astNode.operator](left.value, right.value));
+        } else {
+            return {
+                type: astNode.type,
+                operator: astNode.operator,
+                left: left,
+                right: right
+            };
+        }
 
 `astNode` represents the node under question, if left and right children of the node are "pure",
 the node is replaced with the value that is calculated by applying binary operator to values from left and right children.
