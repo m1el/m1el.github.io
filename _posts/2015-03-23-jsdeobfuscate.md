@@ -5,7 +5,7 @@ date: 2015-03-23 04:08
 ---
 
 There was a [post][1] on metasploit blog about improvements to
-jsobfu - obfuscator for JavaScript.  I find jsobfu particularly interesting
+jsobfu — obfuscator for JavaScript.  I find jsobfu particularly interesting
 and that is why I wrote a deobfuscator for it.
 
 <!-- more -->
@@ -17,7 +17,7 @@ For assembly, there are plenty of ways code might be scrambled and made hard to 
 Self-modifying code, using debugging registers, unnecessary jumps, jumping into
 the middle of an instruction...  All of these are very useful and hard to deal with.
 
-These methods are not available for JS - the code is not self-modifying,
+These methods are not available for JS — the code is not self-modifying,
 it's impossible to jump in the middle of an instruction because there are no instructions.
 There is of course a very complicated and dymanic runtime enviroment such as browser.
 
