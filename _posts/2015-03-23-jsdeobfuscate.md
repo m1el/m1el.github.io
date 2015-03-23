@@ -46,9 +46,10 @@ For example `"ABC";` might be replaced with `String.fromCharCode(0101,0x42,0x43)
 
 Or something like
 
-    (function(){var k=String.fromCharCode(0103),d=String.fromCharCode(0x42),
-      v=(function () { var I="A"; return I })();return v+d+k;})();
-
+```javascript
+(function(){var k=String.fromCharCode(0103),d=String.fromCharCode(0x42),
+  v=(function () { var I="A"; return I })();return v+d+k;})();
+```
 
 The plan to reverse jsobfu was to
 
@@ -66,35 +67,41 @@ with literal representing their value.
 
 For example, code calculating value for binary operations:
 
-    case 'BinaryExpression':
-        left = const_collapse_scoped(astNode.left);
-        right = const_collapse_scoped(astNode.right);
-        if (left.pure && right.pure && astNode.operator in boperators) {
-            return mkliteral(boperators[astNode.operator](left.value, right.value));
-        } else {
-            return {
-                type: astNode.type,
-                operator: astNode.operator,
-                left: left,
-                right: right
-            };
-        }
+```javascript
+case 'BinaryExpression':
+    left = const_collapse_scoped(astNode.left);
+    right = const_collapse_scoped(astNode.right);
+    if (left.pure && right.pure && astNode.operator in boperators) {
+        return mkliteral(boperators[astNode.operator](left.value, right.value));
+    } else {
+        return {
+            type: astNode.type,
+            operator: astNode.operator,
+            left: left,
+            right: right
+        };
+    }
+```
 
 `astNode` represents the node under question, if left and right children of the node are "pure",
 the node is replaced with the value that is calculated by applying binary operator to values from left and right children.
 
 If there was a code `"len" + "gth"`, represented by the following AST:
 
-    {
-      type: 'BinaryExpression',
-      operator: '+',
-      left:  {type: 'Literal', pure: true, value: 'len'},
-      right: {type: 'Literal', pure: true, value: 'gth'}
-    }
+```javascript
+{
+  type: 'BinaryExpression',
+  operator: '+',
+  left:  {type: 'Literal', pure: true, value: 'len'},
+  right: {type: 'Literal', pure: true, value: 'gth'}
+}
+```
 
 It is going to be replaced with:
 
-    {type: 'Literal', pure: true, value: 'length'}
+```javascript
+{type: 'Literal', pure: true, value: 'length'}
+```
 
 By using pattern matching it is possible to find all occurences of `String.fromCharCode`
 and calculate the strings that are represented this way.
