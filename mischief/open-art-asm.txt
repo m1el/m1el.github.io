@@ -1,0 +1,415 @@
+00402A00  /$ 83EC 08        SUB ESP,8                                ;; open art file
+00402A03  |. 55             PUSH EBP
+00402A04  |. 8B6C24 10      MOV EBP,DWORD PTR SS:[ESP+10]
+00402A08  |. 56             PUSH ESI                                 ;; open the file on disk
+00402A09  |. 68 845B5000    PUSH Mischief.00505B84                   ; /mode = "rb"
+00402A0E  |. 50             PUSH EAX                                 ; |path
+00402A0F  |. E8 10051000    CALL <JMP.&MSVCR100.fopen>               ; \fopen
+00402A14  |. 8BF0           MOV ESI,EAX
+00402A16  |. 83C4 08        ADD ESP,8
+00402A19  |. 85F6           TEST ESI,ESI
+00402A1B  |. 74 4D          JE SHORT Mischief.00402A6A               ;; read four bytes
+00402A1D  |. 56             PUSH ESI                                 ; /stream
+00402A1E  |. 6A 04          PUSH 4                                   ; |n = 4
+00402A20  |. 8D4C24 10      LEA ECX,DWORD PTR SS:[ESP+10]            ; |
+00402A24  |. 6A 01          PUSH 1                                   ; |size = 1
+00402A26  |. 51             PUSH ECX                                 ; |ptr
+00402A27  |. E8 E6041000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402A2C  |. 8B4424 18      MOV EAX,DWORD PTR SS:[ESP+18]
+00402A30  |. 8A5424 1B      MOV DL,BYTE PTR SS:[ESP+1B]
+00402A34  |. 8A4C24 1A      MOV CL,BYTE PTR SS:[ESP+1A]
+00402A38  |. 83C4 10        ADD ESP,10
+00402A3B  |. 3C C5          CMP AL,0C5                               ;; test if first four bytes are c5b38be9
+00402A3D  |. 75 22          JNZ SHORT Mischief.00402A61
+00402A3F  |. 80FC B3        CMP AH,0B3
+00402A42  |. 75 0A          JNZ SHORT Mischief.00402A4E
+00402A44  |. 80F9 8B        CMP CL,8B
+00402A47  |. 75 05          JNZ SHORT Mischief.00402A4E
+00402A49  |. 80FA E9        CMP DL,0E9
+00402A4C  |. 74 24          JE SHORT Mischief.00402A72
+00402A4E  |> 3C C5          CMP AL,0C5                               ;; ... or c5b38be7
+00402A50  |. 75 0F          JNZ SHORT Mischief.00402A61
+00402A52  |. 80FC B3        CMP AH,0B3
+00402A55  |. 75 0A          JNZ SHORT Mischief.00402A61
+00402A57  |. 80F9 8B        CMP CL,8B
+00402A5A  |. 75 05          JNZ SHORT Mischief.00402A61
+00402A5C  |. 80FA E7        CMP DL,0E7
+00402A5F  |. 74 11          JE SHORT Mischief.00402A72               ;; close the file if magic number is bad
+00402A61  |> 56             PUSH ESI                                 ; /stream
+00402A62  |. E8 B1041000    CALL <JMP.&MSVCR100.fclose>              ; \fclose
+00402A67  |. 83C4 04        ADD ESP,4
+00402A6A  |> 5E             POP ESI
+00402A6B  |. 33C0           XOR EAX,EAX
+00402A6D  |. 5D             POP EBP
+00402A6E  |. 83C4 08        ADD ESP,8
+00402A71  |. C3             RETN
+00402A72  |> 8BC5           MOV EAX,EBP
+00402A74  |. E8 97FBFFFF    CALL Mischief.00402610                   ;; parse header
+00402A79  |. 85C0           TEST EAX,EAX
+00402A7B  |.^75 E4          JNZ SHORT Mischief.00402A61
+00402A7D  |. 53             PUSH EBX
+00402A7E  |. 57             PUSH EDI                                 ;; read "size"
+00402A7F  |. 56             PUSH ESI                                 ; /stream
+00402A80  |. 6A 01          PUSH 1                                   ; |n = 1
+00402A82  |. 8D5424 1C      LEA EDX,DWORD PTR SS:[ESP+1C]            ; |
+00402A86  |. 6A 04          PUSH 4                                   ; |size = 4
+00402A88  |. 52             PUSH EDX                                 ; |ptr
+00402A89  |. E8 84041000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402A8E  |. 8B5C24 24      MOV EBX,DWORD PTR SS:[ESP+24]
+00402A92  |. 8D43 04        LEA EAX,DWORD PTR DS:[EBX+4]
+00402A95  |. 50             PUSH EAX                                 ; /size
+00402A96  |. E8 C1041000    CALL <JMP.&MSVCR100.malloc>              ; \malloc
+00402A9B  |. 8BF8           MOV EDI,EAX
+00402A9D  |. 83C4 14        ADD ESP,14
+00402AA0  |. 85FF           TEST EDI,EDI
+00402AA2  |. 74 4B          JE SHORT Mischief.00402AEF
+00402AA4  |. 891F           MOV DWORD PTR DS:[EDI],EBX
+00402AA6  |. 8B4C24 14      MOV ECX,DWORD PTR SS:[ESP+14]
+00402AAA  |. 56             PUSH ESI                                 ; /stream
+00402AAB  |. 51             PUSH ECX                                 ; |n
+00402AAC  |. 8D57 04        LEA EDX,DWORD PTR DS:[EDI+4]             ; |
+00402AAF  |. 6A 01          PUSH 1                                   ; |size = 1
+00402AB1  |. 52             PUSH EDX                                 ; |ptr
+00402AB2  |. E8 5B041000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402AB7  |. 56             PUSH ESI                                 ; /stream
+00402AB8  |. E8 5B041000    CALL <JMP.&MSVCR100.fclose>              ; \fclose
+00402ABD  |. 8B45 00        MOV EAX,DWORD PTR SS:[EBP]
+00402AC0  |. 57             PUSH EDI
+00402AC1  |. 50             PUSH EAX
+00402AC2  |. E8 B9210800    CALL Mischief.00484C80                   ;; unpack bytes here?
+00402AC7  |. 8B4D 00        MOV ECX,DWORD PTR SS:[EBP]
+00402ACA  |. 51             PUSH ECX
+00402ACB  |. 8BF0           MOV ESI,EAX
+00402ACD  |. E8 EEB70600    CALL Mischief.0046E2C0
+00402AD2  |. 83C4 20        ADD ESP,20
+00402AD5  |. 57             PUSH EDI                                 ; /block
+00402AD6  |. 85C0           TEST EAX,EAX                             ; |
+00402AD8  |. 74 1F          JE SHORT Mischief.00402AF9               ; |
+00402ADA  |. E8 8F041000    CALL <JMP.&MSVCR100.free>                ; \free
+00402ADF  |. 8B95 60190000  MOV EDX,DWORD PTR SS:[EBP+1960]
+00402AE5  |. 52             PUSH EDX
+00402AE6  |. 55             PUSH EBP
+00402AE7  |. E8 84E50500    CALL Mischief.00461070
+00402AEC  |. 83C4 0C        ADD ESP,0C
+00402AEF  |> 5F             POP EDI
+00402AF0  |. 5B             POP EBX
+00402AF1  |. 5E             POP ESI
+00402AF2  |. 33C0           XOR EAX,EAX
+00402AF4  |. 5D             POP EBP
+00402AF5  |. 83C4 08        ADD ESP,8
+00402AF8  |. C3             RETN
+00402AF9  |> C745 08 010000>MOV DWORD PTR SS:[EBP+8],1               ; |
+00402B00  |. E8 69041000    CALL <JMP.&MSVCR100.free>                ; \free
+00402B05  |. 83C4 04        ADD ESP,4
+00402B08  |. 5F             POP EDI
+00402B09  |. 5B             POP EBX
+00402B0A  |. 8BC6           MOV EAX,ESI
+00402B0C  |. 5E             POP ESI
+00402B0D  |. 5D             POP EBP
+00402B0E  |. 83C4 08        ADD ESP,8
+00402B11  \. C3             RETN
+... snip ...
+00402610  /$ 83EC 28        SUB ESP,28                               ;; parse file header
+00402613  |. 57             PUSH EDI
+00402614  |. 56             PUSH ESI                                 ; /stream
+00402615  |. 6A 01          PUSH 1                                   ; |n = 1
+00402617  |. 8BF8           MOV EDI,EAX                              ; |
+00402619  |. 8D4424 0C      LEA EAX,DWORD PTR SS:[ESP+C]             ; |
+0040261D  |. 6A 04          PUSH 4                                   ; |size = 4
+0040261F  |. 50             PUSH EAX                                 ; |ptr
+00402620  |. E8 ED081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402625  |. 8B4424 14      MOV EAX,DWORD PTR SS:[ESP+14]
+00402629  |. 83C4 10        ADD ESP,10
+0040262C  |. 3D 00000200    CMP EAX,20000                            ;  Switch (cases 0..20000)
+00402631  |. 0F85 91000000  JNZ Mischief.004026C8
+00402637  |. 56             PUSH ESI                                 ; /stream; Case 20000 of switch 0040262C
+00402638  |. 6A 01          PUSH 1                                   ; |n = 1
+0040263A  |. 8D4C24 14      LEA ECX,DWORD PTR SS:[ESP+14]            ; |
+0040263E  |. 6A 04          PUSH 4                                   ; |size = 4
+00402640  |. 51             PUSH ECX                                 ; |ptr
+00402641  |. E8 CC081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402646  |. 56             PUSH ESI                                 ; /stream
+00402647  |. 6A 01          PUSH 1                                   ; |n = 1
+00402649  |. 8D5424 20      LEA EDX,DWORD PTR SS:[ESP+20]            ; |
+0040264D  |. 6A 04          PUSH 4                                   ; |size = 4
+0040264F  |. 52             PUSH EDX                                 ; |ptr
+00402650  |. E8 BD081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402655  |. 8B4424 28      MOV EAX,DWORD PTR SS:[ESP+28]
+00402659  |. 8B4C24 24      MOV ECX,DWORD PTR SS:[ESP+24]
+0040265D  |. 8B5424 2C      MOV EDX,DWORD PTR SS:[ESP+2C]
+00402661  |. 50             PUSH EAX
+00402662  |. 51             PUSH ECX
+00402663  |. 52             PUSH EDX
+00402664  |. E8 272A0600    CALL Mischief.00465090
+00402669  |. 83C4 2C        ADD ESP,2C
+0040266C  |> 85C0           TEST EAX,EAX
+0040266E  |. 75 0A          JNZ SHORT Mischief.0040267A
+00402670  |. B8 01000000    MOV EAX,1
+00402675  |. 5F             POP EDI
+00402676  |. 83C4 28        ADD ESP,28
+00402679  |. C3             RETN
+0040267A  |> 56             PUSH ESI                                 ; /stream
+0040267B  |. 6A 01          PUSH 1                                   ; |n = 1
+0040267D  |. 8D87 24490000  LEA EAX,DWORD PTR DS:[EDI+4924]          ; |
+00402683  |. 6A 04          PUSH 4                                   ; |size = 4
+00402685  |. 50             PUSH EAX                                 ; |ptr
+00402686  |. E8 87081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+0040268B  |. 56             PUSH ESI                                 ; /stream
+0040268C  |. 6A 01          PUSH 1                                   ; |n = 1
+0040268E  |. 8D8F 28490000  LEA ECX,DWORD PTR DS:[EDI+4928]          ; |
+00402694  |. 6A 04          PUSH 4                                   ; |size = 4
+00402696  |. 51             PUSH ECX                                 ; |ptr
+00402697  |. E8 76081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+0040269C  |. 56             PUSH ESI                                 ; /stream
+0040269D  |. 6A 01          PUSH 1                                   ; |n = 1
+0040269F  |. 8D97 20040000  LEA EDX,DWORD PTR DS:[EDI+420]           ; |
+004026A5  |. 6A 04          PUSH 4                                   ; |size = 4
+004026A7  |. 52             PUSH EDX                                 ; |ptr
+004026A8  |. E8 65081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+004026AD  |. 56             PUSH ESI                                 ; /stream
+004026AE  |. 6A 01          PUSH 1                                   ; |n = 1
+004026B0  |. 6A 04          PUSH 4                                   ; |size = 4
+004026B2  |. 81C7 14040000  ADD EDI,414                              ; |
+004026B8  |. 57             PUSH EDI                                 ; |ptr
+004026B9  |. E8 54081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+004026BE  |. 83C4 40        ADD ESP,40
+004026C1  |. 33C0           XOR EAX,EAX
+004026C3  |. 5F             POP EDI
+004026C4  |. 83C4 28        ADD ESP,28
+004026C7  |. C3             RETN
+004026C8  |> 3D 81000000    CMP EAX,81
+004026CD  |. 75 49          JNZ SHORT Mischief.00402718
+004026CF  |. 56             PUSH ESI                                 ; /stream; Case 81 of switch 0040262C
+004026D0  |. 6A 01          PUSH 1                                   ; |n = 1
+004026D2  |. 8D4424 10      LEA EAX,DWORD PTR SS:[ESP+10]            ; |
+004026D6  |. 6A 04          PUSH 4                                   ; |size = 4
+004026D8  |. 50             PUSH EAX                                 ; |ptr
+004026D9  |. E8 34081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+004026DE  |. 56             PUSH ESI                                 ; /stream
+004026DF  |. 6A 01          PUSH 1                                   ; |n = 1
+004026E1  |. 8D4C24 28      LEA ECX,DWORD PTR SS:[ESP+28]            ; |
+004026E5  |. 6A 04          PUSH 4                                   ; |size = 4
+004026E7  |. 51             PUSH ECX                                 ; |ptr
+004026E8  |. E8 25081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+004026ED  |. 56             PUSH ESI                                 ; /stream
+004026EE  |. 6A 01          PUSH 1                                   ; |n = 1
+004026F0  |. 8D5424 34      LEA EDX,DWORD PTR SS:[ESP+34]            ; |
+004026F4  |. 6A 04          PUSH 4                                   ; |size = 4
+004026F6  |. 52             PUSH EDX                                 ; |ptr
+004026F7  |. E8 16081000    CALL <JMP.&MSVCR100.fread>               ; \fread
+004026FC  |. 8B4424 3C      MOV EAX,DWORD PTR SS:[ESP+3C]
+00402700  |. 8B4C24 38      MOV ECX,DWORD PTR SS:[ESP+38]
+00402704  |. 8B5424 40      MOV EDX,DWORD PTR SS:[ESP+40]
+00402708  |. 50             PUSH EAX
+00402709  |. 51             PUSH ECX
+0040270A  |. 52             PUSH EDX
+0040270B  |. E8 80290600    CALL Mischief.00465090                   ;; check if the weather is good
+00402710  |. 83C4 3C        ADD ESP,3C
+00402713  |.^E9 54FFFFFF    JMP Mischief.0040266C
+00402718  |> 83E8 00        SUB EAX,0
+0040271B  |. 53             PUSH EBX
+0040271C  |. 0F84 0E020000  JE Mischief.00402930
+00402722  |. 83E8 7F        SUB EAX,7F
+00402725  |. 0F84 C9000000  JE Mischief.004027F4
+0040272B  |. 48             DEC EAX
+0040272C  |. 74 0B          JE SHORT Mischief.00402739
+0040272E  |. 5B             POP EBX                                  ;  Default case of switch 0040262C
+0040272F  |. B8 01000000    MOV EAX,1
+00402734  |. 5F             POP EDI
+00402735  |. 83C4 28        ADD ESP,28
+00402738  |. C3             RETN
+00402739  |> 56             PUSH ESI                                 ; /stream; Case 80 of switch 0040262C
+0040273A  |. 6A 01          PUSH 1                                   ; |n = 1
+0040273C  |. 8D87 14040000  LEA EAX,DWORD PTR DS:[EDI+414]           ; |
+00402742  |. 6A 04          PUSH 4                                   ; |size = 4
+00402744  |. 50             PUSH EAX                                 ; |ptr
+00402745  |. E8 C8071000    CALL <JMP.&MSVCR100.fread>               ; \fread
+0040274A  |. 56             PUSH ESI                                 ; /stream
+0040274B  |. 6A 01          PUSH 1                                   ; |n = 1
+0040274D  |. 8D9F 18040000  LEA EBX,DWORD PTR DS:[EDI+418]           ; |
+00402753  |. 6A 04          PUSH 4                                   ; |size = 4
+00402755  |. 53             PUSH EBX                                 ; |ptr
+00402756  |. E8 B7071000    CALL <JMP.&MSVCR100.fread>               ; \fread
+0040275B  |. 8B0B           MOV ECX,DWORD PTR DS:[EBX]
+0040275D  |. 51             PUSH ECX
+0040275E  |. E8 FD140100    CALL Mischief.00413C60
+00402763  |. 56             PUSH ESI                                 ; /stream
+00402764  |. 6A 01          PUSH 1                                   ; |n = 1
+00402766  |. 8D97 20040000  LEA EDX,DWORD PTR DS:[EDI+420]           ; |
+0040276C  |. 6A 04          PUSH 4                                   ; |size = 4
+0040276E  |. 52             PUSH EDX                                 ; |ptr
+0040276F  |. 8903           MOV DWORD PTR DS:[EBX],EAX               ; |
+00402771  |. E8 9C071000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402776  |. 83C4 34        ADD ESP,34
+00402779  |. BB 12000000    MOV EBX,12
+0040277E  |. 8BFF           MOV EDI,EDI
+00402780  |> 56             /PUSH ESI                                ; /stream
+00402781  |. 6A 01          |PUSH 1                                  ; |n = 1
+00402783  |. 8D4424 20      |LEA EAX,DWORD PTR SS:[ESP+20]           ; |
+00402787  |. 6A 04          |PUSH 4                                  ; |size = 4
+00402789  |. 50             |PUSH EAX                                ; |ptr
+0040278A  |. E8 83071000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+0040278F  |. 56             |PUSH ESI                                ; /stream
+00402790  |. 6A 01          |PUSH 1                                  ; |n = 1
+00402792  |. 8D4C24 34      |LEA ECX,DWORD PTR SS:[ESP+34]           ; |
+00402796  |. 6A 04          |PUSH 4                                  ; |size = 4
+00402798  |. 51             |PUSH ECX                                ; |ptr
+00402799  |. E8 74071000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+0040279E  |. 56             |PUSH ESI                                ; /stream
+0040279F  |. 6A 01          |PUSH 1                                  ; |n = 1
+004027A1  |. 8D5424 48      |LEA EDX,DWORD PTR SS:[ESP+48]           ; |
+004027A5  |. 6A 04          |PUSH 4                                  ; |size = 4
+004027A7  |. 52             |PUSH EDX                                ; |ptr
+004027A8  |. E8 65071000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004027AD  |. 56             |PUSH ESI                                ; /stream
+004027AE  |. 6A 01          |PUSH 1                                  ; |n = 1
+004027B0  |. 8D4424 5C      |LEA EAX,DWORD PTR SS:[ESP+5C]           ; |
+004027B4  |. 6A 04          |PUSH 4                                  ; |size = 4
+004027B6  |. 50             |PUSH EAX                                ; |ptr
+004027B7  |. E8 56071000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004027BC  |. 83C4 40        |ADD ESP,40
+004027BF  |. 56             |PUSH ESI                                ; /stream
+004027C0  |. 6A 01          |PUSH 1                                  ; |n = 1
+004027C2  |. 8D4C24 30      |LEA ECX,DWORD PTR SS:[ESP+30]           ; |
+004027C6  |. 6A 04          |PUSH 4                                  ; |size = 4
+004027C8  |. 51             |PUSH ECX                                ; |ptr
+004027C9  |. E8 44071000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004027CE  |. 56             |PUSH ESI                                ; /stream
+004027CF  |. 6A 01          |PUSH 1                                  ; |n = 1
+004027D1  |. 8D5424 44      |LEA EDX,DWORD PTR SS:[ESP+44]           ; |
+004027D5  |. 6A 04          |PUSH 4                                  ; |size = 4
+004027D7  |. 52             |PUSH EDX                                ; |ptr
+004027D8  |. E8 35071000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004027DD  |. 83C4 20        |ADD ESP,20
+004027E0  |. 4B             |DEC EBX
+004027E1  |.^75 9D          \JNZ SHORT Mischief.00402780
+004027E3  |. 56             PUSH ESI
+004027E4  |. 6A 12          PUSH 12
+004027E6  |. 6A 01          PUSH 1
+004027E8  |. 8D87 24050000  LEA EAX,DWORD PTR DS:[EDI+524]
+004027EE  |. 50             PUSH EAX
+004027EF  |. E9 23010000    JMP Mischief.00402917
+004027F4  |> 56             PUSH ESI                                 ; /stream; Case 7F of switch 0040262C
+004027F5  |. 6A 01          PUSH 1                                   ; |n = 1
+004027F7  |. 8D8F 14040000  LEA ECX,DWORD PTR DS:[EDI+414]           ; |
+004027FD  |. 6A 04          PUSH 4                                   ; |size = 4
+004027FF  |. 51             PUSH ECX                                 ; |ptr
+00402800  |. E8 0D071000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402805  |. 56             PUSH ESI                                 ; /stream
+00402806  |. 6A 01          PUSH 1                                   ; |n = 1
+00402808  |. 8D9F 18040000  LEA EBX,DWORD PTR DS:[EDI+418]           ; |
+0040280E  |. 6A 04          PUSH 4                                   ; |size = 4
+00402810  |. 53             PUSH EBX                                 ; |ptr
+00402811  |. E8 FC061000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402816  |. 8B13           MOV EDX,DWORD PTR DS:[EBX]
+00402818  |. 52             PUSH EDX
+00402819  |. E8 42140100    CALL Mischief.00413C60
+0040281E  |. 56             PUSH ESI                                 ; /stream
+0040281F  |. 6A 01          PUSH 1                                   ; |n = 1
+00402821  |. 8903           MOV DWORD PTR DS:[EBX],EAX               ; |
+00402823  |. 8D87 20040000  LEA EAX,DWORD PTR DS:[EDI+420]           ; |
+00402829  |. 6A 04          PUSH 4                                   ; |size = 4
+0040282B  |. 50             PUSH EAX                                 ; |ptr
+0040282C  |. E8 E1061000    CALL <JMP.&MSVCR100.fread>               ; \fread
+00402831  |. 83C4 34        ADD ESP,34
+00402834  |. BB 0C000000    MOV EBX,0C
+00402839  |. 8DA424 0000000>LEA ESP,DWORD PTR SS:[ESP]
+00402840  |> 56             /PUSH ESI                                ; /stream
+00402841  |. 6A 01          |PUSH 1                                  ; |n = 1
+00402843  |. 8D4C24 20      |LEA ECX,DWORD PTR SS:[ESP+20]           ; |
+00402847  |. 6A 04          |PUSH 4                                  ; |size = 4
+00402849  |. 51             |PUSH ECX                                ; |ptr
+0040284A  |. E8 C3061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+0040284F  |. 56             |PUSH ESI                                ; /stream
+00402850  |. 6A 01          |PUSH 1                                  ; |n = 1
+00402852  |. 8D5424 34      |LEA EDX,DWORD PTR SS:[ESP+34]           ; |
+00402856  |. 6A 04          |PUSH 4                                  ; |size = 4
+00402858  |. 52             |PUSH EDX                                ; |ptr
+00402859  |. E8 B4061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+0040285E  |. 56             |PUSH ESI                                ; /stream
+0040285F  |. 6A 01          |PUSH 1                                  ; |n = 1
+00402861  |. 8D4424 48      |LEA EAX,DWORD PTR SS:[ESP+48]           ; |
+00402865  |. 6A 04          |PUSH 4                                  ; |size = 4
+00402867  |. 50             |PUSH EAX                                ; |ptr
+00402868  |. E8 A5061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+0040286D  |. 56             |PUSH ESI                                ; /stream
+0040286E  |. 6A 01          |PUSH 1                                  ; |n = 1
+00402870  |. 8D4C24 5C      |LEA ECX,DWORD PTR SS:[ESP+5C]           ; |
+00402874  |. 6A 04          |PUSH 4                                  ; |size = 4
+00402876  |. 51             |PUSH ECX                                ; |ptr
+00402877  |. E8 96061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+0040287C  |. 83C4 40        |ADD ESP,40
+0040287F  |. 56             |PUSH ESI                                ; /stream
+00402880  |. 6A 01          |PUSH 1                                  ; |n = 1
+00402882  |. 8D5424 30      |LEA EDX,DWORD PTR SS:[ESP+30]           ; |
+00402886  |. 6A 04          |PUSH 4                                  ; |size = 4
+00402888  |. 52             |PUSH EDX                                ; |ptr
+00402889  |. E8 84061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+0040288E  |. 56             |PUSH ESI                                ; /stream
+0040288F  |. 6A 01          |PUSH 1                                  ; |n = 1
+00402891  |. 8D4424 44      |LEA EAX,DWORD PTR SS:[ESP+44]           ; |
+00402895  |. 6A 04          |PUSH 4                                  ; |size = 4
+00402897  |. 50             |PUSH EAX                                ; |ptr
+00402898  |. E8 75061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+0040289D  |. 83C4 20        |ADD ESP,20
+004028A0  |. 4B             |DEC EBX
+004028A1  |.^75 9D          \JNZ SHORT Mischief.00402840
+004028A3  |. BB 03000000    MOV EBX,3
+004028A8  |> 56             /PUSH ESI                                ; /stream
+004028A9  |. 6A 01          |PUSH 1                                  ; |n = 1
+004028AB  |. 8D4C24 20      |LEA ECX,DWORD PTR SS:[ESP+20]           ; |
+004028AF  |. 6A 04          |PUSH 4                                  ; |size = 4
+004028B1  |. 51             |PUSH ECX                                ; |ptr
+004028B2  |. E8 5B061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004028B7  |. 56             |PUSH ESI                                ; /stream
+004028B8  |. 6A 01          |PUSH 1                                  ; |n = 1
+004028BA  |. 8D5424 34      |LEA EDX,DWORD PTR SS:[ESP+34]           ; |
+004028BE  |. 6A 04          |PUSH 4                                  ; |size = 4
+004028C0  |. 52             |PUSH EDX                                ; |ptr
+004028C1  |. E8 4C061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004028C6  |. 56             |PUSH ESI                                ; /stream
+004028C7  |. 6A 01          |PUSH 1                                  ; |n = 1
+004028C9  |. 8D4424 48      |LEA EAX,DWORD PTR SS:[ESP+48]           ; |
+004028CD  |. 6A 04          |PUSH 4                                  ; |size = 4
+004028CF  |. 50             |PUSH EAX                                ; |ptr
+004028D0  |. E8 3D061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004028D5  |. 56             |PUSH ESI                                ; /stream
+004028D6  |. 6A 01          |PUSH 1                                  ; |n = 1
+004028D8  |. 8D4C24 5C      |LEA ECX,DWORD PTR SS:[ESP+5C]           ; |
+004028DC  |. 6A 04          |PUSH 4                                  ; |size = 4
+004028DE  |. 51             |PUSH ECX                                ; |ptr
+004028DF  |. E8 2E061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004028E4  |. 83C4 40        |ADD ESP,40
+004028E7  |. 56             |PUSH ESI                                ; /stream
+004028E8  |. 6A 01          |PUSH 1                                  ; |n = 1
+004028EA  |. 8D5424 30      |LEA EDX,DWORD PTR SS:[ESP+30]           ; |
+004028EE  |. 6A 04          |PUSH 4                                  ; |size = 4
+004028F0  |. 52             |PUSH EDX                                ; |ptr
+004028F1  |. E8 1C061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+004028F6  |. 56             |PUSH ESI                                ; /stream
+004028F7  |. 6A 01          |PUSH 1                                  ; |n = 1
+004028F9  |. 8D4424 44      |LEA EAX,DWORD PTR SS:[ESP+44]           ; |
+004028FD  |. 6A 04          |PUSH 4                                  ; |size = 4
+004028FF  |. 50             |PUSH EAX                                ; |ptr
+00402900  |. E8 0D061000    |CALL <JMP.&MSVCR100.fread>              ; \fread
+00402905  |. 83C4 20        |ADD ESP,20
+00402908  |. 4B             |DEC EBX
+00402909  |.^75 9D          \JNZ SHORT Mischief.004028A8
+0040290B  |. 56             PUSH ESI                                 ; /stream
+0040290C  |. 6A 12          PUSH 12                                  ; |n = 12 (18.)
+0040290E  |. 6A 01          PUSH 1                                   ; |size = 1
+00402910  |. 8D8F 24050000  LEA ECX,DWORD PTR DS:[EDI+524]           ; |
+00402916  |. 51             PUSH ECX                                 ; |ptr
+00402917  |> E8 F6051000    CALL <JMP.&MSVCR100.fread>               ; \fread
+0040291C  |. 56             PUSH ESI                                 ; /stream
+0040291D  |. 6A 12          PUSH 12                                  ; |n = 12 (18.)
+0040291F  |. 6A 01          PUSH 1                                   ; |size = 1
+00402921  |. 81C7 36050000  ADD EDI,536                              ; |
+00402927  |. 57             PUSH EDI                                 ; |ptr
+00402928  |. E8 E5051000    CALL <JMP.&MSVCR100.fread>               ; \fread
+0040292D  |. 83C4 20        ADD ESP,20
+00402930  |> 5B             POP EBX                                  ;  Case 0 of switch 0040262C
+00402931  |. 33C0           XOR EAX,EAX
+00402933  |. 5F             POP EDI
+00402934  |. 83C4 28        ADD ESP,28
+00402937  \. C3             RETN
