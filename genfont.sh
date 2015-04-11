@@ -14,6 +14,6 @@ for i in $latin $latin_ext $cyrillic $cyrrilic_ext; do
 done
 fonts='fonts/FiraSans-BoldItalic.otf fonts/FiraSans-Bold.otf fonts/FiraSans-BookItalic.otf fonts/FiraSans-Book.otf'
 for font in $fonts; do
-    "$glyphigo" subset -f "$font" -p "$charlistfile" -o "${font%%.otf}-min.otf" > /dev/null || echo fail
+    "$glyphigo" subset -f "$font" -p "$charlistfile" -o "${font%%.otf}-min.woff2" > /dev/null || echo fail
 done
 rm $charlistfile
