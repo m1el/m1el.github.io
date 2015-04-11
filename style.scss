@@ -7,6 +7,7 @@
 
 @import "reset";
 @import "variables";
+@import "fonts";
 // Syntax highlighting @import is at the bottom of this file
 
 /**************/
@@ -19,19 +20,19 @@ html {
 
 body {
 	background: $white;
-  font: 18px/1.4 $helvetica;
+  font: 18px/1.4 $firaSans;
   color: $darkGray;
 }
 
 .container {
   margin: 0 auto;
-  max-width: 740px;
+  max-width: 760px;
   padding: 0 10px;
   width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
+  font-family: $firaSans;
   color: $darkerGray;
   font-weight: bold;
 
@@ -194,7 +195,7 @@ img {
   margin: 0;
   color: $darkGray;
   cursor: pointer;
-  font-family: $helveticaNeue;
+  font-family: $firaSans;
   font-weight: 300;
   font-size: 28px;
   letter-spacing: 1px;
@@ -213,7 +214,7 @@ img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  font-family: $firaSans;
   font-size: 18px;
 
   @include mobile {
@@ -286,12 +287,16 @@ footer {
 }
 
 code {
-  padding: 0px 5px 2px;
+  padding: 1px 5px 1px 5px;
+  vertical-align: 1px;
   border: 1px solid #ddd;
+  font-size: 1.1em;
   border-radius: 3px;
 }
+
 .highlight code {
   border: 0px none;
+  font-size: 1em;
   border-radius: 0;
   padding: 0;
 }
