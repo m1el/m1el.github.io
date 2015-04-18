@@ -1,0 +1,1104 @@
+00467F50 > $ 83EC 4C          SUB ESP,4C
+00467F53   . 8B5424 50        MOV EDX,DWORD PTR SS:[ESP+50]
+00467F57   . 8B4A 3C          MOV ECX,DWORD PTR DS:[EDX+3C]
+00467F5A   . 8B42 38          MOV EAX,DWORD PTR DS:[EDX+38]
+00467F5D   . 894424 10        MOV DWORD PTR SS:[ESP+10],EAX
+00467F61   . 8B42 40          MOV EAX,DWORD PTR DS:[EDX+40]
+00467F64   . 894C24 18        MOV DWORD PTR SS:[ESP+18],ECX
+00467F68   . 8B4A 44          MOV ECX,DWORD PTR DS:[EDX+44]
+00467F6B   . 53               PUSH EBX
+00467F6C   . 894424 20        MOV DWORD PTR SS:[ESP+20],EAX
+00467F70   . 894C24 34        MOV DWORD PTR SS:[ESP+34],ECX
+00467F74   . 8B4A 08          MOV ECX,DWORD PTR DS:[EDX+8]
+00467F77   . BB 01000000      MOV EBX,1
+00467F7C   . D3E3             SHL EBX,CL
+00467F7E   . 8B4A 04          MOV ECX,DWORD PTR DS:[EDX+4]
+00467F81   . B8 01000000      MOV EAX,1
+00467F86   . D3E0             SHL EAX,CL
+00467F88   . 8B4A 14          MOV ECX,DWORD PTR DS:[EDX+14]
+00467F8B   . 4B               DEC EBX
+00467F8C   . 55               PUSH EBP
+00467F8D   . 8B6A 10          MOV EBP,DWORD PTR DS:[EDX+10]
+00467F90   . 48               DEC EAX
+00467F91   . 894424 48        MOV DWORD PTR SS:[ESP+48],EAX
+00467F95   . 8B02             MOV EAX,DWORD PTR DS:[EDX]
+00467F97   . 894424 40        MOV DWORD PTR SS:[ESP+40],EAX
+00467F9B   . 8B42 28          MOV EAX,DWORD PTR DS:[EDX+28]
+00467F9E   . 894424 30        MOV DWORD PTR SS:[ESP+30],EAX
+00467FA2   . 8B42 2C          MOV EAX,DWORD PTR DS:[EDX+2C]
+00467FA5   . 894C24 2C        MOV DWORD PTR SS:[ESP+2C],ECX
+00467FA9   . 8B4A 24          MOV ECX,DWORD PTR DS:[EDX+24]
+00467FAC   . 56               PUSH ESI
+00467FAD   . 8B72 20          MOV ESI,DWORD PTR DS:[EDX+20]
+00467FB0   . 894424 10        MOV DWORD PTR SS:[ESP+10],EAX
+00467FB4   . 8B42 18          MOV EAX,DWORD PTR DS:[EDX+18]
+00467FB7   . 57               PUSH EDI
+00467FB8   . 8B7A 34          MOV EDI,DWORD PTR DS:[EDX+34]
+00467FBB   . 894C24 1C        MOV DWORD PTR SS:[ESP+1C],ECX
+00467FBF   . 8B4A 30          MOV ECX,DWORD PTR DS:[EDX+30]
+00467FC2   . 894424 10        MOV DWORD PTR SS:[ESP+10],EAX
+00467FC6   . 8B42 1C          MOV EAX,DWORD PTR DS:[EDX+1C]
+00467FC9   . 896C24 3C        MOV DWORD PTR SS:[ESP+3C],EBP
+00467FCD   . 897C24 18        MOV DWORD PTR SS:[ESP+18],EDI
+00467FD1   . 895C24 58        MOV DWORD PTR SS:[ESP+58],EBX
+00467FD5   . 894C24 44        MOV DWORD PTR SS:[ESP+44],ECX
+00467FD9   . C74424 24 000000>MOV DWORD PTR SS:[ESP+24],0
+loop:
+    00467FE1 > > 8B4C24 14        MOV ECX,DWORD PTR SS:[ESP+14]
+    00467FE5   . 23CB             AND ECX,EBX
+    00467FE7   . 8BD7             MOV EDX,EDI
+    00467FE9   . C1E2 04          SHL EDX,4
+    00467FEC   . 03D1             ADD EDX,ECX
+    00467FEE   . 8D5C55 00        LEA EBX,DWORD PTR SS:[EBP+EDX*2]
+    00467FF2   . 894C24 30        MOV DWORD PTR SS:[ESP+30],ECX
+    00467FF6   . 0FB70B           MOVZX ECX,WORD PTR DS:[EBX]
+    ;00467FF9   . 3D 00000001      CMP EAX,1000000
+    ;00467FFE   . 73 13            JNB SHORT Specimen.00468013
+    if eax < 0x1000000:
+        00468000   . 8B5424 10        MOV EDX,DWORD PTR SS:[ESP+10]
+        00468004   . 0FB612           MOVZX EDX,BYTE PTR DS:[EDX]
+        00468007   . C1E6 08          SHL ESI,8
+        0046800A   . C1E0 08          SHL EAX,8
+        0046800D   . 0BF2             OR ESI,EDX
+        0046800F   . FF4424 10        INC DWORD PTR SS:[ESP+10]
+    00468013   > 8BD0             MOV EDX,EAX
+    00468015   . C1EA 0B          SHR EDX,0B
+    00468018   . 0FAFD1           IMUL EDX,ECX
+    ;0046801B   . 3BF2             CMP ESI,EDX
+    ;0046801D   . 0F83 BE010000    JNB Specimen.004681E1
+    if esi < edx:
+        00468023   . 8BC2             MOV EAX,EDX
+        00468025   . BA 00080000      MOV EDX,800
+        0046802A   . 2BD1             SUB EDX,ECX
+        0046802C   . C1EA 05          SHR EDX,5
+        0046802F   . 03D1             ADD EDX,ECX
+        00468031   . 81C5 6C0E0000    ADD EBP,0E6C
+        00468037   . 837C24 44 00     CMP DWORD PTR SS:[ESP+44],0
+        0046803C   . 66:8913          MOV WORD PTR DS:[EBX],DX
+        0046803F   . 896C24 30        MOV DWORD PTR SS:[ESP+30],EBP
+        ;00468043   . 75 07            JNZ SHORT Specimen.0046804C
+        ;00468045   . 837C24 14 00     CMP DWORD PTR SS:[ESP+14],0
+        ;0046804A   . 74 3C            JE SHORT Specimen.00468088
+        if *ss:[esp+44] || *ss[esp+14]:
+            0046804C   > 8B4C24 1C        MOV ECX,DWORD PTR SS:[ESP+1C]
+            ;00468050   . 85C9             TEST ECX,ECX
+            ;00468052   . 75 04            JNZ SHORT Specimen.00468058
+            if !ecx:
+                00468054   . 8B4C24 38        MOV ECX,DWORD PTR SS:[ESP+38]
+            00468058   > 8B5424 34        MOV EDX,DWORD PTR SS:[ESP+34]
+            0046805C   . 0FB65411 FF      MOVZX EDX,BYTE PTR DS:[ECX+EDX-1]
+            00468061   . 8B5C24 14        MOV EBX,DWORD PTR SS:[ESP+14]
+            00468065   . 235C24 50        AND EBX,DWORD PTR SS:[ESP+50]
+            00468069   . B9 08000000      MOV ECX,8
+            0046806E   . 2A4C24 48        SUB CL,BYTE PTR SS:[ESP+48]
+            00468072   . D3EA             SHR EDX,CL
+            00468074   . 8B4C24 48        MOV ECX,DWORD PTR SS:[ESP+48]
+            00468078   . D3E3             SHL EBX,CL
+            0046807A   . 03D3             ADD EDX,EBX
+            0046807C   . 69D2 00060000    IMUL EDX,EDX,600
+            00468082   . 03EA             ADD EBP,EDX
+            00468084   . 896C24 30        MOV DWORD PTR SS:[ESP+30],EBP
+        00468088   > 8B5C24 10        MOV EBX,DWORD PTR SS:[ESP+10]
+        ;0046808C   . 83FF 07          CMP EDI,7
+        ;0046808F   . 73 6F            JNB SHORT Specimen.00468100
+        if edi < 7:
+            00468091   . B9 01000000      MOV ECX,1
+            00468096   . EB 08            JMP SHORT Specimen.004680A0
+ 
+            ;00468098   . 8DA424 00000000  LEA ESP,DWORD PTR SS:[ESP]
+            ;0046809F   . 90               NOP
+            while ecx < 0x100:
+                004680A0   > 0FB7544D 00      MOVZX EDX,WORD PTR SS:[EBP+ECX*2]
+                ;004680A5   . 3D 00000001      CMP EAX,1000000
+                ;004680AA   . 73 0C            JNB SHORT Specimen.004680B8
+                if eax < 0x1000000:
+                    004680AC   . 0FB63B           MOVZX EDI,BYTE PTR DS:[EBX]
+                    004680AF   . C1E6 08          SHL ESI,8
+                    004680B2   . C1E0 08          SHL EAX,8
+                    004680B5   . 0BF7             OR ESI,EDI
+                    004680B7   . 43               INC EBX
+                004680B8   > 8BF8             MOV EDI,EAX
+                004680BA   . C1EF 0B          SHR EDI,0B
+                004680BD   . 0FAFFA           IMUL EDI,EDX
+                ;004680C0   . 3BF7             CMP ESI,EDI
+                ;004680C2   . 73 17            JNB SHORT Specimen.004680DB
+                if esi < edi:
+                    004680C4   . 8BC7             MOV EAX,EDI
+                    004680C6   . BF 00080000      MOV EDI,800
+                    004680CB   . 2BFA             SUB EDI,EDX
+                    004680CD   . C1EF 05          SHR EDI,5
+                    004680D0   . 03FA             ADD EDI,EDX
+                    004680D2   . 66:897C4D 00     MOV WORD PTR SS:[EBP+ECX*2],DI
+                    004680D7   . 03C9             ADD ECX,ECX
+                ;004680D9   . EB 14            JMP SHORT Specimen.004680EF
+                else:
+                    004680DB   > 2BC7             SUB EAX,EDI
+                    004680DD   . 2BF7             SUB ESI,EDI
+                    004680DF   . 8BFA             MOV EDI,EDX
+                    004680E1   . C1EF 05          SHR EDI,5
+                    004680E4   . 2BD7             SUB EDX,EDI
+                    004680E6   . 66:89544D 00     MOV WORD PTR SS:[EBP+ECX*2],DX
+                    004680EB   . 8D4C09 01        LEA ECX,DWORD PTR DS:[ECX+ECX+1]
+                ;004680EF   > 81F9 00010000    CMP ECX,100
+                ;004680F5   .^72 A9            JB SHORT Specimen.004680A0
+            004680F7   . 895C24 10        MOV DWORD PTR SS:[ESP+10],EBX
+        ;004680FB   . E9 B9000000      JMP Specimen.004681B9
+        else:
+            00468100   > 8B4C24 1C        MOV ECX,DWORD PTR SS:[ESP+1C]
+            00468104   . 8B5424 20        MOV EDX,DWORD PTR SS:[ESP+20]
+            00468108   . 3BCA             CMP ECX,EDX
+            0046810A   . 1BFF             SBB EDI,EDI
+            0046810C   . 237C24 38        AND EDI,DWORD PTR SS:[ESP+38]
+            00468110   . BB 00010000      MOV EBX,100
+            00468115   . 2BFA             SUB EDI,EDX
+            00468117   . 8B5424 60        MOV EDX,DWORD PTR SS:[ESP+60]
+            0046811B   . 037A 14          ADD EDI,DWORD PTR DS:[EDX+14]
+            0046811E   . 0FB63C0F         MOVZX EDI,BYTE PTR DS:[EDI+ECX]
+            00468122   . B9 01000000      MOV ECX,1
+            00468127   . EB 0F            JMP SHORT Specimen.00468138
+            00468129   . 8DA424 00000000  LEA ESP,DWORD PTR SS:[ESP]
+            loop:
+                00468130   > 8B6C24 30        MOV EBP,DWORD PTR SS:[ESP+30]
+                00468134   . 8B7C24 54        MOV EDI,DWORD PTR SS:[ESP+54]
+                00468138   > 03FF             ADD EDI,EDI
+                0046813A   . 897C24 54        MOV DWORD PTR SS:[ESP+54],EDI
+                0046813E   . 8BD3             MOV EDX,EBX
+                00468140   . 23D7             AND EDX,EDI
+                00468142   . 8D3C1A           LEA EDI,DWORD PTR DS:[EDX+EBX]
+                00468145   . 03F9             ADD EDI,ECX
+                00468147   . 8D7C7D 00        LEA EDI,DWORD PTR SS:[EBP+EDI*2]
+                0046814B   . 897C24 4C        MOV DWORD PTR SS:[ESP+4C],EDI
+                0046814F   . 0FB73F           MOVZX EDI,WORD PTR DS:[EDI]
+                if eax < 0x1000000:
+                    ;00468152   . 3D 00000001      CMP EAX,1000000
+                    ;00468157   . 73 14            JNB SHORT Specimen.0046816D
+                    00468159   . 8B6C24 10        MOV EBP,DWORD PTR SS:[ESP+10]
+                    0046815D   . 0FB66D 00        MOVZX EBP,BYTE PTR SS:[EBP]
+                    00468161   . C1E6 08          SHL ESI,8
+                    00468164   . C1E0 08          SHL EAX,8
+                    00468167   . 0BF5             OR ESI,EBP
+                    00468169   . FF4424 10        INC DWORD PTR SS:[ESP+10]
+                0046816D   > 8BE8             MOV EBP,EAX
+                0046816F   . C1ED 0B          SHR EBP,0B
+                00468172   . 0FAFEF           IMUL EBP,EDI
+                ;00468175   . 3BF5             CMP ESI,EBP
+                ;00468177   . 73 1B            JNB SHORT Specimen.00468194
+                if esi < ebp:
+                    00468179   . 8BC5             MOV EAX,EBP
+                    0046817B   . BD 00080000      MOV EBP,800
+                    00468180   . 2BEF             SUB EBP,EDI
+                    00468182   . C1ED 05          SHR EBP,5
+                    00468185   . 03EF             ADD EBP,EDI
+                    00468187   . 8B7C24 4C        MOV EDI,DWORD PTR SS:[ESP+4C]
+                    0046818B   . 66:892F          MOV WORD PTR DS:[EDI],BP
+                    0046818E   . 03C9             ADD ECX,ECX
+                    00468190   . F7D2             NOT EDX
+                ;00468192   . EB 17            JMP SHORT Specimen.004681AB
+                else:
+                    00468194   > 2BC5             SUB EAX,EBP
+                    00468196   . 2BF5             SUB ESI,EBP
+                    00468198   . 8BEF             MOV EBP,EDI
+                    0046819A   . C1ED 05          SHR EBP,5
+                    0046819D   . 2BFD             SUB EDI,EBP
+                    0046819F   . 8B6C24 4C        MOV EBP,DWORD PTR SS:[ESP+4C]
+                    004681A3   . 66:897D 00       MOV WORD PTR SS:[EBP],DI
+                    004681A7   . 8D4C09 01        LEA ECX,DWORD PTR DS:[ECX+ECX+1]
+                004681AB   > 23DA             AND EBX,EDX
+                ;004681AD   . 81F9 00010000    CMP ECX,100
+                ;004681B3   .^0F82 77FFFFFF    JB Specimen.00468130
+                while ecx < 0x100
+        004681B9   > 8B5424 1C        MOV EDX,DWORD PTR SS:[ESP+1C]
+        004681BD   . 8B7C24 34        MOV EDI,DWORD PTR SS:[ESP+34]
+        004681C1   . 880C3A           MOV BYTE PTR DS:[EDX+EDI],CL
+        004681C4   . 8B4C24 18        MOV ECX,DWORD PTR SS:[ESP+18]
+        004681C8   . 42               INC EDX
+        004681C9   . FF4424 14        INC DWORD PTR SS:[ESP+14]
+        004681CD   . 895424 1C        MOV DWORD PTR SS:[ESP+1C],EDX
+        004681D1   . 0FB691 D8B85000  MOVZX EDX,BYTE PTR DS:[ECX+50B8D8]
+        004681D8   . 895424 18        MOV DWORD PTR SS:[ESP+18],EDX
+        004681DC   . E9 E7080000      JMP Specimen.00468AC8
+    004681E1   > 2BC2             SUB EAX,EDX
+    004681E3   . 2BF2             SUB ESI,EDX
+    004681E5   . 8BD1             MOV EDX,ECX
+    004681E7   . C1EA 05          SHR EDX,5
+    004681EA   . 2BCA             SUB ECX,EDX
+    004681EC   . 66:890B          MOV WORD PTR DS:[EBX],CX
+    004681EF   . 0FB78C7D 8001000>MOVZX ECX,WORD PTR SS:[EBP+EDI*2+180]
+    004681F7   . 8B5C24 10        MOV EBX,DWORD PTR SS:[ESP+10]
+    ;004681FB   . 3D 00000001      CMP EAX,1000000
+    ;00468200   . 73 10            JNB SHORT Specimen.00468212
+    if eax < 0x1000000:
+        00468202   . 0FB613           MOVZX EDX,BYTE PTR DS:[EBX]
+        00468205   . C1E6 08          SHL ESI,8
+        00468208   . C1E0 08          SHL EAX,8
+        0046820B   . 0BF2             OR ESI,EDX
+        0046820D   . 43               INC EBX
+        0046820E   . 895C24 10        MOV DWORD PTR SS:[ESP+10],EBX
+    00468212   > 8BD0             MOV EDX,EAX
+    00468214   . C1EA 0B          SHR EDX,0B
+    00468217   . 0FAFD1           IMUL EDX,ECX
+    ;0046821A   . 3BF2             CMP ESI,EDX
+    ;0046821C   . 73 28            JNB SHORT Specimen.00468246
+    if esi < edx:
+        0046821E   . 8BC2             MOV EAX,EDX
+        00468220   . BA 00080000      MOV EDX,800
+        00468225   . 2BD1             SUB EDX,ECX
+        00468227   . C1EA 05          SHR EDX,5
+        0046822A   . 03D1             ADD EDX,ECX
+        0046822C   . 66:89947D 800100>MOV WORD PTR SS:[EBP+EDI*2+180],DX
+        00468234   . 83C7 0C          ADD EDI,0C
+        00468237   . 897C24 18        MOV DWORD PTR SS:[ESP+18],EDI
+        0046823B   . 8D8D 64060000    LEA ECX,DWORD PTR SS:[EBP+664]
+    ;00468241   . E9 06020000      JMP Specimen.0046844C
+    else:
+        00468246   > 2BC2             SUB EAX,EDX
+        00468248   . 2BF2             SUB ESI,EDX
+        0046824A   . 8BD1             MOV EDX,ECX
+        0046824C   . C1EA 05          SHR EDX,5
+        0046824F   . 2BCA             SUB ECX,EDX
+        ;00468251   . 837C24 44 00     CMP DWORD PTR SS:[ESP+44],0
+        00468256   . 66:898C7D 800100>MOV WORD PTR SS:[EBP+EDI*2+180],CX
+        ;0046825E   . 75 0B            JNZ SHORT Specimen.0046826B
+        ;00468260   . 837C24 14 00     CMP DWORD PTR SS:[ESP+14],0
+        if !SS:[ESP+44] && !SS:[ESP+14]:
+            ;00468265   . 0F84 82080000    JE Specimen.00468AED
+            return 1
+        0046826B   > 0FB7947D 9801000>MOVZX EDX,WORD PTR SS:[EBP+EDI*2+198]
+        ;00468273   . 3D 00000001      CMP EAX,1000000
+        ;00468278   . 73 10            JNB SHORT Specimen.0046828A
+        if eax < 0x1000000:
+            0046827A   . 0FB60B           MOVZX ECX,BYTE PTR DS:[EBX]
+            0046827D   . C1E6 08          SHL ESI,8
+            00468280   . C1E0 08          SHL EAX,8
+            00468283   . 0BF1             OR ESI,ECX
+            00468285   . 43               INC EBX
+            00468286   . 895C24 10        MOV DWORD PTR SS:[ESP+10],EBX
+        0046828A   > 8BC8             MOV ECX,EAX
+        0046828C   . C1E9 0B          SHR ECX,0B
+        0046828F   . 0FAFCA           IMUL ECX,EDX
+        ;00468292   . 3BF1             CMP ESI,ECX
+        ;00468294   . 0F83 B3000000    JNB Specimen.0046834D
+        if esi < ecx:
+            0046829A   . BB 00080000      MOV EBX,800
+            0046829F   . 2BDA             SUB EBX,EDX
+            004682A1   . C1EB 05          SHR EBX,5
+            004682A4   . 03DA             ADD EBX,EDX
+            004682A6   . 8D57 0F          LEA EDX,DWORD PTR DS:[EDI+F]
+            004682A9   . C1E2 04          SHL EDX,4
+            004682AC   . 035424 30        ADD EDX,DWORD PTR SS:[ESP+30]
+            004682B0   . 66:899C7D 980100>MOV WORD PTR SS:[EBP+EDI*2+198],BX
+            004682B8   . 8D5C55 00        LEA EBX,DWORD PTR SS:[EBP+EDX*2]
+            004682BC   . 0FB713           MOVZX EDX,WORD PTR DS:[EBX]
+            004682BF   . 8BC1             MOV EAX,ECX
+            if ecx < 0x1000000:
+                ;004682C1   . 81F9 00000001    CMP ECX,1000000
+                ;004682C7   . 73 15            JNB SHORT Specimen.004682DE
+                004682C9   . C1E1 08          SHL ECX,8
+                004682CC   . 8BC1             MOV EAX,ECX
+                004682CE   . 8B4C24 10        MOV ECX,DWORD PTR SS:[ESP+10]
+                004682D2   . 0FB609           MOVZX ECX,BYTE PTR DS:[ECX]
+                004682D5   . C1E6 08          SHL ESI,8
+                004682D8   . 0BF1             OR ESI,ECX
+                004682DA   . FF4424 10        INC DWORD PTR SS:[ESP+10]
+            004682DE   > 8BC8             MOV ECX,EAX
+            004682E0   . C1E9 0B          SHR ECX,0B
+            004682E3   . 0FAFCA           IMUL ECX,EDX
+            ;004682E6   . 3BF1             CMP ESI,ECX
+            ;004682E8   . 73 4C            JNB SHORT Specimen.00468336
+            if esi < ecx:
+                004682EA   . 8B6C24 34        MOV EBP,DWORD PTR SS:[ESP+34]
+                004682EE   . 8BC1             MOV EAX,ECX
+                004682F0   . B9 00080000      MOV ECX,800
+                004682F5   . 2BCA             SUB ECX,EDX
+                004682F7   . C1E9 05          SHR ECX,5
+                004682FA   . 03CA             ADD ECX,EDX
+                004682FC   . 8B5424 20        MOV EDX,DWORD PTR SS:[ESP+20]
+                00468300   . 66:890B          MOV WORD PTR DS:[EBX],CX
+                00468303   . 8B4C24 1C        MOV ECX,DWORD PTR SS:[ESP+1C]
+                00468307   . 3BCA             CMP ECX,EDX
+                00468309   . 1BDB             SBB EBX,EBX
+                0046830B   . 235C24 38        AND EBX,DWORD PTR SS:[ESP+38]
+                0046830F   . FF4424 14        INC DWORD PTR SS:[ESP+14]
+                00468313   . 2BDA             SUB EBX,EDX
+                00468315   . 03D9             ADD EBX,ECX
+                00468317   . 8A142B           MOV DL,BYTE PTR DS:[EBX+EBP]
+                0046831A   . 881429           MOV BYTE PTR DS:[ECX+EBP],DL
+                0046831D   . 41               INC ECX
+                0046831E   . 894C24 1C        MOV DWORD PTR SS:[ESP+1C],ECX
+                00468322   . 83FF 07          CMP EDI,7
+                00468325   . 1BC9             SBB ECX,ECX
+                00468327   . 83E1 FE          AND ECX,FFFFFFFE
+                0046832A   . 83C1 0B          ADD ECX,0B
+                0046832D   . 894C24 18        MOV DWORD PTR SS:[ESP+18],ECX
+                00468331   . E9 92070000      JMP Specimen.00468AC8
+            00468336   > 2BC1             SUB EAX,ECX
+            00468338   . 2BF1             SUB ESI,ECX
+            0046833A   . 8BCA             MOV ECX,EDX
+            0046833C   . C1E9 05          SHR ECX,5
+            0046833F   . 2BD1             SUB EDX,ECX
+            00468341   . 66:8913          MOV WORD PTR DS:[EBX],DX
+            00468344   . 8B5C24 10        MOV EBX,DWORD PTR SS:[ESP+10]
+        ;00468348   . E9 EA000000      JMP Specimen.00468437
+        else:
+            0046834D   > 2BC1             SUB EAX,ECX
+            0046834F   . 2BF1             SUB ESI,ECX
+            00468351   . 8BCA             MOV ECX,EDX
+            00468353   . C1E9 05          SHR ECX,5
+            00468356   . 2BD1             SUB EDX,ECX
+            00468358   . 66:89947D 980100>MOV WORD PTR SS:[EBP+EDI*2+198],DX
+            00468360   . 0FB78C7D B001000>MOVZX ECX,WORD PTR SS:[EBP+EDI*2+1B0]
+            ;00468368   . 3D 00000001      CMP EAX,1000000
+            ;0046836D   . 73 10            JNB SHORT Specimen.0046837F
+            if eax < 0x1000000:
+                0046836F   . 0FB613           MOVZX EDX,BYTE PTR DS:[EBX]
+                00468372   . C1E6 08          SHL ESI,8
+                00468375   . C1E0 08          SHL EAX,8
+                00468378   . 0BF2             OR ESI,EDX
+                0046837A   . 43               INC EBX
+                0046837B   . 895C24 10        MOV DWORD PTR SS:[ESP+10],EBX
+            0046837F   > 8BD0             MOV EDX,EAX
+            00468381   . C1EA 0B          SHR EDX,0B
+            00468384   . 0FAFD1           IMUL EDX,ECX
+            ;00468387   . 3BF2             CMP ESI,EDX
+            ;00468389   . 73 1F            JNB SHORT Specimen.004683AA
+            if esi < edx:
+                0046838B   . 8BC2             MOV EAX,EDX
+                0046838D   . BA 00080000      MOV EDX,800
+                00468392   . 2BD1             SUB EDX,ECX
+                00468394   . C1EA 05          SHR EDX,5
+                00468397   . 03D1             ADD EDX,ECX
+                00468399   . 8B4C24 28        MOV ECX,DWORD PTR SS:[ESP+28]
+                0046839D   . 66:89947D B00100>MOV WORD PTR SS:[EBP+EDI*2+1B0],DX
+            ;004683A5   . E9 81000000      JMP Specimen.0046842B
+            else:
+                004683AA   > 2BC2             SUB EAX,EDX
+                004683AC   . 2BF2             SUB ESI,EDX
+                004683AE   . 8BD1             MOV EDX,ECX
+                004683B0   . C1EA 05          SHR EDX,5
+                004683B3   . 2BCA             SUB ECX,EDX
+                004683B5   . 66:898C7D B00100>MOV WORD PTR SS:[EBP+EDI*2+1B0],CX
+                004683BD   . 0FB78C7D C801000>MOVZX ECX,WORD PTR SS:[EBP+EDI*2+1C8]
+                if eax < 0x1000000:
+                    004683C5   . 3D 00000001      CMP EAX,1000000
+                    004683CA   . 73 10            JNB SHORT Specimen.004683DC
+                    004683CC   . 0FB613           MOVZX EDX,BYTE PTR DS:[EBX]
+                    004683CF   . C1E6 08          SHL ESI,8
+                    004683D2   . C1E0 08          SHL EAX,8
+                    004683D5   . 0BF2             OR ESI,EDX
+                    004683D7   . 43               INC EBX
+                    004683D8   . 895C24 10        MOV DWORD PTR SS:[ESP+10],EBX
+                004683DC   > 8BD0             MOV EDX,EAX
+                004683DE   . C1EA 0B          SHR EDX,0B
+                004683E1   . 0FAFD1           IMUL EDX,ECX
+                if esi < edx:
+                    004683E4   . 3BF2             CMP ESI,EDX
+                    004683E6   . 73 1C            JNB SHORT Specimen.00468404
+                    004683E8   . 8BC2             MOV EAX,EDX
+                    004683EA   . BA 00080000      MOV EDX,800
+                    004683EF   . 2BD1             SUB EDX,ECX
+                    004683F1   . C1EA 05          SHR EDX,5
+                    004683F4   . 03D1             ADD EDX,ECX
+                    004683F6   . 8B4C24 2C        MOV ECX,DWORD PTR SS:[ESP+2C]
+                    004683FA   . 66:89947D C80100>MOV WORD PTR SS:[EBP+EDI*2+1C8],DX
+                ;00468402   . EB 1F            JMP SHORT Specimen.00468423
+                else:
+                    00468404   > 2BC2             SUB EAX,EDX
+                    00468406   . 2BF2             SUB ESI,EDX
+                    00468408   . 8BD1             MOV EDX,ECX
+                    0046840A   . C1EA 05          SHR EDX,5
+                    0046840D   . 2BCA             SUB ECX,EDX
+                    0046840F   . 8B5424 2C        MOV EDX,DWORD PTR SS:[ESP+2C]
+                    00468413   . 66:898C7D C80100>MOV WORD PTR SS:[EBP+EDI*2+1C8],CX
+                    0046841B   . 8B4C24 40        MOV ECX,DWORD PTR SS:[ESP+40]
+                    0046841F   . 895424 40        MOV DWORD PTR SS:[ESP+40],EDX
+                00468423   > 8B5424 28        MOV EDX,DWORD PTR SS:[ESP+28]
+                00468427   . 895424 2C        MOV DWORD PTR SS:[ESP+2C],EDX
+            0046842B   > 8B5424 20        MOV EDX,DWORD PTR SS:[ESP+20]
+            0046842F   . 895424 28        MOV DWORD PTR SS:[ESP+28],EDX
+            00468433   . 894C24 20        MOV DWORD PTR SS:[ESP+20],ECX
+        00468437   > 83FF 07          CMP EDI,7
+        0046843A   . 1BC9             SBB ECX,ECX
+        0046843C   . 83E1 FD          AND ECX,FFFFFFFD
+        0046843F   . 83C1 0B          ADD ECX,0B
+        00468442   . 894C24 18        MOV DWORD PTR SS:[ESP+18],ECX
+        00468446   . 8D8D 680A0000    LEA ECX,DWORD PTR SS:[EBP+A68]
+    0046844C   > 0FB711           MOVZX EDX,WORD PTR DS:[ECX]
+    if eax < 0x1000000:
+        ;0046844F   . 3D 00000001      CMP EAX,1000000
+        ;00468454   . 73 10            JNB SHORT Specimen.00468466
+        00468456   . 0FB63B           MOVZX EDI,BYTE PTR DS:[EBX]
+        00468459   . C1E6 08          SHL ESI,8
+        0046845C   . C1E0 08          SHL EAX,8
+        0046845F   . 0BF7             OR ESI,EDI
+        00468461   . 43               INC EBX
+        00468462   . 895C24 10        MOV DWORD PTR SS:[ESP+10],EBX
+    00468466   > 8BF8             MOV EDI,EAX
+    00468468   . C1EF 0B          SHR EDI,0B
+    0046846B   . 0FAFFA           IMUL EDI,EDX
+    if esi < edi:
+        ;0046846E   . 3BF7             CMP ESI,EDI
+        ;00468470   . 73 2A            JNB SHORT Specimen.0046849C
+        00468472   . 8B5C24 30        MOV EBX,DWORD PTR SS:[ESP+30]
+        00468476   . 8BC7             MOV EAX,EDI
+        00468478   . BF 00080000      MOV EDI,800
+        0046847D   . 2BFA             SUB EDI,EDX
+        0046847F   . C1EF 05          SHR EDI,5
+        00468482   . 03FA             ADD EDI,EDX
+        00468484   . 03DB             ADD EBX,EBX
+        00468486   . 66:8939          MOV WORD PTR DS:[ECX],DI
+        00468489   . 8D5CD9 04        LEA EBX,DWORD PTR DS:[ECX+EBX*8+4]
+        0046848D   . 33ED             XOR EBP,EBP
+        0046848F   . C74424 30 080000>MOV DWORD PTR SS:[ESP+30],8
+    ;00468497   . E9 81000000      JMP Specimen.0046851D
+    else:
+        0046849C   > 2BC7             SUB EAX,EDI
+        0046849E   . 2BF7             SUB ESI,EDI
+        004684A0   . 8BFA             MOV EDI,EDX
+        004684A2   . C1EF 05          SHR EDI,5
+        004684A5   . 2BD7             SUB EDX,EDI
+        004684A7   . 66:8911          MOV WORD PTR DS:[ECX],DX
+        004684AA   . 0FB751 02        MOVZX EDX,WORD PTR DS:[ECX+2]
+        ;004684AE   . 3D 00000001      CMP EAX,1000000
+        ;004684B3   . 73 10            JNB SHORT Specimen.004684C5
+        if eax < 0x1000000:
+            004684B5   . 0FB63B           MOVZX EDI,BYTE PTR DS:[EBX]
+            004684B8   . C1E6 08          SHL ESI,8
+            004684BB   . C1E0 08          SHL EAX,8
+            004684BE   . 0BF7             OR ESI,EDI
+            004684C0   . 43               INC EBX
+            004684C1   . 895C24 10        MOV DWORD PTR SS:[ESP+10],EBX
+        004684C5   > 8BF8             MOV EDI,EAX
+        004684C7   . C1EF 0B          SHR EDI,0B
+        004684CA   . 0FAFFA           IMUL EDI,EDX
+        ;004684CD   . 3BF7             CMP ESI,EDI
+        ;004684CF   . 73 2A            JNB SHORT Specimen.004684FB
+        if esi < edi:
+            004684D1   . 8B5C24 30        MOV EBX,DWORD PTR SS:[ESP+30]
+            004684D5   . 8BC7             MOV EAX,EDI
+            004684D7   . BF 00080000      MOV EDI,800
+            004684DC   . 2BFA             SUB EDI,EDX
+            004684DE   . C1EF 05          SHR EDI,5
+            004684E1   . 03FA             ADD EDI,EDX
+            004684E3   . 03DB             ADD EBX,EBX
+            004684E5   . BD 08000000      MOV EBP,8
+            004684EA   . 66:8979 02       MOV WORD PTR DS:[ECX+2],DI
+            004684EE   . 8D9CD9 04010000  LEA EBX,DWORD PTR DS:[ECX+EBX*8+104]
+            004684F5   . 896C24 30        MOV DWORD PTR SS:[ESP+30],EBP
+        ;004684F9   . EB 22            JMP SHORT Specimen.0046851D
+        else:
+            004684FB   > 2BC7             SUB EAX,EDI
+            004684FD   . 2BF7             SUB ESI,EDI
+            004684FF   . 8BFA             MOV EDI,EDX
+            00468501   . C1EF 05          SHR EDI,5
+            00468504   . 2BD7             SUB EDX,EDI
+            00468506   . 66:8951 02       MOV WORD PTR DS:[ECX+2],DX
+            0046850A   . 8D99 04020000    LEA EBX,DWORD PTR DS:[ECX+204]
+            00468510   . BD 10000000      MOV EBP,10
+            00468515   . C74424 30 000100>MOV DWORD PTR SS:[ESP+30],100
+    0046851D   > BF 01000000      MOV EDI,1
+    loop:
+        00468522   > 0FB70C7B         MOVZX ECX,WORD PTR DS:[EBX+EDI*2]
+        if eax < 0x1000000
+            ;00468526   . 3D 00000001      CMP EAX,1000000
+            ;0046852B   . 73 13            JNB SHORT Specimen.00468540
+            0046852D   . 8B5424 10        MOV EDX,DWORD PTR SS:[ESP+10]
+            00468531   . 0FB612           MOVZX EDX,BYTE PTR DS:[EDX]
+            00468534   . C1E6 08          SHL ESI,8
+            00468537   . C1E0 08          SHL EAX,8
+            0046853A   . 0BF2             OR ESI,EDX
+            0046853C   . FF4424 10        INC DWORD PTR SS:[ESP+10]
+        00468540   > 8BD0             MOV EDX,EAX
+        00468542   . C1EA 0B          SHR EDX,0B
+        00468545   . 0FAFD1           IMUL EDX,ECX
+        if esi < edx:
+            ;00468548   . 3BF2             CMP ESI,EDX
+            ;0046854A   . 73 16            JNB SHORT Specimen.00468562
+            0046854C   . 8BC2             MOV EAX,EDX
+            0046854E   . BA 00080000      MOV EDX,800
+            00468553   . 2BD1             SUB EDX,ECX
+            00468555   . C1EA 05          SHR EDX,5
+            00468558   . 03D1             ADD EDX,ECX
+            0046855A   . 66:89147B        MOV WORD PTR DS:[EBX+EDI*2],DX
+            0046855E   . 03FF             ADD EDI,EDI
+            00468560   . EB 13            JMP SHORT Specimen.00468575
+        else:
+            00468562   > 2BC2             SUB EAX,EDX
+            00468564   . 2BF2             SUB ESI,EDX
+            00468566   . 8BD1             MOV EDX,ECX
+            00468568   . C1EA 05          SHR EDX,5
+            0046856B   . 2BCA             SUB ECX,EDX
+            0046856D   . 66:890C7B        MOV WORD PTR DS:[EBX+EDI*2],CX
+            00468571   . 8D7C3F 01        LEA EDI,DWORD PTR DS:[EDI+EDI+1]
+        00468575   > 8B4C24 30        MOV ECX,DWORD PTR SS:[ESP+30]
+        while edi < ecx
+        ;00468579   . 3BF9             CMP EDI,ECX
+        ;0046857B   .^72 A5            JB SHORT Specimen.00468522
+    0046857D   . 2BE9             SUB EBP,ECX
+    0046857F   . 03FD             ADD EDI,EBP
+    ;00468581   . 837C24 18 0C     CMP DWORD PTR SS:[ESP+18],0C
+    00468586   . 897C24 24        MOV DWORD PTR SS:[ESP+24],EDI
+    ;0046858A   . 0F82 B6040000    JB Specimen.00468A46
+    if SS:[ESP+18] >= 0x0c:
+        00468590   . 8BCF             MOV ECX,EDI
+        ;00468592   . 83FF 04          CMP EDI,4
+        ;00468595   . 72 05            JB SHORT Specimen.0046859C
+        if edi >= 4:
+            00468597   . B9 03000000      MOV ECX,3
+        0046859C   > 8B5424 3C        MOV EDX,DWORD PTR SS:[ESP+3C]
+        004685A0   . 8B6C24 10        MOV EBP,DWORD PTR SS:[ESP+10]
+        004685A4   . C1E1 07          SHL ECX,7
+        004685A7   . 8D8C11 60030000  LEA ECX,DWORD PTR DS:[ECX+EDX+360]
+        004685AE   . 0FB751 02        MOVZX EDX,WORD PTR DS:[ECX+2]
+        ;004685B2   . 3D 00000001      CMP EAX,1000000
+        ;004685B7   . 73 11            JNB SHORT Specimen.004685CA
+        if eax < 0x1000000:
+            004685B9   . 0FB67D 00        MOVZX EDI,BYTE PTR SS:[EBP]
+            004685BD   . C1E6 08          SHL ESI,8
+            004685C0   . C1E0 08          SHL EAX,8
+            004685C3   . 0BF7             OR ESI,EDI
+            004685C5   . 45               INC EBP
+            004685C6   . 896C24 10        MOV DWORD PTR SS:[ESP+10],EBP
+        004685CA   > 8BF8             MOV EDI,EAX
+        004685CC   . C1EF 0B          SHR EDI,0B
+        004685CF   . 0FAFFA           IMUL EDI,EDX
+        ;004685D2   . 3BF7             CMP ESI,EDI
+        ;004685D4   . 73 19            JNB SHORT Specimen.004685EF
+        if esi < edi:
+            004685D6   . 8BC7             MOV EAX,EDI
+            004685D8   . BF 00080000      MOV EDI,800
+            004685DD   . 2BFA             SUB EDI,EDX
+            004685DF   . C1EF 05          SHR EDI,5
+            004685E2   . 03FA             ADD EDI,EDX
+            004685E4   . 66:8979 02       MOV WORD PTR DS:[ECX+2],DI
+            004685E8   . BA 02000000      MOV EDX,2
+        ;004685ED   . EB 14            JMP SHORT Specimen.00468603
+        else:
+            004685EF   > 2BC7             SUB EAX,EDI
+            004685F1   . 2BF7             SUB ESI,EDI
+            004685F3   . 8BFA             MOV EDI,EDX
+            004685F5   . C1EF 05          SHR EDI,5
+            004685F8   . 2BD7             SUB EDX,EDI
+            004685FA   . 66:8951 02       MOV WORD PTR DS:[ECX+2],DX
+            004685FE   . BA 03000000      MOV EDX,3
+        00468603   > 8D1C12           LEA EBX,DWORD PTR DS:[EDX+EDX]
+        00468606   . 0FB7140B         MOVZX EDX,WORD PTR DS:[EBX+ECX]
+        ;0046860A   . 3D 00000001      CMP EAX,1000000
+        ;0046860F   . 73 11            JNB SHORT Specimen.00468622
+        if eax < 0x1000000:
+            00468611   . 0FB67D 00        MOVZX EDI,BYTE PTR SS:[EBP]
+            00468615   . C1E6 08          SHL ESI,8
+            00468618   . C1E0 08          SHL EAX,8
+            0046861B   . 0BF7             OR ESI,EDI
+            0046861D   . 45               INC EBP
+            0046861E   . 896C24 10        MOV DWORD PTR SS:[ESP+10],EBP
+        00468622   > 8BF8             MOV EDI,EAX
+        00468624   . C1EF 0B          SHR EDI,0B
+        00468627   . 0FAFFA           IMUL EDI,EDX
+        ;0046862A   . 3BF7             CMP ESI,EDI
+        ;0046862C   . 73 14            JNB SHORT Specimen.00468642
+        if esi < edi:
+            0046862E   . 8BC7             MOV EAX,EDI
+            00468630   . BF 00080000      MOV EDI,800
+            00468635   . 2BFA             SUB EDI,EDX
+            00468637   . C1EF 05          SHR EDI,5
+            0046863A   . 03FA             ADD EDI,EDX
+            0046863C   . 66:893C0B        MOV WORD PTR DS:[EBX+ECX],DI
+        ;00468640   . EB 10            JMP SHORT Specimen.00468652
+        else:
+            00468642   > 2BC7             SUB EAX,EDI
+            00468644   . 2BF7             SUB ESI,EDI
+            00468646   . 8BFA             MOV EDI,EDX
+            00468648   . C1EF 05          SHR EDI,5
+            0046864B   . 2BD7             SUB EDX,EDI
+            0046864D   . 66:89140B        MOV WORD PTR DS:[EBX+ECX],DX
+            00468651   . 43               INC EBX
+        00468652   > 03DB             ADD EBX,EBX
+        00468654   . 0FB7140B         MOVZX EDX,WORD PTR DS:[EBX+ECX]
+        ;00468658   . 3D 00000001      CMP EAX,1000000
+        ;0046865D   . 73 11            JNB SHORT Specimen.00468670
+        if eax < 0x1000000:
+            0046865F   . 0FB67D 00        MOVZX EDI,BYTE PTR SS:[EBP]
+            00468663   . C1E6 08          SHL ESI,8
+            00468666   . C1E0 08          SHL EAX,8
+            00468669   . 0BF7             OR ESI,EDI
+            0046866B   . 45               INC EBP
+            0046866C   . 896C24 10        MOV DWORD PTR SS:[ESP+10],EBP
+        00468670   > 8BF8             MOV EDI,EAX
+        00468672   . C1EF 0B          SHR EDI,0B
+        00468675   . 0FAFFA           IMUL EDI,EDX
+        ;00468678   . 3BF7             CMP ESI,EDI
+        ;0046867A   . 73 14            JNB SHORT Specimen.00468690
+        if esi < edi:
+            0046867C   . 8BC7             MOV EAX,EDI
+            0046867E   . BF 00080000      MOV EDI,800
+            00468683   . 2BFA             SUB EDI,EDX
+            00468685   . C1EF 05          SHR EDI,5
+            00468688   . 03FA             ADD EDI,EDX
+            0046868A   . 66:893C0B        MOV WORD PTR DS:[EBX+ECX],DI
+        ;0046868E   . EB 10            JMP SHORT Specimen.004686A0
+        else:
+            00468690   > 2BC7             SUB EAX,EDI
+            00468692   . 2BF7             SUB ESI,EDI
+            00468694   . 8BFA             MOV EDI,EDX
+            00468696   . C1EF 05          SHR EDI,5
+            00468699   . 2BD7             SUB EDX,EDI
+            0046869B   . 66:89140B        MOV WORD PTR DS:[EBX+ECX],DX
+            0046869F   . 43               INC EBX
+        004686A0   > 03DB             ADD EBX,EBX
+        004686A2   . 0FB7140B         MOVZX EDX,WORD PTR DS:[EBX+ECX]
+        ;004686A6   . 3D 00000001      CMP EAX,1000000
+        ;004686AB   . 73 11            JNB SHORT Specimen.004686BE
+        if eax < 0x10000:
+            004686AD   . 0FB67D 00        MOVZX EDI,BYTE PTR SS:[EBP]
+            004686B1   . C1E6 08          SHL ESI,8
+            004686B4   . C1E0 08          SHL EAX,8
+            004686B7   . 0BF7             OR ESI,EDI
+            004686B9   . 45               INC EBP
+            004686BA   . 896C24 10        MOV DWORD PTR SS:[ESP+10],EBP
+        004686BE   > 8BF8             MOV EDI,EAX
+        004686C0   . C1EF 0B          SHR EDI,0B
+        004686C3   . 0FAFFA           IMUL EDI,EDX
+        ;004686C6   . 3BF7             CMP ESI,EDI
+        ;004686C8   . 73 14            JNB SHORT Specimen.004686DE
+        if esi < edi:
+            004686CA   . 8BC7             MOV EAX,EDI
+            004686CC   . BF 00080000      MOV EDI,800
+            004686D1   . 2BFA             SUB EDI,EDX
+            004686D3   . C1EF 05          SHR EDI,5
+            004686D6   . 03FA             ADD EDI,EDX
+            004686D8   . 66:893C0B        MOV WORD PTR DS:[EBX+ECX],DI
+        ;004686DC   . EB 10            JMP SHORT Specimen.004686EE
+        else:
+            004686DE   > 2BC7             SUB EAX,EDI
+            004686E0   . 2BF7             SUB ESI,EDI
+            004686E2   . 8BFA             MOV EDI,EDX
+            004686E4   . C1EF 05          SHR EDI,5
+            004686E7   . 2BD7             SUB EDX,EDI
+            004686E9   . 66:89140B        MOV WORD PTR DS:[EBX+ECX],DX
+            004686ED   . 43               INC EBX
+        004686EE   > 03DB             ADD EBX,EBX
+        004686F0   . 0FB7140B         MOVZX EDX,WORD PTR DS:[EBX+ECX]
+        ;004686F4   . 3D 00000001      CMP EAX,1000000
+        ;004686F9   . 73 11            JNB SHORT Specimen.0046870C
+        if eax < 0x1000000:
+            004686FB   . 0FB67D 00        MOVZX EDI,BYTE PTR SS:[EBP]
+            004686FF   . C1E6 08          SHL ESI,8
+            00468702   . C1E0 08          SHL EAX,8
+            00468705   . 0BF7             OR ESI,EDI
+            00468707   . 45               INC EBP
+            00468708   . 896C24 10        MOV DWORD PTR SS:[ESP+10],EBP
+        0046870C   > 8BF8             MOV EDI,EAX
+        0046870E   . C1EF 0B          SHR EDI,0B
+        00468711   . 0FAFFA           IMUL EDI,EDX
+        ;00468714   . 3BF7             CMP ESI,EDI
+        ;00468716   . 73 14            JNB SHORT Specimen.0046872C
+        if esi < edi:
+            00468718   . 8BC7             MOV EAX,EDI
+            0046871A   . BF 00080000      MOV EDI,800
+            0046871F   . 2BFA             SUB EDI,EDX
+            00468721   . C1EF 05          SHR EDI,5
+            00468724   . 03FA             ADD EDI,EDX
+            00468726   . 66:893C0B        MOV WORD PTR DS:[EBX+ECX],DI
+        ;0046872A   . EB 10            JMP SHORT Specimen.0046873C
+        else:
+            0046872C   > 2BC7             SUB EAX,EDI
+            0046872E   . 2BF7             SUB ESI,EDI
+            00468730   . 8BFA             MOV EDI,EDX
+            00468732   . C1EF 05          SHR EDI,5
+            00468735   . 2BD7             SUB EDX,EDI
+            00468737   . 66:89140B        MOV WORD PTR DS:[EBX+ECX],DX
+            0046873B   . 43               INC EBX
+        0046873C   > 03DB             ADD EBX,EBX
+        0046873E   . 0FB7140B         MOVZX EDX,WORD PTR DS:[EBX+ECX]
+        ;00468742   . 3D 00000001      CMP EAX,1000000
+        ;00468747   . 73 11            JNB SHORT Specimen.0046875A
+        if eax < 0x1000000:
+            00468749   . 0FB67D 00        MOVZX EDI,BYTE PTR SS:[EBP]
+            0046874D   . C1E6 08          SHL ESI,8
+            00468750   . C1E0 08          SHL EAX,8
+            00468753   . 0BF7             OR ESI,EDI
+            00468755   . 45               INC EBP
+            00468756   . 896C24 10        MOV DWORD PTR SS:[ESP+10],EBP
+        0046875A   > 8BF8             MOV EDI,EAX
+        0046875C   . C1EF 0B          SHR EDI,0B
+        0046875F   . 0FAFFA           IMUL EDI,EDX
+        ;00468762   . 3BF7             CMP ESI,EDI
+        ;00468764   . 73 16            JNB SHORT Specimen.0046877C
+        if esi < edi:
+            00468766   . 8BC7             MOV EAX,EDI
+            00468768   . BF 00080000      MOV EDI,800
+            0046876D   . 2BFA             SUB EDI,EDX
+            0046876F   . C1EF 05          SHR EDI,5
+            00468772   . 03FA             ADD EDI,EDX
+            00468774   . 66:893C0B        MOV WORD PTR DS:[EBX+ECX],DI
+            00468778   . 8BEB             MOV EBP,EBX
+        ;0046877A   . EB 12            JMP SHORT Specimen.0046878E
+        else:
+            0046877C   > 2BC7             SUB EAX,EDI
+            0046877E   . 2BF7             SUB ESI,EDI
+            00468780   . 8BFA             MOV EDI,EDX
+            00468782   . C1EF 05          SHR EDI,5
+            00468785   . 2BD7             SUB EDX,EDI
+            00468787   . 66:89140B        MOV WORD PTR DS:[EBX+ECX],DX
+            0046878B   . 8D6B 01          LEA EBP,DWORD PTR DS:[EBX+1]
+        0046878E   > 83ED 40          SUB EBP,40
+        ;00468791   . 83FD 04          CMP EBP,4
+        ;00468794   . 0F82 62020000    JB Specimen.004689FC
+        if ebp >= 4:
+            0046879A   . 8BCD             MOV ECX,EBP
+            0046879C   . 8BD5             MOV EDX,EBP
+            0046879E   . BF 01000000      MOV EDI,1
+            004687A3   . D1E9             SHR ECX,1
+            004687A5   . 23EF             AND EBP,EDI
+            004687A7   . 2BCF             SUB ECX,EDI
+            004687A9   . 83CD 02          OR EBP,2
+            004687AC   . 894C24 30        MOV DWORD PTR SS:[ESP+30],ECX
+            ;004687B0   . 83FA 0E          CMP EDX,0E
+            ;004687B3   . 0F83 7D000000    JNB Specimen.00468836
+            if edx < 0x0e:
+                004687B9   . D3E5             SHL EBP,CL
+                004687BB   . 897C24 40        MOV DWORD PTR SS:[ESP+40],EDI
+                004687BF   . 8BCD             MOV ECX,EBP
+                004687C1   . 2BCA             SUB ECX,EDX
+                004687C3   . 8B5424 3C        MOV EDX,DWORD PTR SS:[ESP+3C]
+                004687C7   . 8D9C4A 5E050000  LEA EBX,DWORD PTR DS:[EDX+ECX*2+55E]
+                004687CE   . 8BFF             MOV EDI,EDI
+                loop:
+                    004687D0   > 0FB7147B         MOVZX EDX,WORD PTR DS:[EBX+EDI*2]
+                    ;004687D4   . 3D 00000001      CMP EAX,1000000
+                    ;004687D9   . 73 13            JNB SHORT Specimen.004687EE
+                    if eax < 0x1000000:
+                        004687DB   . 8B4C24 10        MOV ECX,DWORD PTR SS:[ESP+10]
+                        004687DF   . 0FB609           MOVZX ECX,BYTE PTR DS:[ECX]
+                        004687E2   . C1E6 08          SHL ESI,8
+                        004687E5   . C1E0 08          SHL EAX,8
+                        004687E8   . 0BF1             OR ESI,ECX
+                        004687EA   . FF4424 10        INC DWORD PTR SS:[ESP+10]
+                    004687EE   > 8BC8             MOV ECX,EAX
+                    004687F0   . C1E9 0B          SHR ECX,0B
+                    004687F3   . 0FAFCA           IMUL ECX,EDX
+                    ;004687F6   . 3BF1             CMP ESI,ECX
+                    ;004687F8   . 73 16            JNB SHORT Specimen.00468810
+                    if esi < ecx:
+                        004687FA   . 8BC1             MOV EAX,ECX
+                        004687FC   . B9 00080000      MOV ECX,800
+                        00468801   . 2BCA             SUB ECX,EDX
+                        00468803   . C1E9 05          SHR ECX,5
+                        00468806   . 03CA             ADD ECX,EDX
+                        00468808   . 66:890C7B        MOV WORD PTR DS:[EBX+EDI*2],CX
+                        0046880C   . 03FF             ADD EDI,EDI
+                    ;0046880E   . EB 17            JMP SHORT Specimen.00468827
+                    else:
+                        00468810   > 2BC1             SUB EAX,ECX
+                        00468812   . 2BF1             SUB ESI,ECX
+                        00468814   . 8BCA             MOV ECX,EDX
+                        00468816   . C1E9 05          SHR ECX,5
+                        00468819   . 2BD1             SUB EDX,ECX
+                        0046881B   . 0B6C24 40        OR EBP,DWORD PTR SS:[ESP+40]
+                        0046881F   . 66:89147B        MOV WORD PTR DS:[EBX+EDI*2],DX
+                        00468823   . 8D7C3F 01        LEA EDI,DWORD PTR DS:[EDI+EDI+1]
+                    00468827   > D16424 40        SHL DWORD PTR SS:[ESP+40],1
+                    0046882B   . FF4C24 30        DEC DWORD PTR SS:[ESP+30]
+                    ;0046882F   .^75 9F            JNZ SHORT Specimen.004687D0
+                    while SS:[ESP+30]
+            ;00468831   . E9 C6010000      JMP Specimen.004689FC
+            else:
+                00468836   > 8B7C24 10        MOV EDI,DWORD PTR SS:[ESP+10]
+                0046883A   . 83E9 04          SUB ECX,4
+                0046883D   . 894C24 30        MOV DWORD PTR SS:[ESP+30],ECX
+                ;00468841   > 3D 00000001      CMP EAX,1000000
+                ;00468846   . 73 0C            JNB SHORT Specimen.00468854
+                loop:
+                    if eax < 0x1000000:
+                        00468848   . 0FB617           MOVZX EDX,BYTE PTR DS:[EDI]
+                        0046884B   . C1E6 08          SHL ESI,8
+                        0046884E   . C1E0 08          SHL EAX,8
+                        00468851   . 0BF2             OR ESI,EDX
+                        00468853   . 47               INC EDI
+                    00468854   > D1E8             SHR EAX,1
+                    00468856   . 2BF0             SUB ESI,EAX
+                    00468858   . 8BD6             MOV EDX,ESI
+                    0046885A   . C1EA 1F          SHR EDX,1F
+                    0046885D   . F7DA             NEG EDX
+                    0046885F   . 8D6C6A 01        LEA EBP,DWORD PTR DS:[EDX+EBP*2+1]
+                    00468863   . 23D0             AND EDX,EAX
+                    00468865   . 03F2             ADD ESI,EDX
+                    00468867   . FF4C24 30        DEC DWORD PTR SS:[ESP+30]
+                    0046886B   .^75 D4            JNZ SHORT Specimen.00468841
+                0046886D   . 8B4C24 3C        MOV ECX,DWORD PTR SS:[ESP+3C]
+                00468871   . 0FB791 46060000  MOVZX EDX,WORD PTR DS:[ECX+646]
+                00468878   . C1E5 04          SHL EBP,4
+                0046887B   . 897C24 10        MOV DWORD PTR SS:[ESP+10],EDI
+                ;0046887F   . 3D 00000001      CMP EAX,1000000
+                ;00468884   . 73 10            JNB SHORT Specimen.00468896
+                if eax < 0x1000000:
+                    00468886   . 0FB61F           MOVZX EBX,BYTE PTR DS:[EDI]
+                    00468889   . C1E6 08          SHL ESI,8
+                    0046888C   . C1E0 08          SHL EAX,8
+                    0046888F   . 0BF3             OR ESI,EBX
+                    00468891   . 47               INC EDI
+                    00468892   . 897C24 10        MOV DWORD PTR SS:[ESP+10],EDI
+                00468896   > 8BF8             MOV EDI,EAX
+                00468898   . C1EF 0B          SHR EDI,0B
+                0046889B   . 0FAFFA           IMUL EDI,EDX
+                ;0046889E   . 3BF7             CMP ESI,EDI
+                ;004688A0   . 73 1C            JNB SHORT Specimen.004688BE
+                if esi < edi:
+                    004688A2   . 8BC7             MOV EAX,EDI
+                    004688A4   . BF 00080000      MOV EDI,800
+                    004688A9   . 2BFA             SUB EDI,EDX
+                    004688AB   . C1EF 05          SHR EDI,5
+                    004688AE   . 03FA             ADD EDI,EDX
+                    004688B0   . 66:89B9 46060000 MOV WORD PTR DS:[ECX+646],DI
+                    004688B7   . BA 02000000      MOV EDX,2
+                ;004688BC   . EB 1A            JMP SHORT Specimen.004688D8
+                else:
+                    004688BE   > 2BC7             SUB EAX,EDI
+                    004688C0   . 2BF7             SUB ESI,EDI
+                    004688C2   . 8BFA             MOV EDI,EDX
+                    004688C4   . C1EF 05          SHR EDI,5
+                    004688C7   . 2BD7             SUB EDX,EDI
+                    004688C9   . 66:8991 46060000 MOV WORD PTR DS:[ECX+646],DX
+                    004688D0   . BA 03000000      MOV EDX,3
+                    004688D5   . 83CD 01          OR EBP,1
+                004688D8   > 8D1C12           LEA EBX,DWORD PTR DS:[EDX+EDX]
+                004688DB   . 0FB7940B 4406000>MOVZX EDX,WORD PTR DS:[EBX+ECX+644]
+                ;004688E3   . 3D 00000001      CMP EAX,1000000
+                ;004688E8   . 73 13            JNB SHORT Specimen.004688FD
+                if eax < 0x1000:
+                    004688EA   . 8B7C24 10        MOV EDI,DWORD PTR SS:[ESP+10]
+                    004688EE   . 0FB63F           MOVZX EDI,BYTE PTR DS:[EDI]
+                    004688F1   . C1E6 08          SHL ESI,8
+                    004688F4   . C1E0 08          SHL EAX,8
+                    004688F7   . 0BF7             OR ESI,EDI
+                    004688F9   . FF4424 10        INC DWORD PTR SS:[ESP+10]
+                004688FD   > 8BF8             MOV EDI,EAX
+                004688FF   . C1EF 0B          SHR EDI,0B
+                00468902   . 0FAFFA           IMUL EDI,EDX
+                ;00468905   . 3BF7             CMP ESI,EDI
+                ;00468907   . 73 18            JNB SHORT Specimen.00468921
+                if esi < edi:
+                    00468909   . 8BC7             MOV EAX,EDI
+                    0046890B   . BF 00080000      MOV EDI,800
+                    00468910   . 2BFA             SUB EDI,EDX
+                    00468912   . C1EF 05          SHR EDI,5
+                    00468915   . 03FA             ADD EDI,EDX
+                    00468917   . 66:89BC0B 440600>MOV WORD PTR DS:[EBX+ECX+644],DI
+                ;0046891F   . EB 17            JMP SHORT Specimen.00468938
+                else:
+                    00468921   > 2BC7             SUB EAX,EDI
+                    00468923   . 2BF7             SUB ESI,EDI
+                    00468925   . 8BFA             MOV EDI,EDX
+                    00468927   . C1EF 05          SHR EDI,5
+                    0046892A   . 2BD7             SUB EDX,EDI
+                    0046892C   . 66:89940B 440600>MOV WORD PTR DS:[EBX+ECX+644],DX
+                    00468934   . 43               INC EBX
+                    00468935   . 83CD 02          OR EBP,2
+                00468938   > 03DB             ADD EBX,EBX
+                0046893A   . 0FB7940B 4406000>MOVZX EDX,WORD PTR DS:[EBX+ECX+644]
+                ;00468942   . 3D 00000001      CMP EAX,1000000
+                ;00468947   . 73 13            JNB SHORT Specimen.0046895C
+                if eax < 0x1000000:
+                    00468949   . 8B7C24 10        MOV EDI,DWORD PTR SS:[ESP+10]
+                    0046894D   . 0FB63F           MOVZX EDI,BYTE PTR DS:[EDI]
+                    00468950   . C1E6 08          SHL ESI,8
+                    00468953   . C1E0 08          SHL EAX,8
+                    00468956   . 0BF7             OR ESI,EDI
+                    00468958   . FF4424 10        INC DWORD PTR SS:[ESP+10]
+                0046895C   > 8BF8             MOV EDI,EAX
+                0046895E   . C1EF 0B          SHR EDI,0B
+                00468961   . 0FAFFA           IMUL EDI,EDX
+                ;00468964   . 3BF7             CMP ESI,EDI
+                ;00468966   . 73 18            JNB SHORT Specimen.00468980
+                if esi < edi:
+                    00468968   . 8BC7             MOV EAX,EDI
+                    0046896A   . BF 00080000      MOV EDI,800
+                    0046896F   . 2BFA             SUB EDI,EDX
+                    00468971   . C1EF 05          SHR EDI,5
+                    00468974   . 03FA             ADD EDI,EDX
+                    00468976   . 66:89BC0B 440600>MOV WORD PTR DS:[EBX+ECX+644],DI
+                ;0046897E   . EB 17            JMP SHORT Specimen.00468997
+                else:
+                    00468980   > 2BC7             SUB EAX,EDI
+                    00468982   . 2BF7             SUB ESI,EDI
+                    00468984   . 8BFA             MOV EDI,EDX
+                    00468986   . C1EF 05          SHR EDI,5
+                    00468989   . 2BD7             SUB EDX,EDI
+                    0046898B   . 66:89940B 440600>MOV WORD PTR DS:[EBX+ECX+644],DX
+                    00468993   . 43               INC EBX
+                    00468994   . 83CD 04          OR EBP,4
+                00468997   > 0FB79459 4406000>MOVZX EDX,WORD PTR DS:[ECX+EBX*2+644]
+                ;0046899F   . 3D 00000001      CMP EAX,1000000
+                ;004689A4   . 73 13            JNB SHORT Specimen.004689B9
+                if eax < 0x1000000:
+                    004689A6   . 8B7C24 10        MOV EDI,DWORD PTR SS:[ESP+10]
+                    004689AA   . 0FB63F           MOVZX EDI,BYTE PTR DS:[EDI]
+                    004689AD   . C1E6 08          SHL ESI,8
+                    004689B0   . C1E0 08          SHL EAX,8
+                    004689B3   . 0BF7             OR ESI,EDI
+                    004689B5   . FF4424 10        INC DWORD PTR SS:[ESP+10]
+                004689B9   > 8BF8             MOV EDI,EAX
+                004689BB   . C1EF 0B          SHR EDI,0B
+                004689BE   . 0FAFFA           IMUL EDI,EDX
+                ;004689C1   . 3BF7             CMP ESI,EDI
+                ;004689C3   . 73 18            JNB SHORT Specimen.004689DD
+                if esi < edi:
+                    004689C5   . 8BC7             MOV EAX,EDI
+                    004689C7   . BF 00080000      MOV EDI,800
+                    004689CC   . 2BFA             SUB EDI,EDX
+                    004689CE   . C1EF 05          SHR EDI,5
+                    004689D1   . 03FA             ADD EDI,EDX
+                    004689D3   . 66:89BC59 440600>MOV WORD PTR DS:[ECX+EBX*2+644],DI
+                ;004689DB   . EB 16            JMP SHORT Specimen.004689F3
+                else:
+                    004689DD   > 2BC7             SUB EAX,EDI
+                    004689DF   . 2BF7             SUB ESI,EDI
+                    004689E1   . 8BFA             MOV EDI,EDX
+                    004689E3   . C1EF 05          SHR EDI,5
+                    004689E6   . 2BD7             SUB EDX,EDI
+                    004689E8   . 66:899459 440600>MOV WORD PTR DS:[ECX+EBX*2+644],DX
+                    004689F0   . 83CD 08          OR EBP,8
+                ;004689F3   > 83FD FF          CMP EBP,-1
+                ;004689F6   . 0F84 00010000    JE Specimen.00468AFC
+                if ebp == -1
+                    00468AFC   > 814424 24 120100>ADD DWORD PTR SS:[ESP+24],112
+                    00468B04   . 836C24 18 0C     SUB DWORD PTR SS:[ESP+18],0C
+                    break
+        004689FC   > 8B4C24 2C        MOV ECX,DWORD PTR SS:[ESP+2C]
+        00468A00   . 8B5424 28        MOV EDX,DWORD PTR SS:[ESP+28]
+        00468A04   . 894C24 40        MOV DWORD PTR SS:[ESP+40],ECX
+        00468A08   . 8B4C24 20        MOV ECX,DWORD PTR SS:[ESP+20]
+        00468A0C   . 894C24 28        MOV DWORD PTR SS:[ESP+28],ECX
+        00468A10   . 8B4C24 44        MOV ECX,DWORD PTR SS:[ESP+44]
+        00468A14   . 895424 2C        MOV DWORD PTR SS:[ESP+2C],EDX
+        00468A18   . 8D55 01          LEA EDX,DWORD PTR SS:[EBP+1]
+        00468A1B   . 895424 20        MOV DWORD PTR SS:[ESP+20],EDX
+        ;00468A1F   . 85C9             TEST ECX,ECX
+        ;00468A21   . 75 06            JNZ SHORT Specimen.00468A29
+        ;00468A23   . 3B6C24 14        CMP EBP,DWORD PTR SS:[ESP+14]
+        ;00468A27   . EB 02            JMP SHORT Specimen.00468A2B
+        ;00468A29   > 3BE9             CMP EBP,ECX
+        ;00468A2B   > 0F83 BC000000    JNB Specimen.00468AED
+        if (ecx && ebp >= ecx) || ebp >= SS:[ESP+14]:
+            return 1
+        00468A31   . 837C24 18 13     CMP DWORD PTR SS:[ESP+18],13
+        00468A36   . 8B7C24 24        MOV EDI,DWORD PTR SS:[ESP+24]
+        00468A3A   . 1BC9             SBB ECX,ECX
+        00468A3C   . 83E1 FD          AND ECX,FFFFFFFD
+        00468A3F   . 83C1 0A          ADD ECX,0A
+        00468A42   . 894C24 18        MOV DWORD PTR SS:[ESP+18],ECX
+    00468A46   > 8B4C24 64        MOV ECX,DWORD PTR SS:[ESP+64]
+    00468A4A   . 8B6C24 1C        MOV EBP,DWORD PTR SS:[ESP+1C]
+    00468A4E   . 83C7 02          ADD EDI,2
+    ;00468A51   . 3BCD             CMP ECX,EBP
+    if ecx == ebp:
+        ;00468A53   . 0F84 94000000    JE Specimen.00468AED
+        return 1
+    00468A59   . 2BCD             SUB ECX,EBP
+    00468A5B   . 894C24 30        MOV DWORD PTR SS:[ESP+30],ECX
+    ;00468A5F   . 3BCF             CMP ECX,EDI
+    ;00468A61   . 72 04            JB SHORT Specimen.00468A67
+    if ecx >= edi:
+        00468A63   . 897C24 30        MOV DWORD PTR SS:[ESP+30],EDI
+    00468A67   > 8B5C24 20        MOV EBX,DWORD PTR SS:[ESP+20]
+    00468A6B   . 8B5424 38        MOV EDX,DWORD PTR SS:[ESP+38]
+    00468A6F   . 3BEB             CMP EBP,EBX
+    00468A71   . 1BC9             SBB ECX,ECX
+    00468A73   . 23CA             AND ECX,EDX
+    00468A75   . 2BCB             SUB ECX,EBX
+    00468A77   . 8B5C24 30        MOV EBX,DWORD PTR SS:[ESP+30]
+    00468A7B   . 015C24 14        ADD DWORD PTR SS:[ESP+14],EBX
+    00468A7F   . 2BFB             SUB EDI,EBX
+    00468A81   . 03CD             ADD ECX,EBP
+    00468A83   . 897C24 24        MOV DWORD PTR SS:[ESP+24],EDI
+    00468A87   . 8D3C19           LEA EDI,DWORD PTR DS:[ECX+EBX]
+    ;00468A8A   . 3BFA             CMP EDI,EDX
+    ;00468A8C   . 77 1F            JA SHORT Specimen.00468AAD
+    if edi <= edx:
+        00468A8E   . 8B5424 34        MOV EDX,DWORD PTR SS:[ESP+34]
+        00468A92   . 2BCD             SUB ECX,EBP
+        00468A94   . 03D5             ADD EDX,EBP
+        00468A96   . 03EB             ADD EBP,EBX
+        00468A98   . 8BF9             MOV EDI,ECX
+        00468A9A   . 8D0C1A           LEA ECX,DWORD PTR DS:[EDX+EBX]
+        00468A9D   . 896C24 1C        MOV DWORD PTR SS:[ESP+1C],EBP
+        loop:
+            00468AA1   > 8A1C17           MOV BL,BYTE PTR DS:[EDI+EDX]
+            00468AA4   . 881A             MOV BYTE PTR DS:[EDX],BL
+            00468AA6   . 42               INC EDX
+            ;00468AA7   . 3BD1             CMP EDX,ECX
+            ;00468AA9   .^75 F6            JNZ SHORT Specimen.00468AA1
+            while edx != ecx
+    ;00468AAB   . EB 1B            JMP SHORT Specimen.00468AC8
+    else:
+        00468AAD   > 8B7C24 34        MOV EDI,DWORD PTR SS:[ESP+34]
+        loop:
+            00468AB1   > 8A1439           MOV DL,BYTE PTR DS:[ECX+EDI]
+            00468AB4   . 88142F           MOV BYTE PTR DS:[EDI+EBP],DL
+            00468AB7   . 41               INC ECX
+            00468AB8   . 45               INC EBP
+            ;00468AB9   . 3B4C24 38        CMP ECX,DWORD PTR SS:[ESP+38]
+            ;00468ABD   . 75 02            JNZ SHORT Specimen.00468AC1
+            if ecx == *ss[ESP+38]:
+                00468ABF   . 33C9             XOR ECX,ECX
+            ;00468AC1   > 4B               DEC EBX
+            ;00468AC2   .^75 ED            JNZ SHORT Specimen.00468AB1
+            while ebx--
+        00468AC4   . 896C24 1C        MOV DWORD PTR SS:[ESP+1C],EBP
+    ;00468AC8   > 8B4C24 1C        MOV ECX,DWORD PTR SS:[ESP+1C]
+    ;00468ACC   . 3B4C24 64        CMP ECX,DWORD PTR SS:[ESP+64]
+    ;00468AD0   . 73 37            JNB SHORT Specimen.00468B09
+    if SS:[ESP+1C] >= SS:[ESP+64]: break
+    ;00468AD2   . 8B5424 10        MOV EDX,DWORD PTR SS:[ESP+10]
+    ;00468AD6   . 3B5424 68        CMP EDX,DWORD PTR SS:[ESP+68]
+    ;00468ADA   . 73 2D            JNB SHORT Specimen.00468B09
+    if SS:[ESP+10] >= SS:[ESP+68]: break
+    00468ADC   . 8B6C24 3C        MOV EBP,DWORD PTR SS:[ESP+3C]
+    00468AE0   . 8B7C24 18        MOV EDI,DWORD PTR SS:[ESP+18]
+    00468AE4   . 8B5C24 58        MOV EBX,DWORD PTR SS:[ESP+58]
+    ;00468AE8   .^E9 F4F4FFFF      JMP <Specimen.00467FE1>
+;00468AED   > 5F               POP EDI
+;00468AEE   . 5E               POP ESI
+;00468AEF   . 5D               POP EBP
+;00468AF0   . B8 01000000      MOV EAX,1
+;00468AF5   . 5B               POP EBX
+;00468AF6   . 83C4 4C          ADD ESP,4C
+;00468AF9   . C2 0C00          RETN 0C
+;00468AFC   > 814424 24 120100>ADD DWORD PTR SS:[ESP+24],112
+;00468B04   . 836C24 18 0C     SUB DWORD PTR SS:[ESP+18],0C
+00468B09   > 8B5424 10        MOV EDX,DWORD PTR SS:[ESP+10]
+;00468B0D   . 3D 00000001      CMP EAX,1000000
+;00468B12   . 73 0C            JNB SHORT Specimen.00468B20
+if eax < 0x1000000:
+    00468B14   . 0FB60A           MOVZX ECX,BYTE PTR DS:[EDX]
+    00468B17   . C1E6 08          SHL ESI,8
+    00468B1A   . C1E0 08          SHL EAX,8
+    00468B1D   . 0BF1             OR ESI,ECX
+    00468B1F   . 42               INC EDX
+00468B20   > 8B4C24 60        MOV ECX,DWORD PTR SS:[ESP+60]
+00468B24   . 8941 1C          MOV DWORD PTR DS:[ECX+1C],EAX
+00468B27   . 8B4424 1C        MOV EAX,DWORD PTR SS:[ESP+1C]
+00468B2B   . 8951 18          MOV DWORD PTR DS:[ECX+18],EDX
+00468B2E   . 8B5424 24        MOV EDX,DWORD PTR SS:[ESP+24]
+00468B32   . 8941 24          MOV DWORD PTR DS:[ECX+24],EAX
+00468B35   . 8B4424 20        MOV EAX,DWORD PTR SS:[ESP+20]
+00468B39   . 8951 48          MOV DWORD PTR DS:[ECX+48],EDX
+00468B3C   . 8B5424 14        MOV EDX,DWORD PTR SS:[ESP+14]
+00468B40   . 8941 38          MOV DWORD PTR DS:[ECX+38],EAX
+00468B43   . 8B4424 2C        MOV EAX,DWORD PTR SS:[ESP+2C]
+00468B47   . 5F               POP EDI
+00468B48   . 8951 2C          MOV DWORD PTR DS:[ECX+2C],EDX
+00468B4B   . 8B5424 24        MOV EDX,DWORD PTR SS:[ESP+24]
+00468B4F   . 8971 20          MOV DWORD PTR DS:[ECX+20],ESI
+00468B52   . 8941 40          MOV DWORD PTR DS:[ECX+40],EAX
+00468B55   . 8B4424 14        MOV EAX,DWORD PTR SS:[ESP+14]
+00468B59   . 5E               POP ESI
+00468B5A   . 8951 3C          MOV DWORD PTR DS:[ECX+3C],EDX
+00468B5D   . 8B5424 38        MOV EDX,DWORD PTR SS:[ESP+38]
+00468B61   . 5D               POP EBP
+00468B62   . 8941 34          MOV DWORD PTR DS:[ECX+34],EAX
+00468B65   . 8951 44          MOV DWORD PTR DS:[ECX+44],EDX
+00468B68   . 33C0             XOR EAX,EAX
+00468B6A   . 5B               POP EBX
+00468B6B   . 83C4 4C          ADD ESP,4C
+00468B6E   . C2 0C00          RETN 0C
