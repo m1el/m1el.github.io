@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>html bug :(</title>
+<script type="text/javascript">
+window.onload = function(){
+    var script = document.getElementById('script'),
+        container = document.getElementById('container');
+    script.appendChild(document.createTextNode('<\/script><img src onerror=alert(1)>'));
+    container.innerHTML = container.innerHTML;
+};
+</script>
+</head>
+<body>
+  <div id="container"><script id="script" type="pure/love"></script></div>
+</body></html>
