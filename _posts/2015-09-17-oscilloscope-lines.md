@@ -52,7 +52,7 @@ that affected by electron beam moving from the start to the end of the segment.
 This has two interesting implications:
 
 - There is no corner case for segment joints
-- There will be triangle overdraw, which cause loss of performance
+- There will be triangle overdraw, which might cause loss of performance
 
 Beam intensity is collected from different segments using `blendFunc(gl.SRC_ALPHA, gl.ONE);`.
 
