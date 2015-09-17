@@ -250,6 +250,8 @@ however there are several problems with current implementation.
 - Point intensity is saturated too fast.  I've added a workaround
   by giving little red and blue value to the color, so oversaturated pixels look white.
 
+- No account for gamma correction.
+
 - There is no post-processing bloom, but is it really required?
 
 - Currently, woscope is a PoC of this technique,
