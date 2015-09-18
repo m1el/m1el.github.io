@@ -27,7 +27,7 @@ Some awesome oscilloscope music videos:
 However, I could not find any *beautiful* oscilloscope emulators.
 Lines produced by most emulators barely look like real oscilloscope lines at all.
 
-Because of that I made a cool WebGL demo ⸺ [woscope](https://m1el.github.io/woscope/),
+Because of that I made a cool WebGL demo — [woscope](https://m1el.github.io/woscope/),
 which is a XY mode oscilloscope emulator.
 
 ![sexy oscilloscope squiggle](/woscope-how/woscope-pic.png)
