@@ -5,16 +5,6 @@ title: How to draw oscilloscope lines with math and WebGL
 date: 2015-09-17 19:36
 ---
 
-<script>
-window.MathJax = {
-    tex2jax: {
-        inlineMath: [['$', '$']],
-        processEscapes: true
-    }
-};
-</script>
-<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-
 When I saw oscilloscope music demos, they amazed and inspired me.
 
 Observing a clever use of interaction between sound and an electron beam is a unique experience.
@@ -35,6 +25,16 @@ which is a XY mode oscilloscope emulator.
 In this post you can learn how to draw these lines in WebGL.
 
 <!-- more -->
+
+<script>
+window.MathJax = {
+    tex2jax: {
+        inlineMath: [['$', '$']],
+        processEscapes: true
+    }
+};
+</script>
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 
 # Problem formulation
 
