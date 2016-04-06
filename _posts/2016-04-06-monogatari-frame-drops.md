@@ -262,6 +262,8 @@ You can look at the optimized *Monogatari drops* over [here][7].
 
 And full patch with several bug fixes is available [here][6].
 
+Comments on [reddit][8]
+
 *Finally*, I can enjoy this piece of art in silky smooth 60 fps.
 
 [1]: http://kodansha-box.jp/topics/nishio/drops/
@@ -271,3 +273,4 @@ And full patch with several bug fixes is available [here][6].
 [5]: timeline-fix-02-frame-drop.png#sshot
 [6]: faster-monogatari-drops.diff
 [7]: http://m1el.github.io/nishio-drops
+[8]: https://www.reddit.com/r/programming/comments/4dmivz/monogatari_frame_drops_a_writeup_on_js/
