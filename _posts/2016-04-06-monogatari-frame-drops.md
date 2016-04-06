@@ -214,7 +214,7 @@ What do you think now, Mr. Profiler?
 
 4 ms? Can we do better? Maybe. But I'll call this good enough and enjoy my day.
 
-What about those frame drops at 5 second mark?
+What about those frame drops at the 5 second mark?
 
 ![Chrome's profiler showing cause of frame drops][5]
 
