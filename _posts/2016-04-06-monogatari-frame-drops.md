@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /monogatari-frame-drops/index.html
 title: Monogatari frame drops
 date: 2016-04-06 15:05
 ---
