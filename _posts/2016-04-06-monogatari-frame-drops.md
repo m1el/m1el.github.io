@@ -97,7 +97,7 @@ diff --git a/main-orig.js b/main.js
 
 ![Chrome's profiler report for first fix][3]
 
-8ms? Much better, but can we improve this?
+8 ms? Much better, but can we improve this?
 
 The next culprit is:
 
@@ -212,7 +212,7 @@ What do you think now, Mr. Profiler?
 
 ![Chrome's profiler report for next fixes][4]
 
-4ms? Can we do better? Maybe. But I'll call this good enough and enjoy my day.
+4 ms? Can we do better? Maybe. But I'll call this good enough and enjoy my day.
 
 What about those frame drops at 5 second mark?
 
