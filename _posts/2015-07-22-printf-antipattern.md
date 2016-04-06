@@ -72,13 +72,18 @@ $(this).html("<input type='text' value='" + OriginalContent + "' />");
 - Some poor programmer writing a dynamic web-site in C:
 
 ```C
-sprintf(buffer, "<tr><td onclick=putpgtl("?j=%d&k=%d&v=%d&h=24")>%s２４時間</td></tr>", ...)
+sprintf(buffer, "<tr><td onclick=putpgtl(\"?j=%d&k=%d&v=%d&h=24\")>%s２４時間</td></tr>", ...)
 ```
 
 - Generating JSON using string formatting: [gist.github.com/varemenos/e95c2e098e657c7688fd](https://gist.github.com/varemenos/e95c2e098e657c7688fd)
 
 ```bash
 git log --pretty=format:'{ %n  "commit": "%H",%n  "abbreviated_commit": "%h",%n  "tree": "%T",%n  "abbreviated_tree": "%t",%n  "parent": "%P",%n  "abbreviated_parent": "%p",%n  "refs": "%D",%n  "encoding": "%e",%n  "subject": "%s",%n  "sanitized_subject_line": "%f",%n  "body": "%b",%n  "commit_notes": "%N",%n  "verification_flag": "%G?",%n  "signer": "%GS",%n  "signer_key": "%GK",%n  "author": { %n    "name": "%aN",%n    "email": "%aE",%n    "date": "%aD"%n  },%n  "commiter": { %n    "name": "%cN",%n    "email": "%cE",%n    "date": "%cD"%n  }%n},'
+```
+
+```bash
+# jesus christ why
+(curl json) | jq -c '.[] | {value: .value, name: .name}' | sed -e 's/"name":"//g' -e 's/","value"//g' | tr -d '"}' | grep -v ':0' | awk '{FS=":" ; printf "%20s\t\%d\n",$1,$2}' | less
 ```
 
 - Using `sed` to process XML:
