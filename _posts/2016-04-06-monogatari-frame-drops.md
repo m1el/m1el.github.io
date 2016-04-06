@@ -4,18 +4,24 @@ title: Monogatari frame drops
 date: 2016-04-06 15:05
 ---
 
-# Monotatari frame drops
-
-<video loop controls src="hitagi-drop.webm"><img src="hitagi-drop-000.png"></video>
+<video loop controls src="/monogatari-frame-drops/hitagi-drop.webm"><img src="/monogatari-frame-drops/hitagi-drop-000.png"></video>
 
 There is a beatiful web page: [Monogatari drops][1],
 and it's a rare example of an acceptable use
 of page scroll for artistic purposes.
 
 The page is great, I like the concept, I like the art,
-I like monogatari series in general.
+I like monogatari series.
 
 But there is a problem: the page is slow. And we're going to fix it.
+
+An optimized and fixed version of the page os available over [here][7],
+and more details on the optimization process are available in the rest of this post.
+
+<!-- more -->
+<style>@media screen and (min-width: 1100px) {
+  .entry img { max-width: none; margin-left: -173px; }
+}</style>
 
 # Measuring
 
@@ -25,15 +31,15 @@ But there should always be a way to measure how "slow" it is.
 
 Let's look at Chrome's timeline report.
 
-![chrome's profiler report for original page][2]
+![Chrome's profiler report for original page][2]
 
 35 milliseconds for a frame?!
 
 I'm viewing this page on a high-end PC,
 capable of drawing millions of textured polygons per second,
-and you say that it takes you 35 millisecond to update this page?
+and you tell me it takes 35 millisecond to scroll?
 
-And the main culprit is this function:
+If we look at the profile, we can easily identify the main culprit:
 
 ```javascript
 $(document).on('scrolled', function(){
@@ -49,9 +55,12 @@ $(document).on('scrolled', function(){
 
 # Layout thrashing
 
-This function is constantly causing layout updates by requesting `$scene.height()` and writing `$object.css(...)`.
+The browser can't return layout properties without re-calculating the layout,
+if the layout has changed. This problem is known as *Layout thrashing*.
 
-If we cache `$scene` size in it's `data`, chrome won't have to update layout several times:
+The function in question is constantly causing layout re-calculations by requesting `$scene.height()` and updating `$object.css(...)`.
+
+If we cache `$scene`'s height in it's `data`, Chrome won't have to update the layout several times:
 
 ```diff
 diff --git a/main-orig.js b/main.js
@@ -85,9 +94,9 @@ diff --git a/main-orig.js b/main.js
              var translateY = size * (3 - (($scroll_top - $scene.data('offset_top')) / $window_height));
 ```
 
-![chrome's profiler report for first fix][3]
+![Chrome's profiler report for first fix][3]
 
-8ms? Much better, but can we improve it?
+8ms? Much better, but can we improve this?
 
 The next culprit is:
 
@@ -108,7 +117,7 @@ $(document).on('scrolled', function(){
 });
 ```
 
-This code is causing unnecessary layout update too, and has a similar fix:
+This code is causing some unnecessary layout updates, and has a similar fix:
 
 ```diff
 diff --git a/main-orig.js b/main.js
@@ -144,7 +153,8 @@ $(document).on('scrolled', function(){
 });
 ```
 
-This will call `show()` or `hide()` on *many* DOM nodes on *each* frame, which is unacceptable.
+This function will call `show()` or `hide()` on *many* DOM nodes on *each* frame,
+which is a big performance hit.
 
 The fix is pretty straightforward:
 
@@ -164,7 +174,7 @@ $(document).on('scrolled', function(){
 });
 ```
 
-And another fix with layout request:
+And another fix with layout thrashing:
 
 ```diff
 diff --git a/main-fix1.js b/main.js
@@ -199,15 +209,15 @@ diff --git a/main-fix1.js b/main.js
 
 What do you think now, Mr. Profiler?
 
-![chrome's profiler report for next fixes][4]
+![Chrome's profiler report for next fixes][4]
 
 4ms? Can we do better? Maybe. But I'll call this good enough and enjoy my day.
 
-But what about those frame drops?
+What about those frame drops at 5 second mark?
 
-![chrome's profiler showing cause of frame drops][5]
+![Chrome's profiler showing cause of frame drops][5]
 
-These frame drops are caused by images downloading and decoding additional images in background,
+These frame drops are caused by downloading and decoding additional images in the background,
 unfortunately we can't do much about it.
 
 # Unwanted 60 fps
@@ -224,9 +234,9 @@ imgLoad.on('done', function(){
 });
 ```
 
-By default, this code will change Hitagi's frames as fast as possible (int my case, 60 fps).
+By default, this code will change Hitagi's frames as fast as possible. In my case, it runs at 60 fps, and looks ridiculous.
 
-But anime is usually animated at 12 fps, so we have to limit the frame rate:
+Anime is usually animated at 12 fps, so we have to limit the frame rate:
 
 ```javascript
 var lastChange = 0;
@@ -245,9 +255,13 @@ imgLoad.on('done', function(){
 
 # End
 
-*Finally*, I can enjoy this piece of art in silky smooth 60 fps.
+It's pretty impressive how such little things can make or break JS/HTML performance.
 
-Full patch with several bug fixes is available [here][6].
+You can look at the optimized *Monogatari drops* over [here][7].
+
+And full patch with several bug fixes is available [here][6].
+
+*Finally*, I can enjoy this piece of art in silky smooth 60 fps.
 
 [1]: http://kodansha-box.jp/topics/nishio/drops/
 [2]: timeline-original.png
@@ -255,3 +269,4 @@ Full patch with several bug fixes is available [here][6].
 [4]: timeline-fix-02.png
 [5]: timeline-fix-02-frame-drop.png
 [6]: faster-monogatari-drops.diff
+[7]: http://m1el.github.io/nishio-drops
