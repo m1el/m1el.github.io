@@ -21,7 +21,7 @@ and more details on the optimization process are available in the rest of this p
 
 <!-- more -->
 <style>@media screen and (min-width: 1100px) {
-  .entry img { max-width: none; margin-left: -173px; }
+  img[src$="#sshot"] { max-width: none; margin-left: -173px; }
 }</style>
 
 # Measuring
@@ -265,9 +265,9 @@ And full patch with several bug fixes is available [here][6].
 *Finally*, I can enjoy this piece of art in silky smooth 60 fps.
 
 [1]: http://kodansha-box.jp/topics/nishio/drops/
-[2]: timeline-original.png
-[3]: timeline-fix-01.png
-[4]: timeline-fix-02.png
-[5]: timeline-fix-02-frame-drop.png
+[2]: timeline-original.png#sshot
+[3]: timeline-fix-01.png#sshot
+[4]: timeline-fix-02.png#sshot
+[5]: timeline-fix-02-frame-drop.png#sshot
 [6]: faster-monogatari-drops.diff
 [7]: http://m1el.github.io/nishio-drops
