@@ -140,37 +140,37 @@ Where σ is the spread of the beam.
 To calculate the cumulative intensity, we integrate
 the intensity over time as the beam is moving from start to end.
 
-$$\mathrm{Cumulative}=\int\_0^1 \mathrm{Intensity}(\mathrm{distance}(t)) dt$$
+$$\mathrm{Cumulative}=\int_0^1 \mathrm{Intensity}(\mathrm{distance}(t)) dt$$
 
 ![](/woscope-how/integration-transform.png)
 
 If we use the frame of reference where start point is at $(0,0)$
 and the end point is $(length,0)$, $distance(t)$ can be written as:
 
-$$\mathrm{distance}(t)=\sqrt{(p\_x-t\times length)^2+p\_y^2}$$
+$$\mathrm{distance}(t)=\sqrt{(p_x-t\times length)^2+p_y^2}$$
 
 Now,
 
-$$\mathrm{Cumulative}(p)=\int\_0^1 \frac{1}{σ\sqrt{2π}} e^{-\frac{(p\_x-t\times length)^2+p\_y^2}{2σ^2}} dt$$
+$$\mathrm{Cumulative}(p)=\int_0^1 \frac{1}{σ\sqrt{2π}} e^{-\frac{(p_x-t\times length)^2+p_y^2}{2σ^2}} dt$$
 
-Since $p\_y^2$ is a constant in this integral,
-$e^{-\frac{p\_y^2}{2σ^2}}$ can be taken out of the integration.
+Since $p_y^2$ is a constant in this integral,
+$e^{-\frac{p_y^2}{2σ^2}}$ can be taken out of the integration.
 
-$$\mathrm{Cumulative}(p)=e^{-\frac{p\_y^2}{2σ^2}} \int\_0^1 \frac{1}{σ\sqrt{2π}} e^{-\frac{(p\_x-t\times length)^2}{2σ^2}} dt$$
+$$\mathrm{Cumulative}(p)=e^{-\frac{p_y^2}{2σ^2}} \int_0^1 \frac{1}{σ\sqrt{2π}} e^{-\frac{(p_x-t\times length)^2}{2σ^2}} dt$$
 
 Let's simplify the integral slightly, by replacing $t$ with $\frac{u}{l}$:
 
-$$\int\_0^1 \frac{1}{σ\sqrt{2π}} e^{-\frac{(p\_x-t\times length)^2}{2σ^2}} dt =
-\frac{1}{l} \int\_0^l \frac{1}{σ\sqrt{2π}} e^{-\frac{(p\_x-u)^2}{2σ^2}} du$$
+$$\int_0^1 \frac{1}{σ\sqrt{2π}} e^{-\frac{(p_x-t\times length)^2}{2σ^2}} dt =
+\frac{1}{l} \int_0^l \frac{1}{σ\sqrt{2π}} e^{-\frac{(p_x-u)^2}{2σ^2}} du$$
 
 The integral of normal distribution is half error function. [w\|a](http://www.wolframalpha.com/input/?i=integrate++1%2F%28%CF%83+sqrt%282%CF%80%29%29+e%5E%28-%28m-x*l%29%5E2%2F%282%CF%83%5E2%29%29+dx+from+0+to+1)
 
-$$\frac{1}{l} \int\_0^l \frac{1}{σ\sqrt{2π}} e^{-\frac{(p\_x-u)^2}{2σ^2}} du=
-\frac{1}{2l} \left(\mathrm{erf}\left(\frac{p\_x}{\sqrt2 σ}\right) - \mathrm{erf}\left(\frac{p\_x-l}{\sqrt2 σ}\right)\right)$$
+$$\frac{1}{l} \int_0^l \frac{1}{σ\sqrt{2π}} e^{-\frac{(p_x-u)^2}{2σ^2}} du=
+\frac{1}{2l} \left(\mathrm{erf}\left(\frac{p_x}{\sqrt2 σ}\right) - \mathrm{erf}\left(\frac{p_x-l}{\sqrt2 σ}\right)\right)$$
 
 Finally,
 
-$$\mathrm{Cumulative}(p)=\frac{1}{2l} e^{-\frac{p\_y^2}{2σ^2}}\left(\mathrm{erf}\left(\frac{p\_x}{\sqrt2 σ}\right) - \mathrm{erf}\left(\frac{p\_x-l}{\sqrt2 σ}\right)\right)$$
+$$\mathrm{Cumulative}(p)=\frac{1}{2l} e^{-\frac{p_y^2}{2σ^2}}\left(\mathrm{erf}\left(\frac{p_x}{\sqrt2 σ}\right) - \mathrm{erf}\left(\frac{p_x-l}{\sqrt2 σ}\right)\right)$$
 
 One of the benefits of doing math in this case is that segment joints
 will have mathematically perfect intensity after adding adjacent segments.
