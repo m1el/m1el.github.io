@@ -163,7 +163,7 @@ Let's simplify the integral slightly, by replacing $t$ with $\frac{u}{l}$:
 $$\int\_0^1 \frac{1}{σ\sqrt{2π}} e^{-\frac{(p\_x-t\times length)^2}{2σ^2}} dt =
 \frac{1}{l} \int\_0^l \frac{1}{σ\sqrt{2π}} e^{-\frac{(p\_x-u)^2}{2σ^2}} du$$
 
-The integral of normal distribution is half error function. [w|a](http://www.wolframalpha.com/input/?i=integrate++1%2F%28%CF%83+sqrt%282%CF%80%29%29+e%5E%28-%28m-x*l%29%5E2%2F%282%CF%83%5E2%29%29+dx+from+0+to+1)
+The integral of normal distribution is half error function. [w\|a](http://www.wolframalpha.com/input/?i=integrate++1%2F%28%CF%83+sqrt%282%CF%80%29%29+e%5E%28-%28m-x*l%29%5E2%2F%282%CF%83%5E2%29%29+dx+from+0+to+1)
 
 $$\frac{1}{l} \int\_0^l \frac{1}{σ\sqrt{2π}} e^{-\frac{(p\_x-u)^2}{2σ^2}} du=
 \frac{1}{2l} \left(\mathrm{erf}\left(\frac{p\_x}{\sqrt2 σ}\right) - \mathrm{erf}\left(\frac{p\_x-l}{\sqrt2 σ}\right)\right)$$
