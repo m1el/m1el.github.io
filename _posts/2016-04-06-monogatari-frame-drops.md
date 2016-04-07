@@ -16,7 +16,7 @@ I like monogatari series.
 
 But there is a problem: the page is slow. And we're going to fix it.
 
-An optimized and fixed version of the page os available over [here][7],
+An optimized and fixed version of the page is available over [here][7],
 and more details on the optimization process are available in the rest of this post.
 
 <!-- more -->
