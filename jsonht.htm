@@ -176,6 +176,7 @@ addEventListener('load', function() {
   code = document.getElementById('code');
   out = document.getElementById('output');
   code.addEventListener('input', update);
+  code.style.height = (code.scrollHeight + 4) + 'px';
   update();
 });
 
@@ -197,7 +198,7 @@ function update(event) {
 
 </script><style>
 body { max-width: 800px; margin: auto; }
-textarea { width: 798px; min-height: 400px; }
+textarea { width: 798px; min-height: 400px; max-width: 100%; }
 .error { color: red; }
 p { margin: 4px; }
 </style></head><body>
@@ -221,11 +222,13 @@ p { margin: 4px; }
   ["p", "It is possible to represent any DOM tree in this form."],
   ["p",
     "For example, one can make ",
-    ["b", "bold"], ", ",
-    ["i", "italic"], " or ",
-    ["b", ["i", "nested"]], "; ",
-    ["span", {"id": "test", "class": "green"},
-      "and have arbitrary attributes."]],
+    ["b", "bold"], ", ", ["i", "italic"], " or ", ["b", ["i", "nested"]], "; ",
+    ["span", {"id": "test", "class": "green"}, "and have arbitrary attributes."]],
   ["p", "DOM trees in this form are easy to parse, generate and process."],
-  ["p", "The code on this page is dedicated to public domain."]]
-</textarea><div id="output"></div></body></html>
+  ["p", "List of interesting functions in the source code:"],
+  ["ul",
+    ["li", ["code", "unrender"], ": takes DOM element as an input, and outputs a corresponding JS representation."],
+    ["li", ["code", "render"], ": takes JS representation of DOM as an input, and returns a corresponding DOM element."],
+    ["li", ["code", "serizlize"], ": takes JS representation of DOM as an input, and returns a corresponding HTML string."],
+    ["li", ["code", "normalize"], ": takes JS representation of DOM as an input, and collects all objects out of place to combine them into an attributes object."]],
+  ["p", "The code on this page is dedicated to public domain."]]</textarea><div id="output"></div></body></html>
