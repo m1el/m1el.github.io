@@ -197,15 +197,24 @@ function update(event) {
 
 </script><style>
 body { max-width: 800px; margin: auto; }
-textarea { width: 798px; min-height: 230px; }
+textarea { width: 798px; min-height: 360px; }
 .error { color: red; }
+p { margin: 4px; }
 </style></head><body>
 <noscript>you need to enable js to make this page interavtive</noscript>
 <textarea id="code">
 ["div", {"class": "some classes"},
-  ["style", ".green { color: green; }"],
+  ["style",
+    ".green { color: green; }\n",
+    "li &gt; p { margin: 0px; }"],
   ["h3", "JSON Hyper Text"],
   ["p", "This is a demo of JSON representation for HTML."],
+  ["ul",
+    ["li", "An element may be a Text node, represented as a String"],
+    ["li",
+      ["p", "Or an Element node, represented as an array with element's tag name in the head,"],
+      ["p", "optionally followed by node's attributes dictionary, followed by node's children,"]],
+    ["li", "Or a Comment node, represented as an array: [\"!comment\", \"comment text\"]"]],
   ["p", "You can represent any DOM tree in this form."],
   ["p",
     "For example, you can make ",
