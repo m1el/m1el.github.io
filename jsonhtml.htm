@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>jsonhtml</title><script id="script">
+function unrender(el) {
+  if (el instanceof Element) {
+    var attrs = {};
+    Array.prototype.forEach.call(el.attributes,
+       function (attr) { attrs[attr.name] = attr.value; });
+    return [el.tagName.toLowerCase(), attrs]
+       .concat(Array.prototype.map.call(el.childNodes, unrender));
+  } else if (el instanceof Text) {
+    return el.data;
+  } else if (el instanceof Comment) {
+    return ['!comment', el.data];
+  } else {
+    throw 'cannot convert from dom: ' + el;
+  }
+}
+
+function render(obj) {
+  if (typeof obj === 'string') {
+    return new Text(obj);
+  } else if (Array.isArray(obj)) {
+    if (obj[0] === '!comment') {
+      return new Comment(obj[1]);
+    }
+    var dom = document.createElement(obj[0]);
+    var attrs = obj[1];
+    Object.keys(attrs).forEach(
+      function (key) { dom.setAttribute(key, attrs[key]); });
+    obj.slice(2).forEach(
+      function (child) { dom.appendChild(render(child)); });
+    return dom;
+  } else {
+    throw 'Cannot make dom of: ' + obj;
+  }
+}
+
+function normalize(obj) {
+  if (typeof obj === 'string') {
+    return obj;
+  } else {
+    if (obj[0] === '!comment') {
+      return obj;
+    }
+    var attrs = {};
+    var res = [obj[0], attrs];
+    obj.slice(1).forEach((child) => {
+      if (Object.getPrototypeOf(child) === Object.prototype) {
+        Object.assign(attrs, child);
+      } else {
+        res.push(normalize(child));
+      }
+    });
+    return res;
+  }
+}
+
+var serialize = (function() {
+  var replaceDict = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    };
+  var escapeRegex = /[<>&"]/g;
+  function escapeLookup(s) {
+    return replaceDict[s];
+  }
+
+  function htmlEscape(str) {
+    return str.replace(escapeRegex, escapeLookup);
+  }
+
+  var voidElements = new Set([
+    'area', 'base', 'br', 'col',
+    'command', 'embed', 'hr', 'img',
+    'input', 'keygen', 'link', 'meta',
+    'param', 'source', 'track', 'wbr']);
+
+  var nameRegex = /^[a-z][a-z0-9_-]*$/i;
+  var noEscapeValue = /^[a-z0-9_-]+$/i;
+  var commentRegex = /^->|^>|--|-$/;
+
+  var noescapeNodes = {
+    'style': /<\/style/i,
+    'script': /<\/script/i,
+  };
+
+  function SerializationException(message) {
+    this.message = message;
+    this.name = "SerializationException";
+  }
+
+  function serializeAttribute(key, val) {
+    if (!nameRegex.test(key)) {
+      throw new SerializationException('invalid attribute name: ' + key);
+    }
+    var html = ' ' + key;
+    if (val !== '') {
+      if (!noEscapeValue.test(val)) {
+        val = '"' + htmlEscape(val) + '"';
+      }
+      html += '=' + val;
+    }
+    return html;
+  }
+
+  return function serialize(obj) {
+    if (typeof obj === 'string') {
+      return htmlEscape(obj);
+    } else if (Array.isArray(obj)) {
+      if (obj[0] === '!comment') {
+        var str = '' + obj[1];
+        if (commentRegex.test(str)) {
+          throw new SerializationException('invalid comment text: ' + str);
+        }
+        return '<!--' + str + '-->';
+      }
+
+      var tag = ('' + obj[0]).toLowerCase();
+      if (!nameRegex.test(tag)) {
+        throw new Error('invalid tag name: ' + tag);
+      }
+
+      var attrs = obj[1];
+      var attrString = Object.keys(attrs).map(
+        (key) => serializeAttribute(key, attrs[key]))
+        .join('');
+      var html = '<' + tag + attrString + '>';
+
+      var children = obj.slice(2);
+      if (voidElements.has(tag)) {
+        if (children.length > 0) {
+          throw new SerializationException(tag + ' is a void node, and cannot contain children');
+        }
+      } else {
+        if (noescapeNodes.hasOwnProperty(tag)) {
+          if (!children.every((c) => typeof c === 'string')) {
+            throw new SerializationException(tag + ' node can only contain text nodes');
+          }
+          var inner = children.join('');
+          var rx = noescapeNodes[tag];
+          if (rx.test(inner)) {
+            throw new SerializationException(tag + ' node cannot contain ' + rx.source);
+          }
+          html += inner;
+        } else {
+          html += children.map(serialize).join('');
+        }
+        html += '</' + tag + '>';
+      }
+
+      return html;
+    }
+  };
+})();
+
+function pprint(obj, indent) {
+  indent = indent || '';
+  if (typeof obj === 'string') {
+    return indent + JSON.stringify(obj);
+  } else if (Array.isArray(obj)) {
+    var str = indent + '[' + JSON.stringify(obj[0]) + ', ' + JSON.stringify(obj[1]);
+    indent = '  ' + indent;
+    for (var i = 2; i < obj.length; i++) {
+      str += ',\n' + pprint(obj[i], indent);
+    }
+    str += ']';
+    return str;
+  }
+}
+
+var code = null;
+var out = null;
+
+addEventListener('load', function() {
+  code = document.getElementById('code');
+  out = document.getElementById('output');
+  code.addEventListener('input', update);
+  update();
+});
+
+function update(event) {
+  var dom = null;
+  try {
+    var obj = JSON.parse(code.value);
+    dom = render(normalize(obj));
+  } catch(e) {
+    dom = render(['pre', {'class': 'error'}, e.stack || e.toString()]);
+  }
+
+  while (out.firstChild) {
+    out.removeChild(out.firstChild);
+  }
+
+  out.appendChild(dom)
+}
+
+</script><style>
+body { max-width: 800px; margin: auto; }
+textarea { width: 798px; min-height: 230px; }
+.error { color: red; }
+</style></head><body><textarea id="code">
+["div", {"class": "some classes"},
+  ["style", ".green { color: green; }"],
+  ["p", "This is a demo of JSON representation for HTML."],
+  ["p", "You can represent any DOM tree in this form."],
+  ["p",
+    "For example, you can make ",
+    ["b", "bold"], " ",
+    ["i", "italic"], " ",
+    ["b", ["i", "or both"]], ", ",
+    ["span", {"id": "test", "class": "green"},
+      "and have arbitrary attributes."]],
+  ["p", "DOM trees in this form are easy to parse, generate and process dynamically."],
+  ["p", "The code on this page is dedicated to public domain."]]
+</textarea><div id="output"></div></body></html>
