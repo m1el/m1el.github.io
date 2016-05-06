@@ -193,12 +193,14 @@ function update(event) {
     out.removeChild(out.firstChild);
   }
 
-  out.appendChild(dom)
+  out.appendChild(dom);
 }
 
 </script><style>
 body { max-width: 800px; margin: auto; }
-textarea { width: 798px; min-height: 400px; max-width: 100%; }
+textarea {
+    box-sizing: border-box; width: 798px;
+    min-height: 400px; max-width: 100%; }
 .error { color: red; }
 p { margin: 4px; }
 </style></head><body>
