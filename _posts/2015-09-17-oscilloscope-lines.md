@@ -34,7 +34,7 @@ window.MathJax = {
     }
 };
 </script>
-<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="/MathJax/config/TeX-AMS_HTML-full.js"></script>
 
 # Problem formulation
 
