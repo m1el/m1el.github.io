@@ -240,7 +240,7 @@ var to_string = (fn) => {
   return to_list(fn).map(c=>alpha[to_int(c)]).join('');
 };
 
-console.log('full program:', RESULT);
+console.log('full program:', JSON.stringify(RESULT));
 to_list(Eval(RESULT)).forEach(row => console.log(to_string(row)));
 ```
 
