@@ -77,7 +77,7 @@ Eval = function E(p, e) {
 
 And of course, translated to Common LISP for completeness:
 
-```lisp
+```racket
 (defun Eval (prog env)
  (cond
   ((numberp prog)     (nth (1- prog) env))
