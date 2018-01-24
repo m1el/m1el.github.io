@@ -27,7 +27,7 @@ All of the features in lambda expressions are available in LISP and have a strai
 However, LISP AST has quite complex data structures: symbols, strings, linked lists... we need to go simpler.
 
 First, let's use [De Bruijn indices][5] -- instead of variable symbols.
-TL;DR -- replace variable names with the number of the nested lambda's argument you want to look up.
+Replace variable names with the number of the nested lambda's argument you want to look up.
 For example, an implementation of the K combinator `λa.λb.a` becomes `λλ2`, where 2 means "the argument of the second lambda, going up from this position".
 
 Second, note that the lambda notation has a binary operation -- function application, and a single argument syntax for creating a lambda, the argument being lambda body.
@@ -135,9 +135,9 @@ console.assert(iota_S(iota_K)(iota_K)("test") === "test");
 
 ## FizzBuzz
 
-Once lambda calculus is working, we can start working on more [ambitious programs][1].
+Once the interpreter is working, we can run some more [ambitious programs][1].
 
-Using some trivial transformations, Tom Stuart's FizzBuzz becomes the following code:
+Using some trivial transformations, Tom Stuart's FizzBuzz becomes the following:
 
 <!-- Precise details of how this program was transformed are lost in time, but it wouldn't be hard to repeat those. -->
 
