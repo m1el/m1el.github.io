@@ -18,7 +18,7 @@ Then I wondered: what's the simplest way to represent lambda functions as data?
 
 ## Representation
 
-Lambda expressions, such as `λa.λb.(a b)` have three parts: Variables (`a`, `b`), Application (`(a b)`) and Abstraction (or creating a function) `(λa.a)`.
+Lambda expressions, such as `λa.λb.(a b)` have three parts: Variables `a`, `b`, Application `(a b)` and Abstraction (or creating a function) `(λa.a)`.
 
 The question of representing code as data would be incomplete without mentioning LISP, where code *is* data that can be transformed.
 [The Most Beautiful Program Ever Written][3] dives into that topic, and into the question of evaluation.
