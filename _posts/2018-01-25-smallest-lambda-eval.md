@@ -8,7 +8,8 @@ date: 2018-01-25 00:21
 This post is heavily inspired by
 [Tom Stuart: Programming with noting][1],
 [William Byrd on "The Most Beautiful Program Ever Written"][2],
-[Guowei LV -- The Most Beautiful Program Ever Written][3].
+[Guowei LV -- The Most Beautiful Program Ever Written][3],
+[John Tromp -- Binary lambda calculus][7].
 
 When I first learned about [Lambda calculus][4], I was amazed by a strong mathematical basis for anonymous functions used in many languages.
 
@@ -18,7 +19,7 @@ Then I wondered: what's the simplest way to represent lambda functions as data?
 
 ## Representation
 
-Lambda expressions, such as `λa.λb.(a b)` have three parts: Variables `a`, `b`, Application `(a b)` and Abstraction (or creating a function) `(λa.a)`.
+Lambda expressions, such as `λa.λb.(a b)` have three parts: Variables `a`, `b`, Application `(a b)` and Abstraction (or creating a function) `λa.a`.
 
 The question of representing code as data would be incomplete without mentioning LISP, where code *is* data that can be transformed.
 [The Most Beautiful Program Ever Written][3] dives into that topic, and into the question of evaluation.
@@ -37,6 +38,10 @@ Let's use the following representation:
 - variable lookup is a positive integer number which represents a De Bruijn index.
 - creating a function is a tuple of zero and function body. `λa.a` becomes `[0, 1]` in JS notation.
 - function application is a tuple of two values. `λa.λb.(a b)` becomes `[0, [0, [2, 1]]]`.
+
+*Note*: John Tromp has invented [Binary lambda calculus][7], which is a much more efficient representation than this.
+For the purpose of making a simple interpreter, a binary tree form is used to represent lambda terms.
+There's a 1-to-1 mapping between binary tree form and binary representation.
 
 ## Environment
 
@@ -260,6 +265,8 @@ There's almost no applications for this in the real world except for learning ho
 
 - Write a parser that can translate lambda expressions into this form.
 
+- Write a parser for [Binary Lambda Calculus][7]
+
 - Write a lazy evaluator.
 
 - Implement an evaluator without using lambda functions provided by the language.
@@ -280,3 +287,4 @@ This evaluator shows once again the simplicity and expressiveness of lambda calc
 [4]: https://en.wikipedia.org/wiki/Lambda_calculus
 [5]: https://en.wikipedia.org/wiki/De_Bruijn_index
 [6]: https://en.wikipedia.org/wiki/Iota_and_Jot
+[7]: https://tromp.github.io/cl/Binary_lambda_calculus.html
