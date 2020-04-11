@@ -49,14 +49,14 @@ A particularly notable function is `SSL_get_version`, which contains references 
 
 ![](inlined-ssl-get-version.png)
 
-It looks like `SSL_get_version` got inlined.  I suspected that this was not the only place where TLS connections were made, so I had to find a different place to work on.  The next notable thing was that near one of the SSL version strings I've noticed code paths and assertion strings:
+It looks like `SSL_get_version` got inlined.  I suspected that this was not the only place where TLS connections are made, so I had to find a different place to work on.  The next notable thing was that near one of the SSL version strings I've noticed code paths and assertion strings:
 
 ![](assertion-info.png)
 
-As it turns out, debug information such as source file names and assetion expressions, which can be used as landmarks too.
+As it turns out, debug information such as source file names and assertion expressions, which can be used as landmarks too.
 Now we have more landmarks to navigate OpenSSL binary code.
 
-I've continued to label function as I inspected nearby references to `.\\ssl\ssl_lib.c` strings, and I've stumbled onto [`SSL_set_connect_state` function](ssl-set-connect-ghidra.png).  Using the same code pattern, [`mov dword ptr [$register + 0x48], 0x5000`](code-pattern.png), I've found [`SSL_connect`](ssl-connect-ghidra.png) as well.  `SSL_connect` had an inlined call to `SSL_set_connect_state`.  I've decided to be cautious and interject both of these functions.
+I've continued to label function as I inspected nearby references to `.\\ssl\ssl_lib.c` strings, and I've stumbled upon [`SSL_set_connect_state` function](ssl-set-connect-ghidra.png).  Using the same code pattern, [`mov dword ptr [$register + 0x48], 0x5000`](code-pattern.png), I've found [`SSL_connect`](ssl-connect-ghidra.png) as well.  `SSL_connect` had an inlined call to `SSL_set_connect_state`.  I've decided to be cautious and interject both of these functions.
 
 ## Extracting the data
 
@@ -73,7 +73,7 @@ Last option it is.
 
 ## DLL injection
 
-To extract *all* TLS keys, we need to control the running process from the very beginning.
+To extract *all* TLS keys, we need to control the running process from the beginning of its execution.
 One way to do this is to set `gflags` to use DLL injector program as a debugger for the process.
 The program we want to debug is called `OVRServer_x64.exe`, so let's create `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\OVRServer_x64.exe` key in registry and set `Debugger` string value to command line of our injector.
 
@@ -85,15 +85,15 @@ The code for `injector.exe` is [here][ote-injector].
 
 ## Running from inside the process
 
-After the DLL was injected, it can patch the code in-memory and log secret keys.
+After the DLL is injected, it can patch the code in-memory and log secret keys.
 
 The architecture for `injectee.dll` is pretty simple -- patch the code, create a channel, create writer thread with the receiving end of the channel, send keys from different threads using the other end.
 
-Patching was done in assembly.  It can be approximately described like this:
+Patching was done in assembly.  It can be visually explained like this:
 
 ![](asm-patch.png)
 
-There are several ways to extract the keys ginen a pointer to `ssl_st` struct.
+There are several ways to extract the keys given a pointer to `ssl_st` struct.
 - Implementing a C library
 - Walking the pointers manually
 - Porting OpenSSL structs to the used language
