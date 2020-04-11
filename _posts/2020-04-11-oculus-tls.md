@@ -15,7 +15,7 @@ One of those programs is Oculus software.  There are a few reasons why I want to
 1. Oculus is owned by Facebook, which means Facebook *can* dictate what Oculus software does with user's data.
 2. Oculus servers run on Facebook's infrastructure, which means that Facebook *can* have access to any data uploaded to those servers.
 3. Oculus Headset has cameras and software that builds a 3D map of my room, which *can* be uploaded to the servers.
-4. Oculus [oculus-pp][Privacy Policy] explicitly states that Oculus automatically collects:  
+4. Oculus [Privacy Policy][oculus-pp] explicitly states that Oculus automatically collects:  
 > Information about your environment, physical movements, and dimensions when you use an XR device.  For example, when you set up the Oculus Guardian System to alert you when you approach a boundary, we receive information about the play area that you have defined;
 
 Fortunately, I can use programs such as Wireshark or tcpdump to inspect traffic sent to the servers.  
