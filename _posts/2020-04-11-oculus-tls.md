@@ -5,8 +5,6 @@ title: Extracting TLS keys from an unwilling application
 date: 2020-04-11 16:00
 ---
 
-# Extracting TLS keys from an unwilling application
-
 I want to be able to inspect the traffic of programs running on my computer.
 I don't really trust those programs and ideally I'd like to put nearly all of them into a high security jail.
 
