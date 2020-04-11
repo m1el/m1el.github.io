@@ -12,6 +12,8 @@ I don't really trust those programs and ideally I'd like to put nearly all of th
 
 One of those programs is Oculus software.  There are a few reasons why I want to be cautious about Oculus software.
 
+<!-- more -->
+
 1. Oculus is owned by Facebook, which means Facebook *can* dictate what Oculus software does with user's data.
 2. Oculus servers run on Facebook's infrastructure, which means that Facebook *can* have access to any data uploaded to those servers.
 3. Oculus Headset has cameras and software that builds a 3D map of my room, which *can* be uploaded to the servers.
