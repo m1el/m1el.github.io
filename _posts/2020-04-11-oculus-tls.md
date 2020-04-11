@@ -83,7 +83,7 @@ The `CreateRemoteThread` DLL injection is itself a simple technique on Windows, 
 
 The code for `injector.exe` is [here][ote-injector].
 
-## Extracting the data
+## Running from inside the process
 
 After the DLL was injected, it can patch the code in-memory and log secret keys.
 
