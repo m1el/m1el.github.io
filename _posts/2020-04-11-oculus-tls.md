@@ -21,7 +21,7 @@ One of those programs is Oculus software.  There are a few reasons why I want to
 Fortunately, I can use programs such as Wireshark or tcpdump to inspect traffic sent to the servers.  
 Fortunately, Oculus is using TLS so that a third party cannot snoop on this data in transit.  
 Unfortunately, I am playing a role of "third party" in this case.  
-Fortunately, it's possible to read process memory and extract secret keys and inspect TLS data.
+Fortunately, it's possible to read process memory and extract secret keys ([TLS session master key + client random][mozilla-ssl-keylog]) and inspect TLS data.
 
 ## Things that didn't work
 
