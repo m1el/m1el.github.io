@@ -109,7 +109,7 @@ The code for `injectee.dll` is [here][ote-injectee].
 
 If you're interested, the entire code for the project is here: [github.com/m1el/oculus-tls-extractor](https://github.com/m1el/oculus-tls-extractor)
 
-Analysis of the data being sent by Oculus Runtime to the mothership is coming up in the follow-up post.
+Analysis of the data being sent by Oculus Runtime to the mothership is [in the follow-up post][followup].
 
 [oculus-pp]: https://www.oculus.com/legal/privacy-policy/ "Oculus Privacy Policy (Last Updated: December 27, 2019)"
 [wireshark-tls]: https://wiki.wireshark.org/TLS "Wireshark wiki: TLS"
@@ -120,3 +120,4 @@ Analysis of the data being sent by Oculus Runtime to the mothership is coming up
 [ote-injector]: https://github.com/m1el/oculus-tls-extractor/blob/master/injector.rs "Oculus TLS Extractor -- injector.rs"
 [ote-injectee]: https://github.com/m1el/oculus-tls-extractor/blob/master/injectee.rs "Oculus TLS Extractor -- injectee.rs"
 [ote-ssl-inspector]: https://github.com/m1el/oculus-tls-extractor/blob/master/ssl_inspector.c "Oculus TLS Extractor -- ssl_inspector.c"
+[followup]: http://m1el.github.io/oculus-tls-extract/results.html "What does Oculus Runtime send home?"

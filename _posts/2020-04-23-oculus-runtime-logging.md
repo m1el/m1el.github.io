@@ -7,7 +7,7 @@ date: 2020-04-23 13:17
 
 I wanted to know what data Oculus Runtime sends home.
 To do that, I've [implemented a custom tool](/oculus-tls-extract/)
-to extract TLS keys from a runnning Oculus Runtime instance.
+to extract TLS keys from a running Oculus Runtime instance.
 
 You can find my findings below.
 
