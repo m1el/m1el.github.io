@@ -233,8 +233,8 @@ The findings were rather boring.  The most egregious things I've found were:
 
 I would like it if Oculus didn't send this information home, but this probably won't happen.
 
-My analysis of the logs is incomplete, if you'd like to do this yourself, feel free to
-inspect [the logs I've captured myself][some-log] or capture your own logs using [the tool I wrote][oculus-tls-extractor].
+My analysis of the logs is incomplete, if you'd like to do inspect the data yourself, feel free to
+take a look at [the logs I've captured myself][some-log] or capture your own logs using [the tool I wrote][oculus-tls-extractor].
 
 [some-log]: https://gist.github.com/m1el/0f10913c1a58ba1cea92a813065ab857 "Edited logs from oculus runtime"
 [oculus-tls-extractor]: https://github.com/m1el/oculus-tls-extractor "Oculus TLS Extractor"
