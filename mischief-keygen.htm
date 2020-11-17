@@ -10,15 +10,16 @@
     <script>
     var input, output, copyButton;
     var update = function() {
-        var email = input.value;
-        if (email.length > 32) {
+        // Take input, trim whitespace
+        var email = input.value.replace(/^\s+|\s+$/g, '');
+        if (email === '') {
+            output.value = '';
+        } else if (email.length > 32) {
             output.value = 'Email needs to be shorter than 32 chars';
-            return;
+        } else {
+            // This is the actual keygen :)
+            output.value = md5(0xaa7bfd + email);
         }
-        // Trim whitespace
-        email = email.replace(/^\s+|\s+$/g, '');
-        // This is the actual keygen :)
-        output.value = md5(0xaa7bfd + email);
     };
     var copy = function() {
         if (output.value.length !== 32) {
