@@ -56,11 +56,11 @@
     #c{position:absolute;z-index:-1;fill:#fff}
     </style>
 <script>
-F=x=>(c.style.fill=`#${Math.random().toString(16).substr(2,6)}`,x)
-x=F(42);y=69;v=4;h=4;(f=requestAnimationFrame)(r=()=>{s=c.style
+var F=x=>(c.style.fill=`#${Math.random().toString(16).substr(2,6)}`,x),
+x=42,y=69,v=4,h=4,f=requestAnimationFrame,r=s=>{s=c.style
 s.top=y+=v=y<4?F(4):y>window.innerHeight-113?F(-4):v
 s.left=x+=h=x<4?F(4):x>window.innerWidth-214?F(-4):h
-f(r)})
+f(r)};window.onload=_=>F(r())
 </script>
 </head>
 <body>
