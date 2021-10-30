@@ -137,7 +137,7 @@ thus `InputLength ^ Chunk = InvAesDec4Times(Hash) ^ DefaultSeed`.
 
 ## Actually Inverting `_mm_aesdec_si128(Hash, Zero)`
 
-The has function is using AES primitives in a non-standard way, so some work
+The hass function is using AES primitives in a non-standard way, so some work
 is required to invert the operation.
 
 Let's look at the operation of four AES-NI intrinsics:
