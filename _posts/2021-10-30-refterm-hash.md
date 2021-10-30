@@ -345,7 +345,7 @@ Do not claim that you have built a cryptographically secure hash function if you
 
 The attack code is available here: [github.com/m1el/refterm-hash-break][refterm-hash-break].
 
-The mitigations are available here: [github.com/cmuratori/refterm/pull/33][refterm-pr].
+The mitigations are available here: [github.com/cmuratori/refterm/pull/40][refterm-pr].
 
 [refterm-git]: https://github.com/cmuratori/refterm/ "Refterm v2, a reference terminal renderer"
 [refterm-hash]: https://github.com/cmuratori/refterm/blob/20a063f3700ac4c2913076864cb560301e76b2dc/refterm_example_source_buffer.c#L166-L227
@@ -358,4 +358,4 @@ The mitigations are available here: [github.com/cmuratori/refterm/pull/33][refte
 [tinyaes]: https://github.com/kokke/tiny-AES-c "Tiny AES in C"
 [refterm-hash-break]: https://github.com/m1el/refterm-hash-break "A POC for breaking refterm hash"
 [wiki-davies-meyer]: https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer "One-way compression function: Davies–Meyer"
-[refterm-pr]: https://github.com/cmuratori/refterm/pull/32
+[refterm-pr]: https://github.com/cmuratori/refterm/pull/40
