@@ -37,6 +37,7 @@ The hash function `ComputeGlyphHash` is loacted in [refterm\_example\_source\_bu
 - And fed through the same bit mixing method as described above
 
 In FP terms, this could be described as:
+
 ```Rust
 ComputeHash(Input) = ZeroPad(Input, 16).chunks_exact(16)
     .fold(Length ^ DefaultSeed, |Hash, Chunk| AesDec4Times(Hash ^ Chunk, Zero))
@@ -64,6 +65,7 @@ If we use the value `0x01` for the first byte, the produced hash of the string
 `"\x01"` will be the same as the hash of the string `""`.
 
 Example of collisions:
+
 ```
 message: "",      hash: [41148b628ab49fce6d55977058831078]
 message: "\x01",  hash: [41148b628ab49fce6d55977058831078]
@@ -82,6 +84,7 @@ inexpensive solution would be to set padding bytes to overhang length.
 This only works if the overhang chunk is always calculated.
 
 Example code:
+
 ```C
     // Read the last block
     char Temp[16];
@@ -170,6 +173,7 @@ To invert `_mm_aesdec_si128`, we need to run it in reverse, with the opposite op
 `InvShiftRows -> InvSubBytes -> InvMixColumns` is inverted to: `MixColumns -> SubBytes -> ShiftRows`.
 
 Initially, `InvAesDec` was implemented using primitives from [Tiny AES in C][tinyaes],
+
 ```C
 __m128i InvAesDec(__m128i data, __m128i key) {
     // Implemented in terms of aes primitives, using tiny-aes
@@ -183,6 +187,7 @@ __m128i InvAesDec(__m128i data, __m128i key) {
 
 Furthermore, Discord user `@davee` has helpfully pointed out that the same operation
 can be implemented using AES-NI intrinsics the following way:
+
 ```C
 __m128i InvAesDec(__m128i data, __m128i key) {
     // Implemented using AES-NI intrinsics, credit to @davee
@@ -194,6 +199,7 @@ __m128i InvAesDec(__m128i data, __m128i key) {
 ```
 
 Why does this work?  Let's write out the operations:
+
 ```
 // aesdec(data, key)
 // the operation we would like to invert
@@ -211,6 +217,7 @@ ShiftRows, SubBytes, XOR zero,
 All `XOR zero` operations are no-ops, and can be omitted.
 Two `XOR Key` operations are next to each other, so they cancel each other.
 So we are left with these ten:
+
 ```
 InvShiftRows, InvSubBytes, InvMixColumns,
 InvShiftRows, InvSubBytes,
@@ -229,6 +236,7 @@ Because of what `(Inf)ShiftRows`. and `(Inv)SubBytes` do, they commute.
 Byte substitution is position-independent, and byte swapping is independent of contents.
 
 Let's rewrite the operations by swapping consecutive `InvShiftRows` and `InvSubBytes`:
+
 ```
 InvSubBytes(5), InvShiftRows(4), InvMixColumns(3),
 InvSubBytes(2), InvShiftRows(1),
@@ -242,6 +250,7 @@ Therefore, `InvAesDec(AesDec(data, key), key)` is a no-oop. QED
 Since we're interested in inverting four rounds of `AesEnc`, rather than
 calling `InvAesDec` four times, we can optimize this operation.
 Note: the `xor` operations can be omitted in this case since the key is zero.
+
 ```C
 __m128i InvAesDecX4(__m128i data, __m128i key) {
     __m128i zero = _mm_setzero_si128();
@@ -305,6 +314,7 @@ ComputeHash(Input) = SecurePad(Input, 16).chunks_exact(16)
 ```
 
 The implementation of this construction for refterm bit mixing operation would look like this:
+
 ```C
 __m128i PreviousHash = HashValue;
 HashValue = _mm_aesdec_si128(HashValue, In);
