@@ -143,6 +143,7 @@ is required to invert the operation.
 Let's look at the operation of four AES-NI intrinsics:
 [\_mm\_aesdec\_si128][intel-aesdec], [\_mm\_aesdeclast\_si128][intel-aesdeclast],
 [\_mm\_aesenc\_si128][intel-aesenc], [\_mm\_aesenclast\_si128][intel-aesenclast]:
+
 ```
 _mm_aesdec_si128
 a[127:0] := InvShiftRows(a[127:0])
