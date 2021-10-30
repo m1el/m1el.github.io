@@ -15,7 +15,7 @@ The key in this table is the UTF-8 string of a single glyph.  To avoid string
 allocations, the hash value of the glyph bytes is used as a key instead.
 
 When Casey got asked about the possibility of hash collisions on stream,
-he responded with a claim that the hash function used in refterm is "a strong hash",
+he responded with a claim that the hash function used in refterm is ["a strong hash"][stream-quote],
 and the complexity to find collision is about 2^64 operations.
 After analyzing the code for the hash function used in refterm, a few flaws
 were found in the hash function, and O(1) attacks were discovered.
@@ -348,6 +348,7 @@ The attack code is available here: [github.com/m1el/refterm-hash-break][refterm-
 The mitigations are available here: [github.com/cmuratori/refterm/pull/40][refterm-pr].
 
 
+[stream-quote]: https://www.twitch.tv/videos/1185903786?t=0h16m52s
 [refterm-git]: https://github.com/cmuratori/refterm/ "Refterm v2, a reference terminal renderer"
 [refterm-hash]: https://github.com/cmuratori/refterm/blob/20a063f3700ac4c2913076864cb560301e76b2dc/refterm_example_source_buffer.c#L166-L227
 [refterm-commit]: https://github.com/cmuratori/refterm/blob/20a063f3700ac4c2913076864cb560301e76b2dc/refterm_example_source_buffer.c#L213-L217
