@@ -38,7 +38,7 @@ The hash function `ComputeGlyphHash` is loacted in [refterm\_example\_source\_bu
 
 In FP terms, this could be described as:
 
-```Rust
+```rust
 ComputeHash(Input) = ZeroPad(Input, 16).chunks_exact(16)
     .fold(Length ^ DefaultSeed, |Hash, Chunk| AesDec4Times(Hash ^ Chunk, Zero))
 ```
@@ -85,7 +85,7 @@ This only works if the overhang chunk is always calculated.
 
 Example code:
 
-```C
+```c
     // Read the last block
     char Temp[16];
     __movsb((unsigned char *)Temp, At, Overhang);
@@ -175,7 +175,7 @@ To invert `_mm_aesdec_si128`, we need to run it in reverse, with the opposite op
 
 Initially, `InvAesDec` was implemented using primitives from [Tiny AES in C][tinyaes],
 
-```C
+```c
 __m128i InvAesDec(__m128i data, __m128i key) {
     // Implemented in terms of aes primitives, using tiny-aes
     data = _mm_xor_si128(data, key);
@@ -189,7 +189,7 @@ __m128i InvAesDec(__m128i data, __m128i key) {
 Furthermore, Discord user `@davee` has helpfully pointed out that the same operation
 can be implemented using AES-NI intrinsics the following way:
 
-```C
+```c
 __m128i InvAesDec(__m128i data, __m128i key) {
     // Implemented using AES-NI intrinsics, credit to @davee
     data = _mm_xor_si128(data, key);
@@ -252,7 +252,7 @@ Since we're interested in inverting four rounds of `AesEnc`, rather than
 calling `InvAesDec` four times, we can optimize this operation.
 Note: the `xor` operations can be omitted in this case since the key is zero.
 
-```C
+```c
 __m128i InvAesDecX4(__m128i data, __m128i key) {
     __m128i zero = _mm_setzero_si128();
     data = _mm_xor_si128(data, key);
@@ -309,14 +309,14 @@ The hash function in refterm is most similar to [Davies-Meyer][wiki-davies-meyer
 given a cryptographically secure symmetrical encryption function `Encrypt`, produces a secure one-way function.
 It can be expressed in FP terms the following way:
 
-```Rust
+```rust
 ComputeHash(Input) = SecurePad(Input, 16).chunks_exact(16)
     .fold(Zero, |Hash, Chunk| Hash ^ Encrypt(Hash, Chunk))
 ```
 
 The implementation of this construction for refterm bit mixing operation would look like this:
 
-```C
+```c
 __m128i PreviousHash = HashValue;
 HashValue = _mm_aesdec_si128(HashValue, In);
 HashValue = _mm_aesdec_si128(HashValue, In);
