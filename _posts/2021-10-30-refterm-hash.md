@@ -8,7 +8,7 @@ date: 2021-10-30T20:13:11Z
 Recently, Casey Muratori has implemented a [proof-of-concept terminal][refterm-git],
 which is designed around fast input processing and rendering.  This is an important
 and commendable effort, since the vast majority of software performs tens to
-thouthands of times slower than it can.<sup>\[citation needed\]</sup>
+thousands of times slower than it can.<sup>\[citation needed\]</sup>
 
 One of the design choices of refterm is to use a hash table to cache glyph rendering.
 The key in this table is the UTF-8 string of a single glyph.  To avoid string
@@ -24,7 +24,7 @@ were found in the hash function, and O(1) attacks were discovered.
 
 All the source code presented here was the most recent refterm code at the moment
 of writing this post, commit 20a063f3700ac4c2913076864cb560301e76b2dc.
-The hash function `ComputeGlyphHash` is loacted in [refterm\_example\_source\_buffer.c:166][refterm-hash].
+The hash function `ComputeGlyphHash` is located in [refterm\_example\_source\_buffer.c:166][refterm-hash].
 
 ## Operation of the hash
 
