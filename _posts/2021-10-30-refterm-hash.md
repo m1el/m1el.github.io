@@ -15,8 +15,8 @@ The key in this table is the UTF-8 string of a single glyph.  To avoid string
 allocations, the hash value of the glyph bytes is used as a key instead.
 
 When Casey got asked about the possibility of hash collisions on stream,
-he responded with a claim that the hash function used in refterm is "cryptographically
-secure", and the complexity to find collision is about 2^64 operations.
+he responded with a claim that the hash function used in refterm is "a strong hash",
+and the complexity to find collision is about 2^64 operations.
 After analyzing the code for the hash function used in refterm, a few flaws
 were found in the hash function, and O(1) attacks were discovered.
 
