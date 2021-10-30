@@ -29,7 +29,7 @@ footer-links:
   linkedin:
   pinterest:
   rss: # just type anything here for a working RSS icon, make sure you set the "url" above!
-  twitter: qbz32
+  # twitter: qbz32
   stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
   youtube: user/qbz32 # channel/<your_long_string> or user/<user-name>
 
