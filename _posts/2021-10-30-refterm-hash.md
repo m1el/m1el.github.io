@@ -46,7 +46,7 @@ ComputeHash(Input) = ZeroPad(Input, 16).chunks_exact(16)
 ## Flaw 1: Padding weakness
 
 The [input padding][padding-src] is done by zero-padding.  This means that
-inputs that if the last block ends with zeros, the result of processing this
+if the last block ends with zeros, the result of processing this
 block is going to be the same as if that block was right-trimmed of nul bytes.
 
 ```
