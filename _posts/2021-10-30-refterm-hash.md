@@ -341,7 +341,7 @@ These attacks and mitigations could have been found and implemented by anyone wi
 
 Do not roll your own crypto if you don't know what you're doing.
 
-Do not claim that you have built a cryptographically secure hash function if you didn't pass it through nine circles of peer review hell.
+Do not claim that you have built a strong hash function if you didn't pass it through nine circles of peer review hell.
 
 The attack code is available here: [github.com/m1el/refterm-hash-break][refterm-hash-break].
 
