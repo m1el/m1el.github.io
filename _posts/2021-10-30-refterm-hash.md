@@ -347,6 +347,7 @@ The attack code is available here: [github.com/m1el/refterm-hash-break][refterm-
 
 The mitigations are available here: [github.com/cmuratori/refterm/pull/40][refterm-pr].
 
+
 [refterm-git]: https://github.com/cmuratori/refterm/ "Refterm v2, a reference terminal renderer"
 [refterm-hash]: https://github.com/cmuratori/refterm/blob/20a063f3700ac4c2913076864cb560301e76b2dc/refterm_example_source_buffer.c#L166-L227
 [refterm-commit]: https://github.com/cmuratori/refterm/blob/20a063f3700ac4c2913076864cb560301e76b2dc/refterm_example_source_buffer.c#L213-L217
