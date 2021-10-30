@@ -5,7 +5,6 @@ title: How (Not) to Design a Hash Function
 date: 2021-10-30T20:13:11Z
 ---
 
-# How (Not) to Design a Hash Function
 Recently, Casey Muratori has implemented a [proof-of-concept terminal][refterm-git],
 which is designed around fast input processing and rendering.  This is an important
 and commendable effort, since the vast majority of software performs tens to
