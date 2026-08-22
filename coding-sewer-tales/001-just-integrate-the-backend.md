@@ -4,6 +4,7 @@ title: Just integrate the backend
 permalink: /coding-sewer-tales/001-just-integrate-the-backend/
 series: coding-sewer-tales
 order: 1
+mermaid: true
 ---
 
 Hi, my name is Igor and I'm going to tell you a story about the very first task I completed in a commercial SWE setting.
@@ -14,8 +15,8 @@ I was a lil baby, full of hope and wonder.  Eager to be productive and getting p
 We're porting this control panel from native C++ UI to the new shiny thing named HTML+JavaScript.
 A developer from the Product Co. has already implemented the full REST backend for the project.  We have the graphical design.
 Your goal is to implement the Web UI per design and make it work with the backend.  K does the QA for the project.  Any questions?"  
-"Sounds great.  Can I talk to the backend guy?"  
-"He's currently on vacation for two weeks."  
+"Sounds great.  Can I talk to the backend guy?"  
+"He's currently on vacation for two weeks."  
 "API docs?  Server available?"  
 "Don't worry about that, you can start implementing the UI, and integrate later."  
 "There's too much uncertainty here."  
@@ -125,7 +126,7 @@ Eventually the machine prints the ticket number 42.
 Do you *expect* the events to happen in that order?
 But anyway, I cussed under my breath, and wrote some code to handle that.
 
-How do you distinguish different clients?  Now truly, unless the web server does some magic, there's no information which would allo it to distinguish different clients.  And then we'd be screwed, because then the integration is literally impossible.  Then I open \[dramatic music\] the *second tab*.
+How do you distinguish different clients?  Now truly, unless the web server does some magic, there's no information which would allow it to distinguish different clients.  And then we'd be screwed, because then the integration is literally impossible.  Then I open \[dramatic music\] the *second tab*.
 Now, what do you think is going to happen?
 
 - A. Magic.  The server magically figures out the way to respond to the matching tabs.
@@ -137,13 +138,13 @@ I make a request in the first tab... and I get no response.  No response in the 
 
 So yeah, this is why I grew wary of "just integrate X".
 
-"That was a good story, diving deep enough in technical parts, showing initiative and communication.  However, when you tell a story it's better if you end on a positive note", the sales lady told me.
+"That was a good story, diving deep enough in technical parts, showing initiative and communication.  However, when you tell a story it's better if you end on a positive note", the sales lady told me.  
 "Oh, I was *just* getting to the positive note to this story.  After two months or so, someone finally reviewed the C++ web server.  The entire server was trashed immediately.  The review was so scorching that the guy who wrote it got re-evaluated and promptly fired."  
 \[Speechless stickguy\] "☝️... 😐"  
 
 ## Root Cause Analysis / Lessons learned
 
-- The biggest contributor is the process.  The architecture of the web server was not reviewed for *months* of active development.  I brought up the issue of the web server being terrible immediately, and there was nobody to verify the claim.
+- The biggest contributor to such a huge failure is the process.  The architecture of the web server was not reviewed for *months* of active development.  I brought up the issue of the web server being terrible immediately, and there was nobody to verify the claim.
 - No, you shouldn't "integrate the thing" before the thing exists.  
   Or if the contract does not exist.  You can't dig a tunnel from two ends without a proper plan.
 - Since then I trust my own judgment much more. If my brain screams at me that something is not right, I'm going to stop and investigate.  
