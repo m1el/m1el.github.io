@@ -10,8 +10,8 @@ Hi, my name is Igor and I'm going to tell you a story about the very first task 
 
 I was a lil baby, full of hope and wonder.  Eager to be productive and getting paid the big bucks.
 
-"You're working as part of outstaffing team for Product Co.
-We're porting this contol panel from native C++ UI to the new shiny thing named HTML+JavaScript.
+"You're working as part of an outstaffing team for Product Co.
+We're porting this control panel from native C++ UI to the new shiny thing named HTML+JavaScript.
 A developer from the Product Co. has already implemented the full REST backend for the project.  We have the graphical design.
 Your goal is to implement the Web UI per design and make it work with the backend.  K does the QA for the project.  Any questions?"  
 "Sounds great.  Can I talk to the backend guy?"  
@@ -19,9 +19,9 @@ Your goal is to implement the Web UI per design and make it work with the backen
 "API docs?  Server available?"  
 "Don't worry about that, you can start implementing the UI, and integrate later."  
 "There's too much uncertainty here."  
-Doesn't sound too reassuring.  I've had a suspicion at the moment that working with the backend might be an issue, but I didn't expect the sheer scale of the catastrophe.
+Doesn't sound too reassuring.  I had a suspicion at the moment that working with the backend might be an issue, but I didn't expect the sheer scale of the catastrophe.
 
-Over the next two weeks, I've bootstrapped the project, implemented the one screen of UI which was provided, wrote some simple mocks for a fictional data schema that I thought of.  Gave it to QA to poke around, mentioned out that all data is fake.  
+Over the next two weeks, I bootstrapped the project, implemented the one screen of UI which was provided, wrote some simple mocks for a fictional data schema that I thought of.  Gave it to QA to poke around,  mentioned that all data is fake.  
 "I've implemented the screen I was provided in UI only, but I am uncertain about the integration."  
 "What's the problem?  Can't you just integrate the backend?"  
 "When I was told to paint the fence, I thought at least there would be a fence.
@@ -32,19 +32,19 @@ I've been working using a completely fictional API and schema, and I've yet to s
 (Tomorrow)
 
 "Hey V, hello there.  Hope you had a good vacation."  
-"Hi. yeah, it's been quite busy."  
+"Hi.  Yeah, it's been quite busy."  
 "I'm working on Web UI here, and this Web UI is supposed to talk to the RESTful backend.  So, could you tell me how to use it?"  
 "Oh yeah, it's super easy, barely an inconvenience!
 You just make `POST` requests to the endpoint and then get the responses."  
 "What's the list of endpoints?  Do you have API docs? Swagger?  How does authorization work?"  
-"There's one endpoint.  To login you `POST` your login data, and the (other backend) connection is persistent."  
+"There's one endpoint.  To log in, you `POST` your login data, and the (other backend) connection is persistent."  
 \[Oh no.\] "What?  Persistent how?  How did you test the server?"  
 "You'll see, the web server is running over this `IP:port`.
 I'll send you login credentials later."  
 
-So I spent the entire day making requests to the server, and there are good news and bad news.  
+So I spent the entire day making requests to the server, and there is good news and bad news.  
 The good news is that the server was responding.  
-The bad news is that all of the responses were exactly the same.  Regardless of request format, endpoint path, payload, headers, anything I could vary.
+The bad news is that all of the responses were exactly the same.  Regardless of request format, endpoint path, payload, headers and anything I could vary.
 
 Here's the full response, annotated:
 
@@ -56,17 +56,17 @@ Content-Type: application/json  # I promise the response body is valid JSON
 # ^that was the end of the response, the body is empty
 ```
 
-There are a few reasons why this concerning:
-First of all, an empty string is not a valid JSON, OK?
+There are a few reasons why this is concerning:
+First of all, an empty string is not valid JSON, OK?
 Second, if all the responses are exactly the same, regardless of the request, it means you can't know if you're succeeding or failing, and the most likely answer is that you're always failing.
 
 So I bring it up with V.
 
 "Hey, I tried using your 'REST' backend, and I failed to get any meaningful response from it whatsoever."  
 "What's the issue?"  
-"Let's start with the simple one, which is the server always returns `HTTP/200` with empty response, when `content-type: application/json`."  
+"Let's start with the simple one, which is the server always returns `HTTP/200` with an empty response, when `content-type: application/json`."  
 "What's the problem with that?"  
-"For stsarters, an empty string is not valid JSON, but more importantly-"  
+"For starters, an empty string is not valid JSON, but more importantly-"  
 "What would be a minimal valid JSON?"  
 "... what?  The simplest valid JSON response would be an empty dict or an empty array, but you're missing the point, which is-"  
 "OK, I'll change the backend to return an empty array."  
@@ -86,7 +86,7 @@ At this point, I thought "I need an adult", but there were none in the room.  So
 "We'll look into that.  Meanwhile, continue working on the integration."  
 \[unamused\] "😒"
 
-At this point, my main concern was that I'm a relatively new developer, so I don't even know if what I'm experiencing is *normal*.  I can't really trash talk the existing code because I don't know what quality is *expected*, what is *allowed*, and how much people are going to listen to- or trust me.
+At this point, my main concern is that I'm a relatively new developer, so I don't even know if what I'm experiencing is *normal*.  I can't really trash talk the existing code because I don't know what quality is *expected*, what is *allowed*, and how much people are going to listen to- or trust me.
 Talking to the developer didn't reassure me that the issues are even *understood*.
 Bringing up the issues with my direct manager didn't seem to yield any action.
 I didn't have any friends technical enough that I could consult them.
@@ -96,14 +96,14 @@ The only thing going through my head is "Holy shit, this is the worst API I've s
 After exhausting all other options, begrudgingly, I started integrating this API into the UI.  The main difficulty at the moment was the double-async + stateful nature of the protocol.
 What made things worse, we had to be compatible with Interne Explorer 8, so `Promise` was out.  Oh, and bringing third-party JS libraries was not allowed.  And also I was not allowed to implement `Promise` myself. ([I did it later anyway](https://gist.github.com/m1el/2ada9eaedf7b0815f4e8b9973561c5d6))
 
-With those constraints, lack of knowledge, lack of tools, weird ass doubly async API, I wrote the worst JS code of my life.  But hey, it finally worked.  For some definition of worked...
+With those constraints, lack of knowledge, lack of tools, weird-ass doubly async API, I wrote the worst JS code of my life.  But hey, it finally worked.  For some definition of worked...
 
-How does it address the two questions I've had to the developer?  Let's test!
+How does it address the two questions I had to the developer?  Let's test!
 
 How do I know which response corresponds to which request?  Well, lucky me, when I make a request I get a response: `{"request_id": 42}`, and the long-poll endpoint responds with `{"request_id": 42, ...payload}`.
 No big deal, we're going to have a global dict which stores callbacks for specific request ids.  And when we get a corresponding response, the function gets called.
 
-Except I get an error: `"unknown request_id: 42, no matching callback"`.   What?  I clearly see in the network tab that the server does respond with `{"request_id": 42}` to the request, and the long-poll endpoint responds with `{"request_id": 42, ...payload}`...
+Except I get an error: `"unknown request_id: 42, no matching callback"`.  What?  I clearly see in the network tab that the server does respond with `{"request_id": 42}` to the request, and the long-poll endpoint responds with `{"request_id": 42, ...payload}`...
 
 And it turns out that the long-poll endpoint responds *before* the endpoint that makes the request!  So I was getting a response *before* I registered the callback for that specific ID.
 
@@ -125,7 +125,7 @@ Eventually the machine prints the ticket number 42.
 Do you *expect* the events to happen in that order?
 But anyway, I cussed under my breath, and wrote some code to handle that.
 
-How do you distinguish different clients?  Now truly, unless the web server does some magic, there's no information which would allo it to distinguish different client.  And then we'd be screwed, because then the integration is literally impossible.  Then I open \[dramatic music\] the *second tab*.
+How do you distinguish different clients?  Now truly, unless the web server does some magic, there's no information which would allo it to distinguish different clients.  And then we'd be screwed, because then the integration is literally impossible.  Then I open \[dramatic music\] the *second tab*.
 Now, what do you think is going to happen?
 
 - A. Magic.  The server magically figures out the way to respond to the matching tabs.
