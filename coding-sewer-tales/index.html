@@ -1,0 +1,20 @@
+---
+layout: page
+title: Coding Sewer Tales
+permalink: /coding-sewer-tales/
+---
+
+<p>Stories from the sewers of commercial software development.</p>
+
+<div class="posts">
+{% assign tales = site.pages | where: "series", "coding-sewer-tales" | sort: "order" %}
+{% for tale in tales %}
+  <article class="post">
+    <h1><a href="{{ site.baseurl }}{{ tale.url }}">{{ tale.title }}</a></h1>
+    <div class="entry">
+      {{ tale.content | strip_html | truncatewords: 50 }}
+    </div>
+    <a href="{{ site.baseurl }}{{ tale.url }}" class="read-more">Read More</a>
+  </article>
+{% endfor %}
+</div>
