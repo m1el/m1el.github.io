@@ -1,4 +1,10 @@
-# Just integrate the backend
+---
+layout: page
+title: Just integrate the backend
+permalink: /coding-sewer-tales/001-just-integrate-the-backend/
+series: coding-sewer-tales
+order: 1
+---
 
 Hi, my name is Igor and I'm going to tell you a story about the very first task I completed in a commercial SWE setting.
 

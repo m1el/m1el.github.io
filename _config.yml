@@ -64,7 +64,8 @@ sass:
   style: :expanded # You might prefer to minify using :compressed
 
 # Use the following plug-ins
-gems:
+plugins:
+  - jekyll-paginate # Paginate the blog index
   - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
 
 # Exclude these files from your production _site
@@ -73,3 +74,10 @@ exclude:
     - Gemfile.lock
     - LICENSE
     - README.md
+    - vendor
+    # scratch assets living next to the coding-sewer-tales drafts
+    - coding-sewer-tales/o
+    - coding-sewer-tales/dec_pw
+    - coding-sewer-tales/*.blend
+    - coding-sewer-tales/*.mkv
+    - coding-sewer-tales/cmp_*.png
