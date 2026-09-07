@@ -28,7 +28,8 @@ IV = bytes.fromhex("DEADBEEFBAADF00D")
 def brute_decrypt(bf, ciphertext, iv=IV, on_attempt=None):
     """Recover plaintext from ciphertext using only bf.encrypt().
 
-    on_attempt(pos, guess, recovered, matched) is called for every trial.
+    on_attempt(pos, guess, recovered, matched, trial_byte) is called for every
+    trial; trial_byte is the ciphertext byte the guess produced at position pos.
     Returns the recovered plaintext (without the IV prefix).
     """
     recovered = bytearray()
@@ -37,7 +38,7 @@ def brute_decrypt(bf, ciphertext, iv=IV, on_attempt=None):
             trial = bf.encrypt(bytes(recovered) + bytes([guess]), iv)
             matched = trial[pos] == ciphertext[pos]
             if on_attempt:
-                on_attempt(pos, guess, bytes(recovered), matched)
+                on_attempt(pos, guess, bytes(recovered), matched, trial[pos])
             if matched:
                 recovered.append(guess)
                 break
@@ -48,45 +49,79 @@ def brute_decrypt(bf, ciphertext, iv=IV, on_attempt=None):
 
 # --- terminal animation ------------------------------------------------------
 
-GREEN, YELLOW, DIM, RESET = "\x1b[32m", "\x1b[33m", "\x1b[2m", "\x1b[0m"
+GREEN, YELLOW, RED, DIM, RESET = "\x1b[32m", "\x1b[33m", "\x1b[31m", "\x1b[2m", "\x1b[0m"
+
+
+def _hex_groups(data):
+    return " ".join(f"{b:02x}" for b in data)
 
 
 def _glyph(b):
-    return chr(b) if 0x20 <= b < 0x7F else "·"
+    if b == 0x20:
+        return "␣"
+    return chr(b) if 0x20 < b < 0x7F else "·"
 
 
 def animate(bf, ciphertext, delay=0.002, out=sys.stdout):
-    total = len(ciphertext) - len(IV)
+    """Show the target ciphertext and the trial ciphertext being matched byte by byte.
+
+    Three lines: the target ciphertext we're trying to reproduce, the ciphertext
+    of IV + recovered_prefix + guess, and the password recovered so far with each
+    character aligned under its ciphertext byte.  The IV prefix is dim (already
+    known), bytes matched so far are green, the byte under attack is yellow on the
+    target and password lines and red/green on the trial line depending on
+    whether the guess hit.
+    """
+    iv_len = len(IV)
+    total = len(ciphertext) - iv_len
     attempts = [0]
+    ciphertext_pw = bytearray()  # plaintext recovered so far, for the password line
     start = time.monotonic()
     tty = out.isatty()
 
-    def on_attempt(pos, guess, recovered, matched):
+    def render(pos, guess, trial_byte, matched, done_n):
+        # pos is the absolute index into the ciphertext; done_n = matched bytes so far
+        iv_hex = _hex_groups(ciphertext[:iv_len])
+        done_hex = _hex_groups(ciphertext[iv_len:iv_len + done_n])
+        cur_hex = f"{ciphertext[pos]:02x}"
+        rest_hex = _hex_groups(ciphertext[pos + 1:])
+        sep = " " if done_n else ""
+        colour = GREEN if matched else RED
+        target = (f"{DIM}{iv_hex}{RESET} {GREEN}{done_hex}{RESET}{sep}"
+                  f"{GREEN if matched else YELLOW}{cur_hex}{RESET} {DIM}{rest_hex}{RESET}")
+        trial_hex = f"{trial_byte:02x}"
+        trial = (f"{DIM}{iv_hex}{RESET} {GREEN}{done_hex}{RESET}{sep}"
+                 f"{colour}{trial_hex}{RESET}")
+        # one glyph per byte, padded to the 3-column hex cells above
+        pad = " " * (len(iv_hex) + 1)
+        done_pw = "".join(f"{_glyph(b)}  " for b in ciphertext_pw[:done_n])
+        rest_pw = "  ".join("." for _ in range(total - done_n - 1))
+        password = (f"{pad}{GREEN}{done_pw}{RESET}"
+                    f"{GREEN if matched else YELLOW}{_glyph(guess)}{RESET}  {DIM}{rest_pw}{RESET}")
+        out.write(
+            f"\x1b[2K\r"
+            f"byte {min(done_n + 1, total):>3}/{total}  "
+            f"guess 0x{guess:02x}  "
+            f"attempts {attempts[0]:>6}  \n"
+            f"\x1b[2K\r  target {target}\n"
+            f"\x1b[2K\r  trial  {trial}\n"
+            f"\x1b[2K\r  passwd {password}"
+            f"\x1b[3A"
+        )
+        out.flush()
+
+    def on_attempt(pos, guess, recovered, matched, trial_byte):
         attempts[0] += 1
         if not tty:
             return
-        done = "".join(_glyph(b) for b in recovered)
-        rest = "." * (total - len(recovered) - 1)
-        chars = f"{GREEN}{done}{YELLOW}{_glyph(guess)}{DIM}{rest}{RESET}"
-        hexline = f"{GREEN}{recovered.hex()}{YELLOW}{guess:02x}{DIM}{'..' * len(rest)}{RESET}"
-        elapsed = time.monotonic() - start
-        out.write(
-            f"\x1b[2K\r"
-            f"byte {len(recovered) + 1:>3}/{total}  "
-            f"guess 0x{guess:02x}  "
-            f"attempts {attempts[0]:>6}  \n"
-            # f"{elapsed:6.2f}s\n"
-            f"\x1b[2K\r  {chars}\n"
-            f"\x1b[2K\r  {hexline}"
-            f"\x1b[2A"
-        )
-        out.flush()
+        ciphertext_pw[:] = recovered
+        render(pos, guess, trial_byte, matched, len(recovered))
         if delay:
             time.sleep(delay)
 
     plaintext = brute_decrypt(bf, ciphertext, on_attempt=on_attempt)
     if tty:
-        out.write("\n\n\n")
+        out.write("\n\n\n\n")
     elapsed = time.monotonic() - start
     out.write(
         f"recovered {len(plaintext)} bytes in {attempts[0]} attempts\n"
