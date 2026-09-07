@@ -49,7 +49,7 @@ The password decryption meetings got postponed, rescheduled and kicked around.  
 
 An important topic this course talks about is vulnerabilities in the encryption schemas.  So I was wondering -- are there any vulnerabilities in this `encrypt_password` schema?
 
-(Note: I'm using a made-up encryption schema that has the same vulnerability, but it has similar properties)
+(Note: I'm using a made-up encryption schema that has the same vulnerability, but it is different from the original)
 
 Let's inspect the outputs and see if there's a pattern.
 
@@ -57,7 +57,7 @@ Let's inspect the outputs and see if there's a pattern.
 >>> encrypt_password(b"foo")
 "EUKYcrNW2zCqWdc="
 hex: 11429872b356db30aa59d7
->>> encrypt_password("bar")
+>>> encrypt_password(b"bar")
 "EUKYcrNW2zCu0zQ="
 hex: 11429872b356db30aed334
 >>> encrypt_password(b"far")
@@ -110,7 +110,7 @@ Three days later my lovely QAs drop one of the wildest bug reports on me.
 The configuration page is very slow.  For some reason the password field grows to megabytes in size, and then the update just stops working.
 
 The only way this size blowup can happen is exponential growth.
-The only source of exponential growth could be encrypt->base64-ing the password over and over.  (Note: encrypted length is `ceil((length + 8)/3)*4`, with 4/3 growth every iteration)  Which means we're sending the encrypted password where we need to send it in plaintext.
+The only source of exponential growth could be encrypt->base64-ing the password over and over.  (Note: encrypted length is `ceil((length + 8)/3)*4`, with 4/3 growth every iteration)  Which means we're sending the encrypted password where plaintext is expected, and the encrypted password gets encrypted again.
 
 Oh no.  I made a booboo somewhere.  I *know* I tested the code.  I covered all of it in e2e tests and I have seen it work.
 Must be a JS issue?  It's always a JS issue.  Nope, that part is robust and I tested it to exhaustion.
@@ -129,7 +129,7 @@ assert encrypt_password(decrypted) == encrypted, \
 
 ## WAT
 
-Apparently, a function that takes a constant string and returns a new string, **SOMETIMES** silently fails and returns the input string.
+Apparently, a function that takes an immutable string and returns a new string, **SOMETIMES** silently fails and returns the input string.
 I understand programming is hard, but having a heisenbug in a *pure* `string->string` function requires advanced incompetence.
 
 I cuss aloud, bring in the crypto-breaking code and send a PR.
@@ -137,7 +137,7 @@ I cuss aloud, bring in the crypto-breaking code and send a PR.
 – "You had the solution to the encrypted password issue the whole time?" the QA asked me.  
 – "For a while, yes."  
 – "Why didn't you say so earlier?"  
-– "You have to understand: it's a vulnerability.  I can't implement server-side features by exploiting Remote Code Execution.  I can't make database requests using SQL Injection.  I can't rely on breaking weak crypto for our code to work.  If I did, I'd have to report those issues as well.  Then you'd have to deal with fixing the bug AND breaking the feature built on top of it.  The reason I pulled this solution is that I got pissed at all the wasted time."  
+– "You have to understand: it's a vulnerability.  I can't implement server-side features by exploiting Remote Code Execution.  I can't make database requests using SQL Injection.  I can't rely on breaking weak crypto for our code to work.  If I did, I'd have to report those issues as well.  Then you'd have to deal with fixing the bug AND breaking the feature built on top of it.  The reason I brought in this solution is that I got pissed at all the wasted time."  
 
 ## Lessons learned?
 
