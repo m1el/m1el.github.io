@@ -14,8 +14,8 @@ To make "Update" in CRUD work, we need two things to work correctly:
 GETting the data, and POSTing a new version back.  What could possibly go wrong?
 
 Turns out, a part of that data is a password.  Normally, you're supposed to hash/PBKDF the passwords.
-Passwords are *usually* not supposed to be encrypted, as the title implies.
-But these passwords are more like authentication tokens, CI secrets.  At some point, someone will need to get the secrets (e.g. to upload artifacts).  There's some control over who can read them in plaintext.
+Passwords are *usually* not supposed to be encrypted, unlike what the title implies.
+But *these* passwords are more like authentication tokens, CI secrets.  At some point, someone will need to get the secrets (e.g. to upload artifacts).  There's some control over who can read them in plaintext.
 
 Now here is why it matters: when you GET the configuration data, the password field is encrypted.  If you're not supposed to have access, you can't get it in plaintext.  For example:
 
@@ -49,16 +49,18 @@ The password decryption meetings got postponed, rescheduled and kicked around.  
 
 An important topic this course talks about is vulnerabilities in the encryption schemas.  So I was wondering -- are there any vulnerabilities in this `encrypt_password` schema?
 
+(Note: I'm using a made-up encryption schema that has the same vulnerability, but it has similar properties)
+
 Let's inspect the outputs and see if there's a pattern.
 
 ```
->>> encrypt_password("foo")
+>>> encrypt_password(b"foo")
 "EUKYcrNW2zCqWdc="
 hex: 11429872b356db30aa59d7
 >>> encrypt_password("bar")
 "EUKYcrNW2zCu0zQ="
 hex: 11429872b356db30aed334
->>> encrypt_password("far")
+>>> encrypt_password(b"far")
 "EUKYcrNW2zCqV/8="
 hex: 11429872b356db30aa57ff
 ```
@@ -70,7 +72,7 @@ What do we see?
 - The encryption of `"foo"` and `"far"` has the same byte in the ciphertext corresponding to `f`
 - The encryption of `"bar"` and `"far"` has different bytes in the ciphertext corresponding to `a` and `r`.
 
-Beause of constant key and IV, and the fact that the first byte can show us if the prefix is correct, we can recover the password, by guessing one byte at a time.
+Because of the constant key and IV, and the fact that the first byte can show us if the prefix is correct, we can recover the password, by guessing one byte at a time.
 
 (Note for an observant reader: the schema I'm using can be broken using XOR on the current byte, instead of brute forcing all 256 values.  I don't know if it's possible on the original code.)
 
@@ -98,7 +100,7 @@ def decrypt_password(enc):
 ![](../decrypt-password.gif)
 
 I completed "Cryptography I", cracked the encryption method, and was sitting there in disbelief.
-Meanwhile, the coordination to schedule a meeting to discuss how to update the configuration has not even started yet.
+Meanwhile, the coordination to schedule a meeting to discuss how to update the configuration was still ongoing.
 
 After a month and a half, they did provide a `decrypt_password` method.
 I already had all the code necessary to do it, all the tests working, so I just swapped my function with the function they provided.  Easy change, "Update" complete.
@@ -108,7 +110,7 @@ Three days later my lovely QAs drop one of the wildest bug reports on me.
 The configuration page is very slow.  For some reason the password field grows to megabytes in size, and then the update just stops working.
 
 The only way this size blowup can happen is exponential growth.
-Exponential growth in the password field means we're encrypt->base64-ing the password multiple times.
+The only source of exponential growth could be encrypt->base64-ing the password over and over.  (Note: encrypted length is `ceil((length + 8)/3)*4`, with 4/3 growth every iteration)  Which means we're sending the encrypted password where we need to send it in plaintext.
 
 Oh no.  I made a booboo somewhere.  I *know* I tested the code.  I covered all of it in e2e tests and I have seen it work.
 Must be a JS issue?  It's always a JS issue.  Nope, that part is robust and I tested it to exhaustion.
@@ -130,7 +132,7 @@ assert encrypt_password(decrypted) == encrypted, \
 Apparently, a function that takes a constant string and returns a new string, **SOMETIMES** silently fails and returns the input string.
 I understand programming is hard, but having a heisenbug in a *pure* `string->string` function requires advanced incompetence.
 
-I cuss aloud, pull the crypto-breaking code and send a PR.
+I cuss aloud, bring in the crypto-breaking code and send a PR.
 
 – "You had the solution to the encrypted password issue the whole time?" the QA asked me.  
 – "For a while, yes."  
@@ -139,9 +141,8 @@ I cuss aloud, pull the crypto-breaking code and send a PR.
 
 ## Lessons learned?
 
-Did I learn anything?  I guess I learned not to roll my own crypto.
+Did I learn anything?  I guess I learned that rolling your own crypto is a bad idea.
 I learned that asserts are really helpful.
 The assert that helped was truly ridiculous; you wouldn't use it in a regular codebase.
 
-If a function has a pure interface, and doesn't change over time, you should be very sorry if it has intermittent failures.
-
+If a function has a pure interface, and doesn't change over time, you should feel ashamed if it has intermittent failures.
