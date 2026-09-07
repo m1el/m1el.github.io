@@ -5,3 +5,6 @@ _site
 vendor
 Gemfile.lock
 .bundle
+node_modules
+.DS_Store
+__pycache__
