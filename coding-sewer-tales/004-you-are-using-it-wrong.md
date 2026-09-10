@@ -25,8 +25,8 @@ I report the result of my investigation in the JIRA ticket, explain it on a dail
 
 Two Fridays later, on a bi-weekly checkup with my manager:
 
-"I noticed you have a bug assigned to you.  It's been three weeks, have you had any progress?"
-"I've investigated it, I have explained that I cannot fix it, it is out of our control.  The issue is in the DB, and we need to contact the DB developers."
+"I noticed you have a bug assigned to you.  It's been three weeks, have you had any progress?"  
+"I've investigated it, I have explained that I cannot fix it, it is out of our control.  The issue is in the DB, and we need to contact the DB developers."  
 "I'll keep that concern in mind."  
 "OK, and I'll send you an email with the summary of what we have so far."  
 
@@ -40,7 +40,7 @@ Here's an email from two months ago with an overview.  Here's a Skype message fr
 Next week: "Hey Igor, so the DB developers told me it's not a DB problem, and they're very good professionals.  They told me you're using the REST API wrong."  
 "Idk what to tell you.  I am certain that I cannot fix it here, it doesn't logically make sense.  We talked about this."  
 "OK, so here's what we're going to do.  I'm going to give you access to the JIRA for the DB, and you're going to make a ticket.  But it needs to be a very good bug report, because the DB developers are busy."  
-"It is going to be the very best bug report."  
+"It is going to be the very best bug report."   
 "Oh, and you can't use the REST API, you need to use only the official vendor tools."  
 "Sure, let's get this over with."  
 
@@ -54,7 +54,7 @@ Isn't the point of a GUID to Globally IDentify an object, Uniquely?"
 "Our system can only list the objects if you give two GUIDs of the parent.  It's for some stupid legacy reason."  
 "And how do I provide the secondary GUID to the CLI?"  
 "RTFM."  
-"I *did* read the manual, cover to cover, there's no mention of a secondary GUID."   
+"I *did* read the manual, cover to cover, there's no mention of a secondary GUID."  
 "Oh yeah, there are secret command line options."  
 "The fuck do you *mean* 'secret command line options'?!  Secret from **WHO**?!
 I have access to the source code, I will [*make it*][you-cant] sing its man page in soprano if I want to!"  
