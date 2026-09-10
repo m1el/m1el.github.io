@@ -15,20 +15,20 @@ I trace all of the DB calls, and I definitely see three things: `move, delete, g
 Doing `delete, get` gets the item deleted.  Doing `move` before that prevents deletion.
 Great, we have a reproducible bug!
 
-Then I think: imagine if the item name is a secret word.
+Let's think about this:
 I perform the dance with move and delete, then run a clean-state backend.
-That backend has no knowledge of the secret word.  No cache, no disk, no memory, it got the secret word from the DB.
-The backend could not have obtained the secret word if only because of a flaw in the DB.
+A freshly started backend, which could not have cached anything, still returns the item, so the flaw is certainly in the DB.
+And also the DB responses logged by the backend list the items.
 Bulletproof logic, cannot be the backend.
 
 I report the result of my investigation in the JIRA ticket, explain it on a daily standup, and say that we need to contact the developers of the DB.
 
-Two Fridays later, on a weekly checkup with my manager:
+Two Fridays later, on a bi-weekly checkup with my manager:
 
 "I noticed you have a bug assigned to you.  It's been three weeks, have you had any progress?"
 "I've investigated it, I have explained that I cannot fix it, it is out of our control.  The issue is in the DB, and we need to contact the DB developers."
-"I'll keep that in mind."  
-"I'll send you an email explaining the situation."  
+"I'll keep that concern in mind."  
+"OK, and I'll send you an email with the summary of what we have so far."  
 
 Two months later:
 
@@ -44,13 +44,14 @@ Next week: "Hey Igor, so the DB developers told me it's not a DB problem, and th
 "Oh, and you can't use the REST API, you need to use only the official vendor tools."  
 "Sure, let's get this over with."  
 
-After poking around with the vendor CLI tools, there's a bit of a roadblock:
+After poking around with the vendor CLI tools, there's a bit of a roadblock.
+Reading the man page didn't help, so I contacted N, one of the people working on the C++ codebase.
 
 "Hey, N.  I am trying to use the vendor CLI tool to make some queries to the DB.
 The CLI tells me that it needs a secondary GUID to fetch items.
 First of all, what is a secondary GUID?
 Isn't the point of a GUID to Globally IDentify an object, Uniquely?"  
-"Our system only can list the objects if you give two GUIDs of the parent.  It's for some stupid legacy reason."  
+"Our system can only list the objects if you give two GUIDs of the parent.  It's for some stupid legacy reason."  
 "And how do I provide the secondary GUID to the CLI?"  
 "RTFM."  
 "I *did* read the manual, cover to cover, there's no mention of a secondary GUID."   
@@ -80,7 +81,6 @@ int main(int argc, char** argv) {
 The problem was, I couldn't "jump to definition", because `ctags` crashed while indexing, and didn't work at all with how they used namespaces.  `grep` for the names returned an immense amount of garbage, because they were using the exact same names for different purposes all over the place.  Visual Studio ran out of RAM on my machine.
 
 You could claim it was a skill issue.  But this kind of roadblock has never happened to me before or after.  And yes, N was right, access to the source code was not very productive.
-The only project which comes somewhat close is AVISynth, which used `boost` for everything, where a mismatch in a minor version of `boost::phoenix` caused 5 megabytes of compiler errors.
 
 But, I wasn't going to give up.  "The strings for command line options are inside this binary.  And I *will* find them."
 So I run `strings` on the file, and lo and behold, there are multiple strings looking like `/FOO` and `/BAR`, all bunched together.
@@ -93,7 +93,7 @@ It was using exclusively vendored tools, with detailed repro steps,
 reproducible 100% of the time,
 with a video of me reproducing it three times in a row,
 showing all relevant system state on video at all times.
-It had the best write-up I've seen on the entire JIRA board.
+It was the best write-up I've seen on the entire JIRA board.
 
 Impeccable.  Clear.  Undeniable.  Now they have no choice but to admit there is a bug–
 
@@ -104,7 +104,7 @@ Impeccable.  Clear.  Undeniable.  Now they have no choice but to admit there is 
 > not-a-bug.  Closed.
 
 I was *really* close to snapping and raging in the comments & possibly quitting that day.
-I chose to go to the gym and punch a sandbag for 15 minutes.
+Instead, I chose to go to the gym and punch a sandbag for 15 minutes.
 
 Channeling all of my inner Buddha, I respond:
 
@@ -116,7 +116,7 @@ And the response:
 
 > OOOHH, I see!  We have a RefCount problem in our deletion code path.
 
-No apology for dragging their feet for two months after the initial report.
+No apology for dragging their feet for a month after the initial report.
 No apology for completely ignoring the bug report I spent a week on.
 Just "whoopsie, I'm so silly".
 
