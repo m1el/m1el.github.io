@@ -252,15 +252,28 @@ nav {
   border-bottom: none;
 }
 
-.post {
-  blockquote {
-    margin: 0.8em 0.5em;
-    border-left: 2px solid $gray;
-    padding: 0.1em 1em;
-    color: $gray;
-    font-style: italic;
+blockquote {
+  margin: 1em 0;
+  border-left: 3px solid $lightGray;
+  background: #fafafa;
+  padding: 0.6em 1em;
+  color: $gray;
+  font-style: italic;
+
+  > :first-child {
+    margin-top: 0;
   }
 
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  code {
+    font-style: normal;
+  }
+}
+
+.post {
   .comments {
     margin-top: 10px;
   }
@@ -298,6 +311,12 @@ code {
   font-size: 1em;
   border-radius: 0;
   padding: 0;
+}
+
+.mermaid {
+  margin: 20px 0;
+  overflow-x: auto;
+  text-align: center;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
