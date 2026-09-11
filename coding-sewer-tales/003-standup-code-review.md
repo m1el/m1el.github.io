@@ -1,16 +1,22 @@
-# Standup Code Review
+---
+layout: page
+title: Standup Code Review
+permalink: /coding-sewer-tales/003-standup-code-review/
+series: coding-sewer-tales
+order: 3
+---
 
-A long time ago in a galaxy far away, Google Chrome did not have a monopoly on the browsers.  So web developers needed to be careful about supporting different browsers, and work with the lowest common denominator of features.
+A long time ago in a galaxy far away, Google Chrome did not have a monopoly on browsers.  So web developers needed to be careful about supporting different browsers, and work with the lowest common denominator of features.
 
 So we needed a way to tell people the website is not compatible with their browser.
 
-Babel didn't exist, npm was not an established technology. 
+Babel didn't exist, and npm was not an established technology. 
 [browserslist][browserslist-init] and [detect-browser][detect-browser-init] did not exist.
 
-The project we're talking about used Sencha Touch (ExtJS) framework.
+The project we're talking about used the Sencha Touch (ExtJS) framework.
 
 How is that relevant?  The JS build process involved using Sencha tools to combine and compact JavaScript.
-The framework threw a global exception due to some feature missing in the old browsers.
+The framework threw a global exception due to some feature being missing in the old browsers.
 That exception is thrown *before* any of the application code runs.
 
 So the browser compatibility check needs to exist outside of the compiled code.
@@ -40,7 +46,7 @@ for (var i = 0; i < BROWSER_REGEX.length; i++) {
     }
 }
 if (!good) {
-    alert('Unsupported browser, please use Internet Explorer 8+, Opera 12+, Chrome 27+, FireFox 3.6+');
+    alert('Unsupported browser, please use Internet Explorer 8+, Opera 12+, Chrome 27+, Firefox 3.6+');
 }
 })();
 ```
@@ -56,12 +62,12 @@ The normal reaction to your work being criticized with words that strong in fron
 
 I was bewildered.  I put thought and effort into making this.  I made sure it works.
 I made sure it complies with the coding practices put in place.
-There's about 30 lines of code.  Each line surves a purpose.  Each line is readable.
+There's about 30 lines of code.  Each line serves a purpose.  Each line is readable.
 Variable names are a bit short but make sense.
 I don't know of a way to make it simpler or shorter.
 What could possibly be there to elicit such a reaction?
 
-The reason I wasn't offended or felt shame is that I don't self-identify with the code I wrote.
+The reason I wasn't offended or ashamed is that I don't self-identify with the code I wrote.
 I know it's shit.  The point of code reviews is to make code less shit.
 And if you tell me that I'm being retarded and missing an obvious way to make the code better,
 as long as you're correct, I don't care about the tone.
