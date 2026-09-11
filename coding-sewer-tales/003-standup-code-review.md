@@ -74,9 +74,11 @@ as long as you're correct, I don't care about the tone.
 
 Shitting on somebody's work with no substance, in front of 20 people?  That's poor manners *and* a demonstration of incompetence.
 
-Me: "You're unhappy with the code.  How do you suggest we implement the browser compat check?"
-P: "The code is not being built by Sencha tools, not a part of the standard pipeline."
-Me: "The commit message explains why we can't do that.  Old browsers would throw an exception before reaching the check."
+(Later that day, DMs)
+
+Me: "You're unhappy with the code.  How do you suggest we implement the browser compat check?"  
+P: "The code is not being built by Sencha tools, not a part of the standard pipeline."  
+Me: "The commit message explains why we can't do that.  Old browsers would throw an exception before reaching the check."  
 P: "I see."
 
 Change accepted with no comments.
