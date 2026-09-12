@@ -85,6 +85,13 @@ Change accepted with no comments.
 
 Me: how the fuck do you flip from "this code is shit" to "accepted with no comments"???
 
+## Lessons learned
+
+Don't be this guy.  Have negative feedback?  Deliver it privately.  Preferably in a nice tone.
+
+If you insult people in public, you risk being seen as an incomptetent asshole.
+
+
 [browserslist-init]: https://github.com/browserslist/browserslist/commit/ad56a8704eb3824e1d6bc06e5aa782a83e2a0bb1
 
 [detect-browser-init]: https://github.com/DamonOehlman/detect-browser/commit/3ba5d8e860e5a2f3ea6dcc2f6dfa4b9c2f2fb398
